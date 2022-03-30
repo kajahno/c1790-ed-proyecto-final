@@ -12,7 +12,11 @@ The project is divided into the following parts:
 4. Front-End: CLI 
 
 ## Setup
-* In firebase: create a web application
+* Clone repository: 
+    ```bash
+    git clone git@github.com:kajahno/c1790-ed-proyecto-final.git
+    ```
+* In firebase: create a web application (done already)
 * Install nodeJS v16 LTS
     * Install from [here](https://nodejs.dev/download)
 * Install firebase globally 
@@ -27,6 +31,23 @@ The project is divided into the following parts:
     ```
     npm install
     ```
+
+### Github setup (do only once)
+
+* open git bash
+* generate SSH key 
+    ```bash
+    ssh-keygen.exe
+    ```
+    * then hit Enter multiple times
+* Get you public key
+    ```bash
+    cat ~/.ssh/id_rsa.pub
+    ```
+* add your *public* key to Github as explained in [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
+
+
+
 
 ### Back-end
 
