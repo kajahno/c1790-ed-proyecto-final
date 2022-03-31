@@ -11,6 +11,19 @@ The project is divided into the following parts:
 3. Front-End: web client
 4. Front-End: CLI 
 
+### Github setup (do only once)
+
+* open git bash
+* generate SSH key 
+    ```bash
+    ssh-keygen.exe
+    ```
+    * then hit Enter multiple times
+* Get you public key
+    ```bash
+    cat ~/.ssh/id_rsa.pub
+    ```
+* add your *public* key to Github as explained in [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
 ## Setup
 * Clone repository: 
     ```bash
@@ -32,23 +45,6 @@ The project is divided into the following parts:
     npm install
     ```
 
-### Github setup (do only once)
-
-* open git bash
-* generate SSH key 
-    ```bash
-    ssh-keygen.exe
-    ```
-    * then hit Enter multiple times
-* Get you public key
-    ```bash
-    cat ~/.ssh/id_rsa.pub
-    ```
-* add your *public* key to Github as explained in [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
-
-
-
-
 ### Back-end
 
 * initialize firebase
@@ -56,6 +52,18 @@ The project is divided into the following parts:
     cd functions
     npm install
     ```
+
+### Front-end
+
+* Change directories to front-end dir:
+    ```bash
+    cd front-end
+    ```
+* install dependencies
+    ```bash
+    npm install
+    ```
+* read readme.md in that folder
 
 ## Useful firebase commands
 
