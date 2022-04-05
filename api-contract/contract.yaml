@@ -1,0 +1,197 @@
+openapi: 3.0.1
+info:
+  title: ConnectMe
+  description: 'c1790-ed-proyecto-final: a toy social network.'
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://[backend-url].com/api
+tags:
+- name: user
+  description: Operations about user
+paths:
+  /user:
+    post:
+      tags:
+      - user
+      summary: Create user
+      description: This can be done by the logged in user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /user/login:
+    post:
+      tags:
+      - user
+      summary: Logs user into the system
+      operationId: loginUser
+      parameters:
+      - name: username
+        in: query
+        description: The user name for login
+        required: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        description: The password for login in clear text
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        400:
+          description: Invalid username/password supplied
+          content: {}
+  /user/logout:
+    post:
+      tags:
+      - user
+      summary: Logs out current logged in user session
+      operationId: logoutUser
+      security:
+        - bearer_auth: [bearer_auth]
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /user/{username}:
+    get:
+      tags:
+      - user
+      summary: Get user by user name
+      operationId: getUserByName
+      parameters:
+      - name: username
+        in: path
+        description: |
+          The username that needs to be fetched. Use user1 for testing.
+
+          When unauthorized, it will only fetch the public information
+        required: true
+        schema:
+          type: string
+      security:
+        - none: []
+        - bearer_auth: []
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Invalid username supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+    put:
+      tags:
+      - user
+      summary: Updated user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      parameters:
+      - name: username
+        in: path
+        description: name that need to be updated
+        required: true
+        schema:
+          type: string
+      security:
+        - bearer_auth: []
+      requestBody:
+        description: Updated user object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        400:
+          description: Invalid user supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+      x-codegen-request-body-name: body
+    delete:
+      tags:
+      - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+      - name: username
+        in: path
+        description: The name that needs to be deleted
+        required: true
+        schema:
+          type: string
+      security:
+        - bearer_auth: []          
+      responses:
+        400:
+          description: Invalid username supplied
+          content: {}
+        404:
+          description: User not found
+          content: {}
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+        password:
+          type: string
+        confirmPassword:
+          type: string
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        bio:
+          type: string
+        website:
+          type: string
+        location:
+          type: string
+        createdAt:
+          type: string
+        lastSeen:
+          type: string
+    ApiResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
