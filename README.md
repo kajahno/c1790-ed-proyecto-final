@@ -69,8 +69,8 @@ The project is divided into the following parts:
 
 | Command | Description |
 |-------- | ----------- |
-|`firebase emulators:start` | Start firebase emulators (local development). Run from root of repo. |        
-|`firebase deploy` | Deploy the application to production. |        
+|`npx firebase emulators:start` | Start firebase emulators (local development). Run from root of repo. |        
+|`npx firebase deploy` | Deploy the application to production. |        
 
 ## Useful git commands
 
