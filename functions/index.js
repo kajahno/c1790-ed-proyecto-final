@@ -62,7 +62,7 @@ const signupUser = (req, res) => {
             }
         })
         .then((data) => {
-            userId = data.user.uid;
+            userId = data.user.userId;
             return data.user.getIdToken();
         })
         .then((idToken) => {
