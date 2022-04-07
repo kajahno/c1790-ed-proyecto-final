@@ -30,8 +30,8 @@ The project is divided into the following parts:
     git clone git@github.com:kajahno/c1790-ed-proyecto-final.git
     ```
 * In firebase: create a web application (done already)
-* Install nodeJS v16 LTS
-    * Install from [here](https://nodejs.dev/download)
+* Install nodeJS v12 LTS
+    * Install from [here](https://nodejs.org/download/release/latest-v12.x/node-v12.22.12-x64.msi)
 * Install firebase globally 
     ```bash
     npm install -g firebase-tools
@@ -69,7 +69,8 @@ The project is divided into the following parts:
 
 | Command | Description |
 |-------- | ----------- |
-|`firebase emulators:start` | Start firebase emulators (local development). Run from root of repo. |        
+|`npx firebase emulators:start` | Start firebase emulators (local development). Run from root of repo. |        
+|`npx firebase deploy` | Deploy the application to production. |        
 
 ## Useful git commands
 
