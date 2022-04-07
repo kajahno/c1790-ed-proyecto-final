@@ -7,7 +7,8 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-- url: https://[backend-url].com/api
+- url:  https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
+- url: http://localhost:5001/c1790-ed-proyecto-final/europe-west2/api
 tags:
 - name: user
   description: Operations about user
@@ -22,7 +23,7 @@ paths:
       requestBody:
         description: Created user object
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/User'
         required: true

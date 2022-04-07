@@ -31,12 +31,15 @@ const config = {
 firebase.initializeApp(config);
 
 const signupUser = (req, res) => {
+
     const newUser = {
         email: req.body.email,
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
         username: req.body.username,
     };
+
+    console.log("user getting created: ", newUser.username);
 
     // TODO: validate data. Return error when no valid, e.g. password is not the same as confirmPassword
 
@@ -121,8 +124,8 @@ const loginUser = (req, res) => {
 
 
 // User routes
-app.post("/signup", signupUser);
-app.post("/login", loginUser);
+app.post("/user", signupUser);
+app.post("/user/login", loginUser);
 
 // Test so you know how to add other methods
 app.get("/test", (req, res) => {
