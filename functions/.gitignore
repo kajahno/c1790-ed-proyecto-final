@@ -1,1 +1,4 @@
 node_modules/
+
+# ignore environment file because we don't want to push sensitive credentials
+.env
