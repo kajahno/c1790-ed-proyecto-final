@@ -52,6 +52,16 @@ The project is divided into the following parts:
     cd functions
     npm install
     ```
+* create a .env file, and fillup with the content:
+    ```
+    FIREBASE_API_KEY="<the real value>"
+    FIREBASE_AUTH_DOMAIN="<the real value>"
+    FIREBASE_PROJECT_ID="<the real value>"
+    FIREBASE_STORAGE_BUCKET="<the real value>"
+    FIREBASE_MESSAGE_SENDER_ID="<the real value>"
+    FIREBASE_APP_ID="<the real value>"
+    FIREBASE_MEASUREMENT_ID="<the real value>"
+    ```
 
 ### Front-end
 
