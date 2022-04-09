@@ -79,7 +79,8 @@ The project is divided into the following parts:
 
 | Command | Description |
 |-------- | ----------- |
-|`npx firebase emulators:start` | Start firebase emulators (local development). Run from root of repo. |        
+|`npx firebase emulators:start` | Start firebase emulators (local development). Run from root of repo. |
+|`npx firebase emulators:start --only functions` | Start back-end firebase emulator (local front-end development). Run from root of repo. |
 |`npx firebase deploy` | Deploy the application to production. |        
 
 ## Useful git commands
