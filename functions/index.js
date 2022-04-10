@@ -37,6 +37,10 @@ const signupUser = (req, res) => {
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
         username: req.body.username,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        location: req.body.location,
+        lastSeen: req.body.lastSeen,
     };
 
     console.log("user getting created: ", newUser.username);
