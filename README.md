@@ -75,12 +75,30 @@ The project is divided into the following parts:
     ```
 * read readme.md in that folder
 
+### CLI
+
+* Change directories to cli dir:
+    ```bash
+    cd cli
+    ```
+* install dependencies
+    ```bash
+    npm install
+    ```
+* run CLI with:
+    ```bash
+    node . --help
+    ```
+    > Example command: `node . signup --username user --email user@mail.com --password thepass`
+
+    > Note: you must either run the back-end locally or point to the remote back-end for most commands to work.
+
 ## Useful firebase commands
 
 | Command | Description |
 |-------- | ----------- |
 |`npx firebase emulators:start` | Start firebase emulators (local development). Run from root of repo. |
-|`npx firebase emulators:start --only functions` | Start back-end firebase emulator (local front-end development). Run from root of repo. |
+|`npx firebase emulators:start --only functions` | Start back-end firebase emulator (local front-end or CLI development). Run from root of repo. |
 |`npx firebase deploy` | Deploy the application to production. |        
 
 ## Useful git commands

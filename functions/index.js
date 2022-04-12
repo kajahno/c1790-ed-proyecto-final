@@ -49,9 +49,10 @@ const signupUser = (req, res) => {
         .get()
         .then((doc) => {
             if (doc.exists) {
-                return res
-                    .status(400)
-                    .json({ username: "this username is already taken" });
+                throw {
+                    code: "auth/email-already-in-use",
+                    error: new Error()
+                };
             } else {
                 return firebase
                     .auth()
