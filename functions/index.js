@@ -37,6 +37,10 @@ const signupUser = (req, res) => {
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
         username: req.body.username,
+        firstname : req.body.firstname,
+        lastName: req.body.lastName,
+        location: req.body.location,
+        lastSeen : new Date().toISOString(),
     };
 
     console.log("user getting created: ", newUser.username);
@@ -122,6 +126,17 @@ const loginUser = (req, res) => {
             return res.status(500).json({ general: error.code });
         });
 };
+
+const logoutUser = (req, res) => {
+    firebase.auth().signOut().then(function() {
+        console.log('Signed out');
+    })
+    .catch(function(error) {
+        console.error('Sign out error', error);
+    });
+}
+
+
 
 
 // User routes
