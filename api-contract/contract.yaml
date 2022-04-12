@@ -14,6 +14,8 @@ tags:
   description: Operations about authentication
 - name: user profile
   description: Operations about user profile
+- name: posts
+  description: Operations about posts
 paths:
   /user:
     post:
@@ -192,7 +194,145 @@ paths:
         404:
           description: User not found
           content: {}
-    
+  /posts:
+    get:
+      tags:
+      - posts
+      summary: View post
+      description: This can be done by the logged in user.
+      operationId: viewPost
+      requestBody:
+        description: View post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    post:
+      tags:
+      - posts
+      summary: Create post
+      description: This can be done by the logged in user.
+      operationId: createPost
+      requestBody:
+        description: Created post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    put:
+      tags:
+      - posts
+      summary: Edit post
+      description: This can be done by the logged in user.
+      operationId: editPost
+      requestBody:
+        description: Edit post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    delete:
+      tags:
+      - posts
+      summary: Delete post
+      description: This can be done by the logged in user.
+      operationId: deletePost
+      requestBody:
+        description: Delete post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /posts/comments:
+    get:
+      tags:
+      - posts
+      summary: View comment
+      description: This can be done by the logged in user.
+      operationId: viewComment
+      requestBody:
+        description: View post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    post:
+      tags:
+      - posts
+      summary: Create comment
+      description: This can be done by the logged in user.
+      operationId: createComment
+      requestBody:
+        description: Created post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    put:
+      tags:
+      - posts
+      summary: Edit post
+      description: This can be done by the logged in user.
+      operationId: editPost
+      requestBody:
+        description: Edit post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    delete:
+      tags:
+      - posts
+      summary: Delete comment
+      description: This can be done by the logged in user.
+      operationId: deleteComment
+      requestBody:
+        description: Delete post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+          
 components:
   schemas:
     Authentication:
@@ -276,6 +416,19 @@ components:
           type: integer
         posts:
           type: integer
+    Posts:
+      type: object
+      properties:
+        post:
+          type: string
+        canLike:
+          type: boolean
+        canUnlike:
+          type: boolean
+        likes:
+          type: integer
+        tag:
+          type: string     
     ApiResponse:
       type: object
       properties:
