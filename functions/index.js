@@ -40,7 +40,7 @@ const signupUser = (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         location: req.body.location,
-        lastSeen: req.body.lastSeen,
+        lastSeen: new Date().toISOString(),
     };
 
     console.log("user getting created: ", newUser.username);
@@ -100,6 +100,13 @@ const loginUser = (req, res) => {
         email: req.body.email,
         password: req.body.password,
     };
+
+    firebase.auth().signOut().then(function() {
+        console.log('Signed out');
+    })
+    .catch(function(error) {
+        console.error('Sign out error', error);
+    });
 
     // TODO: validate login data (nice to have, but don't bother)
 
