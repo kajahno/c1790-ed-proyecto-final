@@ -78,6 +78,14 @@ const signupUser = (req, res) => {
                 createdAt: new Date().toISOString(),
                 imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/no-img.png?alt=media`,
                 userId,
+                password,
+                confirmPassword,
+                firstname,
+                lastName,
+                website,
+                location,
+                createdAt,
+                lastSeen,
             };
             return db.doc(`/users/${newUser.username}`).set(userCredentials);
         })
@@ -100,6 +108,7 @@ const loginUser = (req, res) => {
         email: req.body.email,
         password: req.body.password,
     };
+    console.log("Is this working?")
 
     // TODO: validate login data (nice to have, but don't bother)
 
@@ -127,7 +136,9 @@ const loginUser = (req, res) => {
         });
 };
 
+
 const logoutUser = (req, res) => {
+    // To do, this doesn't work at the moment, needs fixed.
     firebase.auth().signOut().then(function() {
         console.log('Signed out');
     })
@@ -136,12 +147,49 @@ const logoutUser = (req, res) => {
     });
 }
 
+const user = firebase.auth().currentUser;
+    user.updateProfile({
+    displayName: "prueba",
+}).then(() => {
+  console.log('successful')
+}).catch((error) => {
+    console.log('error')
+});
+
+const updateUser = firebase.auth().currentUser;
+user.updateProfile({
+  displayName: "backend",
+  photoURL: "https://example.com/jane-q-user/profile.jpg"
+}).then(() => {
+  // Update successful
+  // ...
+}).catch((error) => {
+  // An error occurred
+  // ...
+});  
+
+const deleteUser = firebase.auth().currentUser;
+
+user.delete().then(() => {
+  // User deleted.
+}).catch((error) => {
+  // An error ocurred
+  // ...
+});
+
+
+
+
 
 
 
 // User routes
 app.post("/user", signupUser);
 app.post("/user/login", loginUser);
+app.post("/user/logout", logoutUser);
+app.post("/user/ {username}", username);
+app.post("/user/ {username}", updateUser);
+app.post("/user/ {username}", deleteUser);
 
 // Test so you know how to add other methods
 app.get("/test", (req, res) => {
