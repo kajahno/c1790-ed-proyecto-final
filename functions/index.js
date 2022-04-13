@@ -12,6 +12,7 @@ app.use(cors());
 
 // Helper to load configurations
 const dotenv = require("dotenv");
+const { consoleOrigin } = require("firebase-tools/lib/api");
 dotenv.config();
 
 const db = admin.firestore();
@@ -44,7 +45,8 @@ const signupUser = (req, res) => {
     };
 
     console.log("user getting created: ", newUser.username);
-
+   
+    
     // TODO: validate data. Return error when no valid, e.g. password is not the same as confirmPassword
 
     let token, userId;
@@ -101,16 +103,10 @@ const loginUser = (req, res) => {
         password: req.body.password,
     };
 
-    firebase.auth().signOut().then(function() {
-        console.log('Signed out');
-    })
-    .catch(function(error) {
-        console.error('Sign out error', error);
-    });
 
-    // TODO: validate login data (nice to have, but don't bother)
-
-    firebase
+     // TODO: validate login data (nice to have, but don't bother)
+   
+     firebase
         .auth()
         .signInWithEmailAndPassword(user.email, user.password)
         .then((userCredential) => {
@@ -135,9 +131,24 @@ const loginUser = (req, res) => {
 };
 
 
+const user = firebase.auth().currentUser;
+    user.updateProfile({
+   displayName: "prueba",
+   username: "prueba1",
+    imageUrl: "https://firebasestorage.googleapis.com/v0/b/c1790-ed-proyecto-final.appspot.com/o/no-img.png?alt=media"
+  }).then(() => {
+  console.log('successful')
+  }).catch((error) => {
+    console.log('error')
+});
+const logout = () => {
+    return firebase.auth().signOut();
+  }
 // User routes
 app.post("/user", signupUser);
 app.post("/user/login", loginUser);
+app.post("/user/logout", logout);
+
 
 // Test so you know how to add other methods
 app.get("/test", (req, res) => {
