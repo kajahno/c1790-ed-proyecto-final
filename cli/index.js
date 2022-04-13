@@ -152,6 +152,31 @@ const recover = (args) => {
         });
 }
 
+//* delete 
+const deleteuser = (args) => {
+
+    const { username } = args;
+
+    const deleteUserData = {
+        username,
+    };
+
+    console.log(chalk.bgYellow.bold("borrando..."));
+
+    axios
+        .delete("/user/{username}", deleteUserData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("the account has been deleted successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not delete this account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
 // Back-end configuration
 // URLS:
 // Production -> https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
@@ -297,6 +322,24 @@ y.command({
     },
     handler(argv) {
         recover(argv)
+    }
+})
+
+// recover the account
+y.scriptName("connectme")
+y.usage("Usage: -n <name>");
+y.command({
+    command: 'delete',
+    describe: 'This can only be done by the logged in user',
+    builder: {
+        username: {
+            describe: 'Username',
+            demandOption: true,
+            type: 'string'
+        },
+    },
+    handler(argv) {
+        deleteuser(argv)
     }
 })
 y.parse(process.argv.slice(2))
