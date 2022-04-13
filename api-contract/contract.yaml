@@ -7,16 +7,20 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-- url:  https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
+- url: https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
 - url: http://localhost:5001/c1790-ed-proyecto-final/europe-west2/api
 tags:
-- name: user
-  description: Operations about user
+- name: authentication
+  description: Operations about authentication
+- name: user profile
+  description: Operations about user profile
+- name: posts
+  description: Operations about posts
 paths:
   /user:
     post:
       tags:
-      - user
+      - authentication
       summary: Create user
       description: This can be done by the logged in user.
       operationId: createUser
@@ -25,7 +29,25 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/Authentication'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /user/guest:
+    post:
+      tags:
+      - authentication
+      summary: Create guest account
+      description: This can be done without being authenticated.
+      operationId: createGuest
+      requestBody:
+        description: Created guest object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Guest'
         required: true
       responses:
         default:
@@ -34,7 +56,7 @@ paths:
   /user/login:
     post:
       tags:
-      - user
+      - authentication
       summary: Logs user into the system
       operationId: loginUser
       parameters:
@@ -63,7 +85,7 @@ paths:
   /user/logout:
     post:
       tags:
-      - user
+      - authentication
       summary: Logs out current logged in user session
       operationId: logoutUser
       security:
@@ -72,10 +94,26 @@ paths:
         default:
           description: successful operation
           content: {}
+  /user/recover:
+    put:
+      tags:
+      - authentication
+      summary: Recovers an account password
+      operationId: recoverPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recover'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
   /user/{username}:
     get:
       tags:
-      - user
+      - user profile
       summary: Get user by user name
       operationId: getUserByName
       parameters:
@@ -97,7 +135,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserProfile'
         400:
           description: Invalid username supplied
           content: {}
@@ -106,7 +144,7 @@ paths:
           content: {}
     put:
       tags:
-      - user
+      - user profile
       summary: Updated user
       description: This can only be done by the logged in user.
       operationId: updateUser
@@ -124,7 +162,7 @@ paths:
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/Authentication'
         required: true
       responses:
         400:
@@ -136,7 +174,7 @@ paths:
       x-codegen-request-body-name: body
     delete:
       tags:
-      - user
+      - authentication
       summary: Delete user
       description: This can only be done by the logged in user.
       operationId: deleteUser
@@ -156,9 +194,148 @@ paths:
         404:
           description: User not found
           content: {}
+  /posts:
+    get:
+      tags:
+      - posts
+      summary: View post
+      description: This can be done by the logged in user.
+      operationId: viewPost
+      requestBody:
+        description: View post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    post:
+      tags:
+      - posts
+      summary: Create post
+      description: This can be done by the logged in user.
+      operationId: createPost
+      requestBody:
+        description: Created post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    put:
+      tags:
+      - posts
+      summary: Edit post
+      description: This can be done by the logged in user.
+      operationId: editPost
+      requestBody:
+        description: Edit post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    delete:
+      tags:
+      - posts
+      summary: Delete post
+      description: This can be done by the logged in user.
+      operationId: deletePost
+      requestBody:
+        description: Delete post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /posts/comments:
+    get:
+      tags:
+      - posts
+      summary: View comment
+      description: This can be done by the logged in user.
+      operationId: viewComment
+      requestBody:
+        description: View post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    post:
+      tags:
+      - posts
+      summary: Create comment
+      description: This can be done by the logged in user.
+      operationId: createComment
+      requestBody:
+        description: Created post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    put:
+      tags:
+      - posts
+      summary: Edit post
+      description: This can be done by the logged in user.
+      operationId: editPost
+      requestBody:
+        description: Edit post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    delete:
+      tags:
+      - posts
+      summary: Delete comment
+      description: This can be done by the logged in user.
+      operationId: deleteComment
+      requestBody:
+        description: Delete post object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Posts'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+          
 components:
   schemas:
-    User:
+    Authentication:
       type: object
       properties:
         userId:
@@ -181,10 +358,77 @@ components:
           type: string
         location:
           type: string
+        picture: 
+          type: string
+          format: binary
+    Guest:
+      type: object
+      properties:
+        userId:
+          type: string
+        username:
+          type: string
+        picture: 
+          type: string
+          format: binary
+    Recover:
+      type: object
+      properties:
+        username:
+          type: string
+        userId:
+          type: string
+        email:
+          type: string
+        newPassword:
+          type: string
+        confirmPassword:
+          type: string
+    UserProfile:
+      type: object
+      properties:
+        userId:
+          type: string
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        bio:
+          type: string
+        website:
+          type: string
+        location:
+          type: string
+        picture: 
+          type: string
+          format: binary
         createdAt:
           type: string
         lastSeen:
           type: string
+        friends:
+          type: integer
+        likes:
+          type: integer
+        posts:
+          type: integer
+    Posts:
+      type: object
+      properties:
+        post:
+          type: string
+        canLike:
+          type: boolean
+        canUnlike:
+          type: boolean
+        likes:
+          type: integer
+        tag:
+          type: string     
     ApiResponse:
       type: object
       properties:
@@ -192,7 +436,11 @@ components:
           type: string
         message:
           type: string
+
   securitySchemes:
     bearer_auth:
       type: http
       scheme: bearer
+
+
+
