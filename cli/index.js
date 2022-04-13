@@ -97,6 +97,26 @@ const guest= (args) => {
         });
 }
 
+// implement user/logout
+const logOut= (args) => {
+
+    const {  } = args;
+
+    console.log(chalk.white.bold("Logging out..."));
+
+    axios
+        .post("/user/logout")
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            
+            console.log(chalk.green.bold(" successfully operation ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not log out: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
 
 // Back-end configuration
 // URLS:
@@ -183,5 +203,28 @@ y.command({
     }
 })
 
+// Logout user
+y.scriptName("connectme")
+y.usage("Usage: -n <name>");
+y.command({
+    command: 'logout',
+    describe: 'Logout current account ',
+    builder: {
+        username: {
+            describe: 'Username',
+            demandOption: true,
+            type: 'string'
+        },
+        userID: {
+            describe: 'An user ID',
+            demandOption: true,
+            type: 'string'
+        },
+        
+    },
+    handler(argv) {
+        logOut(argv)
+    }
+})
 
 y.parse(process.argv.slice(2))
