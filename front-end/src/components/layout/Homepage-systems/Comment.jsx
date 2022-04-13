@@ -2,7 +2,7 @@
 import CommentForm from "./CommentForm.js";
 
 const Comment = ({
-  Post,
+  Comment,
   replies,
   setActiveComment,
   activeComment,
