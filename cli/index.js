@@ -18,6 +18,10 @@ const msgBox = boxen(greeting, boxenOptions);
 
 // Cli commands implementation
 // TODO: move to a different folder so it looks more tidy
+
+// ==> authentication
+
+//*signup
 const signUp = (args) => {
 
     const { email, password, username } = args;
@@ -45,7 +49,7 @@ const signUp = (args) => {
         });
 }
 
-/* Login */
+//* Login 
 const login = (args) => {
 
     const { password, username } = args;
@@ -71,7 +75,7 @@ const login = (args) => {
         });
 }
 
-// definition of create guest command
+// *definition of create guest command
 const guest= (args) => {
 
     const { userId, picture, username } = args;
@@ -95,6 +99,35 @@ const guest= (args) => {
         })
         .catch((error) => {
             console.log(chalk.red.bold(`Could not create aguest account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+//* recover 
+const recover = (args) => {
+
+    const { username, userId, email, newPassword, confirmPassword } = args;
+
+    const recoverUserData = {
+        username,
+        userId,
+        email,
+        newPassword,
+        confirmPassword,
+    };
+
+    console.log(chalk.bgBlue.bold("login..."));
+
+    axios
+        .post("/user/login", useUserData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("login successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not login -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
         });
 }
 
@@ -134,6 +167,7 @@ y.command({
     }
 })
 
+// create login command
 y.scriptName("connectme")
 y.usage("Usage: -n <name>");
 y.command({
