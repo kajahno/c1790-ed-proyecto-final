@@ -45,6 +45,7 @@ const signUp = (args) => {
         });
 }
 
+/* Login */
 const login = (args) => {
 
     const { password, username } = args;
