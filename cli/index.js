@@ -70,6 +70,34 @@ const login = (args) => {
         });
 }
 
+// definition of create guest command
+const guest= (args) => {
+
+    const { userId, picture, username } = args;
+
+    const guestuserdata= {
+        userID,
+        picture,
+        username,
+    };
+
+    console.log(chalk.white.bold("Creating a guest account..."));
+
+    axios
+        .post("/user/guest", guestuserdata)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.white.bold("user guest created successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not create aguest account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+
 // Back-end configuration
 // URLS:
 // Production -> https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
@@ -126,10 +154,34 @@ y.command({
     }
 })
 
+// create guest account command
+y.scriptName("connectme")
+y.usage("Usage: -n <name>");
+y.command({
+    command: 'guest',
+    describe: 'Creata a guest account ',
+    builder: {
+        username: {
+            describe: 'Username',
+            demandOption: true,
+            type: 'string'
+        },
+        userID: {
+            describe: 'An user ID',
+            demandOption: true,
+            type: 'string'
+        },
+       picture: {
+           describe: 'A profile picture',
+            demandOption: true,
+            type: 'string'
+        }
+        // TODO: prompt to confirm the password
+    },
+    handler(argv) {
+        guest(argv)
+    }
+})
+
 
 y.parse(process.argv.slice(2))
-
-
-/* Esto es una prueba  asjdhasudhasuidhasd*/
-
-/* Esto es una prueba  asjdhasudhasuidhasd*/
