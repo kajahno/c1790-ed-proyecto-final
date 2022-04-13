@@ -1,4 +1,3 @@
-
 import chalk from 'chalk';
 import boxen from 'boxen';
 import yargs from 'yargs';
@@ -46,6 +45,31 @@ const signUp = (args) => {
         });
 }
 
+const login = (args) => {
+
+    const { password, username } = args;
+
+    const useUserData = {
+        password,
+        username,
+    };
+
+    console.log(chalk.bgBlue.bold("login..."));
+
+    axios
+        .post("/user/login", useUserData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("login successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not login -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
 // Back-end configuration
 // URLS:
 // Production -> https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
@@ -80,5 +104,27 @@ y.command({
         signUp(argv)
     }
 })
+
+y.scriptName("connectme")
+y.usage("Usage: -n <name>");
+y.command({
+    command: 'login',
+    describe: 'login with an account',
+    builder: {
+        username: {
+            describe: 'Username',
+            demandOption: true,
+            type: 'string'
+        },
+        password: {
+            describe: 'Password of the account'
+        }
+        // TODO: prompt to confirm the password
+    },
+    handler(argv) {
+        login(argv)
+    }
+})
+
 
 y.parse(process.argv.slice(2))
