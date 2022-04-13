@@ -19,7 +19,7 @@ const msgBox = boxen(greeting, boxenOptions);
 // Cli commands implementation
 // TODO: move to a different folder so it looks more tidy
 
-// ==> authentication
+// ==> authentication <==
 
 //*signup
 const signUp = (args) => {
@@ -49,6 +49,54 @@ const signUp = (args) => {
         });
 }
 
+// *definition of create guest command
+const guest= (args) => {
+
+    const { userId, picture, username } = args;
+
+    const guestuserdata= {
+        userId,
+        picture,
+        username,
+    };
+
+    console.log(chalk.white.bold("Creating a guest account..."));
+
+    axios
+        .post("/user/guest", guestuserdata)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.white.bold("user guest created successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not create aguest account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+// implement user/logout
+const logOut= (args) => {
+
+    const {  } = args;
+
+    console.log(chalk.white.bold("Logging out..."));
+
+    axios
+        .post("/user/logout")
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            
+            console.log(chalk.green.bold(" successfully operation ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not log out: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
 //* Login 
 const login = (args) => {
 
@@ -75,33 +123,6 @@ const login = (args) => {
         });
 }
 
-// *definition of create guest command
-const guest= (args) => {
-
-    const { userId, picture, username } = args;
-
-    const guestuserdata= {
-        userID,
-        picture,
-        username,
-    };
-
-    console.log(chalk.white.bold("Creating a guest account..."));
-
-    axios
-        .post("/user/guest", guestuserdata)
-        .then((res) => {
-            console.log(res.data);
-
-            const FBIdToken = `Bearer ${res.data.token}`;
-            // TODO: create a file in the user's machine to store the auth token
-            console.log(chalk.white.bold("user guest created successfully ✔️"));
-        })
-        .catch((error) => {
-            console.log(chalk.red.bold(`Could not create aguest account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
-        });
-}
-
 //* recover 
 const recover = (args) => {
 
@@ -115,19 +136,19 @@ const recover = (args) => {
         confirmPassword,
     };
 
-    console.log(chalk.bgBlue.bold("login..."));
+    console.log(chalk.bgYellow.bold("recovering..."));
 
     axios
-        .post("/user/login", useUserData)
+        .put("/user/recover", recoverUserData)
         .then((res) => {
             console.log(res.data);
 
             const FBIdToken = `Bearer ${res.data.token}`;
             // TODO: create a file in the user's machine to store the auth token
-            console.log(chalk.green.bold("login successfully ✔️"));
+            console.log(chalk.green.bold("recover successfully ✔️"));
         })
         .catch((error) => {
-            console.log(chalk.red.bold(`Could not login -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+            console.log(chalk.red.bold(`Could not recover the account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
         });
 }
 
@@ -218,5 +239,65 @@ y.command({
     }
 })
 
+// Logout user
+y.scriptName("connectme")
+y.usage("Usage: -n <name>");
+y.command({
+    command: 'logout',
+    describe: 'Logout current account ',
+    builder: {
+        username: {
+            describe: 'Username',
+            demandOption: true,
+            type: 'string'
+        },
+        userID: {
+            describe: 'An user ID',
+            demandOption: true,
+            type: 'string'
+        },
+        
+    },
+    handler(argv) {
+        logOut(argv)
+    }
+})
 
+// recover the account
+y.scriptName("connectme")
+y.usage("Usage: -n <name>");
+y.command({
+    command: 'recover',
+    describe: 'recover the current account ',
+    builder: {
+        username: {
+            describe: 'Username',
+            demandOption: true,
+            type: 'string'
+        },
+        userID: {
+            describe: 'An user ID',
+            demandOption: true,
+            type: 'string'
+        },
+        email: {
+            describe: 'An user email',
+            demandOption: true,
+            type: 'string'
+        },
+        newPassword: {
+            describe: 'The new password of the account',
+            demandOption: true,
+            type: 'string'
+        },
+        confirmPassword: {
+            describe: 'confirm the current password',
+            demandOption: true,
+            type: 'string'
+        },  
+    },
+    handler(argv) {
+        recover(argv)
+    }
+})
 y.parse(process.argv.slice(2))
