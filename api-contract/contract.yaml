@@ -358,7 +358,7 @@ components:
           type: string
         location:
           type: string
-        picture: 
+        imageProfile: 
           type: string
           format: binary
     Guest:
@@ -368,7 +368,7 @@ components:
           type: string
         username:
           type: string
-        picture: 
+        imageProfile: 
           type: string
           format: binary
     Recover:
@@ -403,7 +403,7 @@ components:
           type: string
         location:
           type: string
-        picture: 
+        imageProfile: 
           type: string
           format: binary
         createdAt:
@@ -441,6 +441,3 @@ components:
     bearer_auth:
       type: http
       scheme: bearer
-
-
-
