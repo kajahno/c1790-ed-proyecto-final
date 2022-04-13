@@ -152,6 +152,26 @@ const recover = (args) => {
         });
 }
 
+// implement user/logout
+const logOut= (args) => {
+
+    const {  } = args;
+
+    console.log(chalk.white.bold("Logging out..."));
+
+    axios
+        .post("/user/logout")
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            
+            console.log(chalk.green.bold(" successfully operation ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not log out: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
 
 // Back-end configuration
 // URLS:
