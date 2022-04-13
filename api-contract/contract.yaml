@@ -454,7 +454,10 @@ components:
         createdAt:
           type: string
         updatedAt:
-          type: string     
+          type: string
+        imageProfile:
+          type: string
+          format: binary     
     ApiResponse:
       type: object
       properties:
