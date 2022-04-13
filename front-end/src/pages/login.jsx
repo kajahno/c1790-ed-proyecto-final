@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AppIcon from "../logo.svg";
+import axios from "axios";
 
 import {
     Grid,
@@ -71,6 +72,20 @@ class login extends Component {
             password,
         };
         // TODO: implement creating the user here using axios
+
+        axios.post("/user", {
+            userName: "Denny",
+            password: "Rosa1234",
+            email: "Denny123@gmail.com",
+            userid: "Dennbryant",
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     };
 
     handleChange = (event) => {
@@ -170,3 +185,5 @@ class login extends Component {
 }
 
 export default withStyles(styles)(login);
+
+
