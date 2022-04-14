@@ -32,17 +32,13 @@ The project is divided into the following parts:
 * In firebase: create a web application (done already)
 * Install nodeJS v12 LTS
     * Install from [here](https://nodejs.org/download/release/latest-v12.x/node-v12.22.12-x64.msi)
-* Install firebase globally 
-    ```bash
-    npm install -g firebase-tools
-    ```
-* Login to firebase 
-    ```bash
-    firebase login
-    ```
 * Install firebase SDK
     ```
     npm install
+    ```
+* Login to firebase:
+    ```bash
+    npx firebase login
     ```
 
 ### Back-end
@@ -61,6 +57,10 @@ The project is divided into the following parts:
     FIREBASE_MESSAGE_SENDER_ID="<the real value>"
     FIREBASE_APP_ID="<the real value>"
     FIREBASE_MEASUREMENT_ID="<the real value>"
+    ```
+* start development server:
+    ```bash
+    npx firebase emulators:start
     ```
 
 ### Front-end
@@ -99,6 +99,7 @@ The project is divided into the following parts:
 |-------- | ----------- |
 |`npx firebase emulators:start` | Start firebase emulators (local development). Run from root of repo. |
 |`npx firebase emulators:start --only functions` | Start back-end firebase emulator (local front-end or CLI development). Run from root of repo. |
+|`npx firebase login` | Logs in to firebase. | 
 |`npx firebase deploy` | Deploy the application to production. |        
 
 ## Useful git commands

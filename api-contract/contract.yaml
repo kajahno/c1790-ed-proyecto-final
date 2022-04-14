@@ -60,7 +60,7 @@ paths:
       summary: Logs user into the system
       operationId: loginUser
       parameters:
-      - name: username
+      - name: email
         in: query
         description: The user name for login
         required: true
@@ -160,7 +160,7 @@ paths:
       requestBody:
         description: Updated user object
         content:
-          '*/*':
+          'application/json':
             schema:
               $ref: '#/components/schemas/Authentication'
         required: true
