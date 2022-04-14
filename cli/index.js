@@ -325,10 +325,18 @@ const deletePost = (args) => {
 
     const {  } = args;
 
+    const deleteCo = {
+        post,
+        canLike,
+        canUnlike,
+        likes,
+        tag
+    };
+
     console.log(chalk.bgBlue.bold("deleting..."));
 
     axios
-        .post("/posts")
+        .post("/posts", deleteCo)
         .then((res) => {
             console.log(res.data);
 
