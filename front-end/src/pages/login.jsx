@@ -53,7 +53,7 @@ class login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "",
+            Username: "",
             password: "",
             loading: false,
             errors: {},
@@ -66,16 +66,16 @@ class login extends Component {
             loading: true,
         });
 
-        const { email, password } = this.state;
+        const { Username, password } = this.state;
 
         const userData = {
-            email,
+            Username,
             password,
         };
         // TODO: implement creating the user here using axios
 
-        axios.post("/user", {
-            userName: "DennBryant",
+        axios.post("/user",userData ,{
+            Username: "DennBryant",
             password: "Rosa1234",
            
         })
@@ -116,14 +116,14 @@ class login extends Component {
                     </Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
-                            id="email"
-                            name="email"
-                            type="email"
-                            label="Email"
-                            helperText={errors.email}
-                            error={errors.email ? true : false}
+                            id="Username"
+                            name="Username"
+                            type="Username"
+                            label="Username"
+                            helperText={errors.Username}
+                            error={errors.Username ? true : false}
                             className={classes.textField}
-                            value={this.state.email}
+                            value={this.state.Username}
                             onChange={this.handleChange}
                             fullWidth
                         />
