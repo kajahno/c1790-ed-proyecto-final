@@ -198,6 +198,42 @@ const getuser = (args) => {
         });
 }
 
+//* updated user 
+const updateser = (args) => {
+
+    const { userId, password, confirmPassword, username, firstName, 
+    lastName, email, bio, website, location, picture } = args;
+
+    const updateUserData = {
+        userId,
+        password,
+        confirmPassword,
+        username,
+        firstName,
+        lastName,
+        email,
+        bio,
+        website,
+        location,
+        picture
+    };
+
+    console.log(chalk.bgYellow.bold("updating..."));
+
+    axios
+        .put("/user/{username}", updateUserData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold(" update successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not update this account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
 
 // Back-end configuration
 // URLS:
@@ -374,6 +410,74 @@ y.command({
     },
     handler(argv) {
         getuser(argv)
+    }
+})
+
+// update account
+y.scriptName("connectme")
+y.command({
+    command: 'update user',
+    describe: 'update & existen account',
+    builder: {
+        userId: {
+            describe: 'and userID',
+            demandOption: true,
+            type: 'string'
+        },
+        password: {
+            describe: 'password of the account',
+            demandOption: true,
+            type: 'string'
+        },
+        confirmPassword: {
+            describe: 'confirm the password',
+            demandOption: true,
+            type: 'string'
+        },
+        username: {
+            describe: 'and username',
+            demandOption: true,
+            type: 'string'
+        },
+        firstName: {
+            describe: 'your frist name',
+            demandOption: true,
+            type: 'string'
+        },
+        lastName: {
+            describe: 'your lastname',
+            demandOption: true,
+            type: 'string'
+        },
+        email: {
+            describe: 'your email',
+            demandOption: true,
+            type: 'string'
+        },
+        bio: {
+            describe: 'your biogaphy',
+            demandOption: true,
+            type: 'string'
+        },
+        website: {
+            describe: '...',
+            demandOption: true,
+            type: 'string'
+        },
+        location: {
+            describe: 'your actual location',
+            demandOption: true,
+            type: 'string'
+        },
+        picture: {
+            describe: '...',
+            demandOption: true,
+            type: 'string'
+        },
+        // TODO: prompt to confirm the password
+    },
+    handler(argv) {
+        updateser(argv)
     }
 })
 y.parse(process.argv.slice(2))
