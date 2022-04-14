@@ -320,6 +320,68 @@ const updatePost = (args) => {
         });
 }
 
+/*  Delete post    */
+const deletePost = (args) => {
+
+    const {  } = args;
+
+    console.log(chalk.bgBlue.bold("deleting..."));
+
+    axios
+        .post("/posts")
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("post deleted successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not delete the post -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+/* View comments */
+const viewComment = (args) => {
+
+    const {  } = args;
+
+    console.log(chalk.bgBlue.bold("View comment..."));
+
+    axios
+        .post("/posts/comments")
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+    
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not view this comment -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+/*  Create comment    */
+const createComment = (args) => {
+
+    const {  } = args;
+
+    console.log(chalk.bgBlue.bold("deleting..."));
+
+    axios
+        .post("/posts/comments")
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("The comment was created successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not create the comment -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
 // Back-end configuration
 // URLS:
 // Production -> https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
@@ -656,6 +718,120 @@ y.command({
     },
     handler(argv) {
         updatePost(argv)
+    }
+})
+
+// Delete post
+y.scriptName("connectme")
+y.command({
+    command: 'delete-post',
+    describe: 'deletes a post',
+    builder: {
+        post: {
+            describe: 'Post name',
+            demandOption: true,
+            type: 'string'
+        },
+        canLike: {
+            describe: 'Not possibility to like',
+            demandOption: true,
+            type: 'bool'
+        },
+       canUnlike: {
+           describe: 'Not possibility to unlike',
+            demandOption: true,
+            type: 'bool'
+        },
+        likes: {
+            describe: 'Ammount of likes',
+            demandOption: true,
+            type: 'int'
+        },
+        tag: {
+            describe: 'Tag',
+            demandOption: true,
+            type: 'string'
+        },
+
+    },
+    handler(argv) {
+        deletePost(argv)
+    }
+})
+
+// View comment
+y.scriptName("connectme")
+y.command({
+    command: 'view-comment',
+    describe: 'view a comment',
+    builder: {
+        post: {
+            describe: 'Post name',
+            demandOption: true,
+            type: 'string'
+        },
+        canLike: {
+            describe: 'Possibility to like',
+            demandOption: true,
+            type: 'bool'
+        },
+       canUnlike: {
+           describe: 'Possibility to unlike',
+            demandOption: true,
+            type: 'bool'
+        },
+        likes: {
+            describe: 'Ammount of likes',
+            demandOption: true,
+            type: 'int'
+        },
+        tag: {
+            describe: 'Tag',
+            demandOption: true,
+            type: 'string'
+        },
+
+    },
+    handler(argv) {
+        viewComment(argv)
+    }
+})
+
+// Create comment
+y.scriptName("connectme")
+y.command({
+    command: 'create-comment',
+    describe: 'create a comment',
+    builder: {
+        post: {
+            describe: 'Post name',
+            demandOption: true,
+            type: 'string'
+        },
+        canLike: {
+            describe: 'Possibility to like',
+            demandOption: true,
+            type: 'bool'
+        },
+       canUnlike: {
+           describe: 'Possibility to unlike',
+            demandOption: true,
+            type: 'bool'
+        },
+        likes: {
+            describe: 'Ammount of likes',
+            demandOption: true,
+            type: 'int'
+        },
+        tag: {
+            describe: 'Tag',
+            demandOption: true,
+            type: 'string'
+        },
+
+    },
+    handler(argv) {
+        createComment(argv)
     }
 })
 
