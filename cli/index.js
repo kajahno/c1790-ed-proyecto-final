@@ -263,7 +263,7 @@ const getpost = (args) => {
             console.log(chalk.red.bold(`Could not obtain the post -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
         });
 }
-//post command definition
+//create post command definition
 const createPost = (args) => {
 
     const { post, canLike, canUnlike, likes, tag } = args;
@@ -307,7 +307,7 @@ const updatePost = (args) => {
     console.log(chalk.bgYellow.bold("editing the post..."));
 
     axios
-        .put("/user/{username}", putPostData)
+        .put("/posts", putPostData)
         .then((res) => {
             console.log(res.data);
 
