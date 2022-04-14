@@ -184,8 +184,14 @@ const getuser = (args) => {
 
     console.log(chalk.bgYellow.bold("getting user..."));
 
+    const { username } = args;
+    
+        const getUserData = {
+            username
+        };
+
     axios
-        .get("/user/{username}", deleteUserData)
+        .get("/user/{username}", getUserData)
         .then((res) => {
             console.log(res.data);
 
@@ -199,7 +205,7 @@ const getuser = (args) => {
 }
 
 //* updated user 
-const updateser = (args) => {
+const updateuser = (args) => {
 
     const { userId, password, confirmPassword, username, firstName, 
     lastName, email, bio, website, location, picture } = args;
@@ -233,7 +239,86 @@ const updateser = (args) => {
             console.log(chalk.red.bold(`Could not update this account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
         });
 }
+//get post command definition
+const getpost = (args) => {
 
+    console.log(chalk.bgYellow.bold("getting post..."));
+
+    const { post } = args;
+    
+        const getPostData = {
+            post
+        };
+
+    axios
+        .get("/posts", getPostData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("you got the post successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not obtain the post -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+//post command definition
+const createPost = (args) => {
+
+    const { post, canLike, canUnlike, likes, tag } = args;
+
+    const postData = {
+        post,
+        canLike,
+        canUnlike,
+        likes,
+        tag
+    };
+
+    console.log(chalk.bgBlue.bold("posting..."));
+
+    axios
+        .post("/posts", postData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("post created successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not create the post -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+//update post command definition
+const updatePost = (args) => {
+
+    const { post, canLike, canUnlike, likes, tag } = args;
+
+    const putPostData = {
+        post,
+        canLike,
+        canUnlike,
+        likes,
+        tag
+    };
+
+    console.log(chalk.bgYellow.bold("editing the post..."));
+
+    axios
+        .put("/user/{username}", putPostData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("post updated successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not update this post -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
 
 // Back-end configuration
 // URLS:
@@ -295,7 +380,7 @@ y.command({
 y.scriptName("connectme")
 y.command({
     command: 'guest',
-    describe: 'Creata a guest account ',
+    describe: 'Creates a guest account ',
     builder: {
         username: {
             describe: 'Username',
@@ -399,7 +484,7 @@ y.command({
 // get user by username
 y.scriptName("connectme")
 y.command({
-    command: 'get user',
+    command: 'get-user',
     describe: 'get an user by username',
     builder: {
         username: {
@@ -416,7 +501,7 @@ y.command({
 // update account
 y.scriptName("connectme")
 y.command({
-    command: 'update user',
+    command: 'update-user',
     describe: 'update & existen account',
     builder: {
         userId: {
@@ -477,7 +562,101 @@ y.command({
         // TODO: prompt to confirm the password
     },
     handler(argv) {
-        updateser(argv)
+        updateuser(argv)
     }
 })
+
+//get post command
+y.scriptName("connectme")
+y.command({
+    command: 'get-post',
+    describe: 'gets a post',
+    builder: {
+        post: {
+            describe: 'Post to get',
+            demandOption: true,
+            type: 'string'
+        },
+        // TODO: prompt to confirm the password
+    },
+    handler(argv) {
+        getpost(argv)
+    }
+})
+//Post command
+y.scriptName("connectme")
+y.command({
+    command: 'post',
+    describe: 'creates a post ',
+    builder: {
+        post: {
+            describe: 'Post name',
+            demandOption: true,
+            type: 'string'
+        },
+        canLike: {
+            describe: 'Possibility to like',
+            demandOption: true,
+            type: 'bool'
+        },
+       canUnlike: {
+           describe: 'Possibility to unlike',
+            demandOption: true,
+            type: 'bool'
+        },
+        likes: {
+            describe: 'Ammount of likes',
+            demandOption: true,
+            type: 'int'
+        },
+        tag: {
+            describe: 'Tag',
+            demandOption: true,
+            type: 'string'
+        },
+        // TODO: prompt to confirm the password
+    },
+    handler(argv) {
+        createPost(argv)
+    }
+})
+//update post command
+y.scriptName("connectme")
+y.command({
+    command: 'update-post',
+    describe: 'updates a post',
+    builder: {
+        post: {
+            describe: 'Post name',
+            demandOption: true,
+            type: 'string'
+        },
+        canLike: {
+            describe: 'Possibility to like',
+            demandOption: true,
+            type: 'bool'
+        },
+       canUnlike: {
+           describe: 'Possibility to unlike',
+            demandOption: true,
+            type: 'bool'
+        },
+        likes: {
+            describe: 'Ammount of likes',
+            demandOption: true,
+            type: 'int'
+        },
+        tag: {
+            describe: 'Tag',
+            demandOption: true,
+            type: 'string'
+        },
+
+        // TODO: prompt to confirm the password
+    },
+    handler(argv) {
+        updatePost(argv)
+    }
+})
+
 y.parse(process.argv.slice(2))
