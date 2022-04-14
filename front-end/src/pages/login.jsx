@@ -69,13 +69,13 @@ class login extends Component {
         const { username, password } = this.state;
 
         const userData = {
-            username,
+            Username,
             password,
         };
         // TODO: implement creating the user here using axios
 
         axios.post("/user",userData ,{
-            username: "DennBryant",
+            Username: "DennBryant",
             password: "Rosa1234",
            
         })
@@ -116,14 +116,14 @@ class login extends Component {
                     </Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
-                            id="username"
-                            name="username"
-                            type="username"
-                            label="username"
-                            helperText={errors.username}
-                            error={errors.username ? true : false}
+                            id="Username"
+                            name="Username"
+                            type="Username"
+                            label="Username"
+                            helperText={errors.Username}
+                            error={errors.Username ? true : false}
                             className={classes.textField}
-                            value={this.state.username}
+                            value={this.state.Username}
                             onChange={this.handleChange}
                             fullWidth
                         />
