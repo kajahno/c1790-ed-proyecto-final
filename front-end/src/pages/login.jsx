@@ -53,7 +53,7 @@ class login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
+            Username: "",
             password: "",
             loading: false,
             errors: {},
@@ -66,7 +66,7 @@ class login extends Component {
             loading: true,
         });
 
-        const { username, password } = this.state;
+        const { Username, password } = this.state;
 
         const userData = {
             Username,
