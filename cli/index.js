@@ -177,6 +177,28 @@ const deleteuser = (args) => {
         });
 }
 
+// ==> user progile <===
+
+//* getuser 
+const getuser = (args) => {
+
+    console.log(chalk.bgYellow.bold("getting user..."));
+
+    axios
+        .get("/user/{username}", deleteUserData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("you got the user successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not obtain the account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+
 // Back-end configuration
 // URLS:
 // Production -> https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
@@ -214,7 +236,6 @@ y.command({
 
 // create login command
 y.scriptName("connectme")
-y.usage("Usage: -n <name>");
 y.command({
     command: 'login',
     describe: 'login with an account',
@@ -236,7 +257,6 @@ y.command({
 
 // create guest account command
 y.scriptName("connectme")
-y.usage("Usage: -n <name>");
 y.command({
     command: 'guest',
     describe: 'Creata a guest account ',
@@ -265,7 +285,6 @@ y.command({
 
 // Logout user
 y.scriptName("connectme")
-y.usage("Usage: -n <name>");
 y.command({
     command: 'logout',
     describe: 'Logout current account ',
@@ -289,7 +308,6 @@ y.command({
 
 // recover the account
 y.scriptName("connectme")
-y.usage("Usage: -n <name>");
 y.command({
     command: 'recover',
     describe: 'recover the current account ',
@@ -325,9 +343,8 @@ y.command({
     }
 })
 
-// recover the account
+// delete an account 
 y.scriptName("connectme")
-y.usage("Usage: -n <name>");
 y.command({
     command: 'delete',
     describe: 'This can only be done by the logged in user',
@@ -340,6 +357,23 @@ y.command({
     },
     handler(argv) {
         deleteuser(argv)
+    }
+})
+
+// get user by username
+y.scriptName("connectme")
+y.command({
+    command: 'get user',
+    describe: 'get an user by username',
+    builder: {
+        username: {
+            describe: 'Username',
+            demandOption: true,
+            type: 'string'
+        },
+    },
+    handler(argv) {
+        getuser(argv)
     }
 })
 y.parse(process.argv.slice(2))
