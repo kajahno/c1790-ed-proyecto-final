@@ -44,12 +44,13 @@ const styles = {
         position: "absolute",
     },
 };
-
+     // I just add a Birthday TextField in sign up - Denny 
 class signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: "",
+            Birthday:"",
             password: "",
             confirmPassword: "",
             username: "",
@@ -61,14 +62,15 @@ class signup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        const { email, password, confirmPassword, username,Birthday} = this.state;
+        const { email,Birthday, password, confirmPassword, username} = this.state;
 
         const newUserData = {
             email,
+            Birthday,
             password,
             confirmPassword,
-            username,
-            Birthday,
+            username
+           
         };
 
 
