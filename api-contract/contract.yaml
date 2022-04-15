@@ -14,7 +14,7 @@ tags:
   description: Operations about authentication
 - name: user profile
   description: Operations about user profile
-- name: posts
+- name: post
   description: Operations about posts
 paths:
   /user:
@@ -60,7 +60,7 @@ paths:
       summary: Logs user into the system
       operationId: loginUser
       parameters:
-      - name: username
+      - name: email
         in: query
         description: The user name for login
         required: true
@@ -160,7 +160,7 @@ paths:
       requestBody:
         description: Updated user object
         content:
-          '*/*':
+          'application/json':
             schema:
               $ref: '#/components/schemas/Authentication'
         required: true
@@ -194,10 +194,10 @@ paths:
         404:
           description: User not found
           content: {}
-  /posts:
+  /post:
     get:
       tags:
-      - posts
+      - post
       summary: View post
       description: This can be done by the logged in user.
       operationId: viewPost
@@ -206,15 +206,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Posts'
+              $ref: '#/components/schemas/Post'
         required: true
+      security:
+        - bearer_auth: []
       responses:
         default:
           description: successful operation
           content: {}
     post:
       tags:
-      - posts
+      - post
       summary: Create post
       description: This can be done by the logged in user.
       operationId: createPost
@@ -223,15 +225,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Posts'
+              $ref: '#/components/schemas/Post'
         required: true
+      security:
+        - bearer_auth: []
       responses:
         default:
           description: successful operation
           content: {}
     put:
       tags:
-      - posts
+      - post
       summary: Edit post
       description: This can be done by the logged in user.
       operationId: editPost
@@ -240,15 +244,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Posts'
+              $ref: '#/components/schemas/Post'
         required: true
+      security:
+        - bearer_auth: []
       responses:
         default:
           description: successful operation
           content: {}
     delete:
       tags:
-      - posts
+      - post
       summary: Delete post
       description: This can be done by the logged in user.
       operationId: deletePost
@@ -257,16 +263,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Posts'
+              $ref: '#/components/schemas/Post'
         required: true
+      security:
+        - bearer_auth: []
       responses:
         default:
           description: successful operation
           content: {}
-  /posts/comments:
+  /post/comment:
     get:
       tags:
-      - posts
+      - post
       summary: View comment
       description: This can be done by the logged in user.
       operationId: viewComment
@@ -275,15 +283,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Posts'
+              $ref: '#/components/schemas/Post'
         required: true
+      security:
+        - bearer_auth: []
       responses:
         default:
           description: successful operation
           content: {}
     post:
       tags:
-      - posts
+      - post
       summary: Create comment
       description: This can be done by the logged in user.
       operationId: createComment
@@ -292,15 +302,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Posts'
+              $ref: '#/components/schemas/Post'
         required: true
+      security:
+        - bearer_auth: []
       responses:
         default:
           description: successful operation
           content: {}
     put:
       tags:
-      - posts
+      - post
       summary: Edit post
       description: This can be done by the logged in user.
       operationId: editPost
@@ -309,15 +321,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Posts'
+              $ref: '#/components/schemas/Post'
         required: true
+      security:
+        - bearer_auth: []
       responses:
         default:
           description: successful operation
           content: {}
     delete:
       tags:
-      - posts
+      - post
       summary: Delete comment
       description: This can be done by the logged in user.
       operationId: deleteComment
@@ -326,8 +340,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Posts'
+              $ref: '#/components/schemas/Post'
         required: true
+      security:
+        - bearer_auth: []
       responses:
         default:
           description: successful operation
@@ -361,6 +377,8 @@ components:
         imageProfile: 
           type: string
           format: binary
+        birthday:
+          type: string
     Guest:
       type: object
       properties:
@@ -416,19 +434,34 @@ components:
           type: integer
         posts:
           type: integer
-    Posts:
+        birthday:
+          type: string
+    Post:
       type: object
       properties:
+        username:
+          type: string
+        title:
+          type: string
         post:
           type: string
         canLike:
           type: boolean
         canUnlike:
           type: boolean
-        likes:
+        likeCount:
+          type: integer
+        commentCount:
           type: integer
         tag:
-          type: string     
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        imageProfile:
+          type: string
+          format: binary     
     ApiResponse:
       type: object
       properties:
