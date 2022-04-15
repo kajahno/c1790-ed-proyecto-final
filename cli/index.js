@@ -31,7 +31,7 @@ const signUp = (args) => {
         password,
         confirmPassword: password,
         username,
-        Birthaday,
+        Birthday,
     };
 
     console.log(chalk.yellow.bold("Creating a new account..."));
@@ -223,7 +223,7 @@ const updateuser = (args) => {
         website,
         location,
         picture,
-        Birthaday
+        Birthday
     };
 
     console.log(chalk.yellow.bold("updating..."));
@@ -420,8 +420,8 @@ y.command({
         password: {
             describe: 'Password of the new account'
         },
-        Birthaday:{
-            describe: 'User birthaday',
+        Birthday:{
+            describe: 'User birthday',
             type: 'string'
         }
         // TODO: prompt to confirm the password
@@ -634,8 +634,8 @@ y.command({
             describe: '...',
             demandOption: true,
             type: 'string'
-        },Birthaday:{
-            describe: 'User birthaday',
+        },Birthday:{
+            describe: 'User birthday',
             type: 'string'
         }
         // TODO: prompt to confirm the password
