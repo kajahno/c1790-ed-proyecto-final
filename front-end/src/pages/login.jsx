@@ -52,8 +52,8 @@ class login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            Username: "DennBryant",
-            password: "Rosa1234",
+            Username: "",
+            password: "",
             loading: false,
             errors: {},
         };
@@ -74,6 +74,8 @@ class login extends Component {
         // TODO: implement creating the user here using axios
 
         axios.post("/user",userData ,{
+            Username: "DennBryant",
+            password: "Rosa1234",
         })
             .then(function (response) {
                 console.log(response);
