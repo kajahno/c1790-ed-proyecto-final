@@ -61,13 +61,14 @@ class signup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        const { email, password, confirmPassword, username } = this.state;
+        const { email, password, confirmPassword, username,Birthday} = this.state;
 
         const newUserData = {
             email,
             password,
             confirmPassword,
             username,
+            Birthday,
         };
 
 
@@ -140,6 +141,18 @@ class signup extends Component {
                             error={errors.email ? true : false}
                             className={classes.textField}
                             value={this.state.email}
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
+                        <TextField
+                            id="Birthday"
+                            name="Birthday"
+                            type="Birthday"
+                            label="Birthday"
+                            helperText={errors.Birthday}
+                            error={errors.Birthday ? true : false}
+                            className={classes.TextField}
+                            value={this.state.Birthday}
                             onChange={this.handleChange}
                             fullWidth
                         />
