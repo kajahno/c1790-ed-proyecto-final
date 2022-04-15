@@ -377,6 +377,8 @@ components:
         imageProfile: 
           type: string
           format: binary
+        birthday:
+          type: string
     Guest:
       type: object
       properties:
@@ -432,6 +434,8 @@ components:
           type: integer
         posts:
           type: integer
+        birthday:
+          type: string
     Post:
       type: object
       properties:
