@@ -31,9 +31,10 @@ const signUp = (args) => {
         password,
         confirmPassword: password,
         username,
+        Birthaday,
     };
 
-    console.log(chalk.white.bold("Creating a new account..."));
+    console.log(chalk.yellow.bold("Creating a new account..."));
 
     axios
         .post("/user", newUserData)
@@ -42,7 +43,7 @@ const signUp = (args) => {
 
             const FBIdToken = `Bearer ${res.data.token}`;
             // TODO: create a file in the user's machine to store the auth token
-            console.log(chalk.white.bold("Account created successfully ✔️"));
+            console.log(chalk.green.bold("Account created successfully ✔️"));
         })
         .catch((error) => {
             console.log(chalk.red.bold(`Could not create account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
@@ -60,7 +61,7 @@ const guest= (args) => {
         username,
     };
 
-    console.log(chalk.white.bold("Creating a guest account..."));
+    console.log(chalk.yellow.bold("Creating a guest account..."));
 
     axios
         .post("/user/guest", guestuserdata)
@@ -69,7 +70,7 @@ const guest= (args) => {
 
             const FBIdToken = `Bearer ${res.data.token}`;
             // TODO: create a file in the user's machine to store the auth token
-            console.log(chalk.white.bold("user guest created successfully ✔️"));
+            console.log(chalk.green.bold("user guest created successfully ✔️"));
         })
         .catch((error) => {
             console.log(chalk.red.bold(`Could not create aguest account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
@@ -86,7 +87,7 @@ const login = (args) => {
         username,
     };
 
-    console.log(chalk.bgBlue.bold("login..."));
+    console.log(chalk.yellow.bold("login..."));
 
     axios
         .post("/user/login", useUserData)
@@ -107,7 +108,7 @@ const logOut= (args) => {
 
     const {  } = args;
 
-    console.log(chalk.white.bold("Logging out..."));
+    console.log(chalk.yellow.bold("Logging out..."));
 
     axios
         .post("/user/logout")
@@ -136,7 +137,7 @@ const recover = (args) => {
         confirmPassword,
     };
 
-    console.log(chalk.bgYellow.bold("recovering..."));
+    console.log(chalk.yellow.bold("recovering..."));
 
     axios
         .put("/user/recover", recoverUserData)
@@ -161,7 +162,7 @@ const deleteuser = (args) => {
         username,
     };
 
-    console.log(chalk.bgYellow.bold("borrando..."));
+    console.log(chalk.yellow.bold("borrando..."));
 
     axios
         .delete("/user/{username}", deleteUserData)
@@ -182,7 +183,7 @@ const deleteuser = (args) => {
 //* getuser 
 const getuser = (args) => {
 
-    console.log(chalk.bgYellow.bold("getting user..."));
+    console.log(chalk.yellow.bold("getting user..."));
 
     const { username } = args;
     
@@ -221,10 +222,11 @@ const updateuser = (args) => {
         bio,
         website,
         location,
-        picture
+        picture,
+        Birthaday
     };
 
-    console.log(chalk.bgYellow.bold("updating..."));
+    console.log(chalk.yellow.bold("updating..."));
 
     axios
         .put("/user/{username}", updateUserData)
@@ -242,7 +244,7 @@ const updateuser = (args) => {
 //get post command definition
 const getpost = (args) => {
 
-    console.log(chalk.bgYellow.bold("getting post..."));
+    console.log(chalk.yellow.bold("getting post..."));
 
     const { post } = args;
     
@@ -276,7 +278,7 @@ const createPost = (args) => {
         tag
     };
 
-    console.log(chalk.bgBlue.bold("posting..."));
+    console.log(chalk.yellow.bold("posting..."));
 
     axios
         .post("/posts", postData)
@@ -304,7 +306,7 @@ const updatePost = (args) => {
         tag
     };
 
-    console.log(chalk.bgYellow.bold("editing the post..."));
+    console.log(chalk.yellow.bold("editing the post..."));
 
     axios
         .put("/posts", putPostData)
@@ -333,7 +335,7 @@ const deletePost = (args) => {
         tag
     };
 
-    console.log(chalk.bgBlue.bold("deleting..."));
+    console.log(chalk.yellow.bold("deleting..."));
 
     axios
         .post("/posts", deleteCo)
@@ -354,7 +356,7 @@ const viewComment = (args) => {
 
     const {  } = args;
 
-    console.log(chalk.bgBlue.bold("View comment..."));
+    console.log(chalk.yellow.bold("View comment..."));
 
     axios
         .post("/posts/comments")
@@ -374,7 +376,7 @@ const createComment = (args) => {
 
     const {  } = args;
 
-    console.log(chalk.bgBlue.bold("deleting..."));
+    console.log(chalk.yellow.bold("deleting..."));
 
     axios
         .post("/posts/comments")
@@ -417,6 +419,10 @@ y.command({
         },
         password: {
             describe: 'Password of the new account'
+        },
+        Birthaday:{
+            describe: 'User birthaday',
+            type: 'string'
         }
         // TODO: prompt to confirm the password
     },
@@ -628,7 +634,10 @@ y.command({
             describe: '...',
             demandOption: true,
             type: 'string'
-        },
+        },Birthaday:{
+            describe: 'User birthaday',
+            type: 'string'
+        }
         // TODO: prompt to confirm the password
     },
     handler(argv) {
