@@ -24,7 +24,7 @@ const msgBox = boxen(greeting, boxenOptions);
 //*signup
 const signUp = (args) => {
 
-    const { email, password, username } = args;
+    const { email, password, username,Birthday } = args;
 
     const newUserData = {
         email,
@@ -443,7 +443,8 @@ y.command({
             type: 'string'
         },
         password: {
-            describe: 'Password of the account'
+            describe: 'Password of the account',
+            
         }
         // TODO: prompt to confirm the password
     },
