@@ -16,6 +16,8 @@ tags:
   description: Operations about user profile
 - name: post
   description: Operations about posts
+- name: friend
+  description: Operations about friendship
 paths:
   /user:
     post:
@@ -348,7 +350,142 @@ paths:
         default:
           description: successful operation
           content: {}
-          
+  /friend:
+    post:
+      tags:
+      - friend
+      summary: Add a friend
+      description: This can be done by the logged in user.
+      operationId: addFriend
+      requestBody:
+        description: Add friend object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Friendship'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    delete:
+      tags:
+      - friend
+      summary: Delete a friend
+      description: This can be done by the logged in user.
+      operationId: deleteFriend
+      requestBody:
+        description: Delete friend object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Friendship'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    get:
+      tags:
+      - friend
+      summary: View a list of friends
+      description: This can be done by the logged in user.
+      operationId: viewFriend
+      requestBody:
+        description: View friend object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FriendList'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    put:
+      tags:
+      - friend
+      summary: Block a friend
+      description: This can be done by the logged in user.
+      operationId: blockFriend
+      requestBody:
+        description: Block friend object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Friendship'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /friend/group:
+    post:
+      tags:
+      - friend
+      summary: Create a group of friends
+      description: This can be done by the logged in user.
+      operationId: createGroup
+      requestBody:
+        description: Create friendGroup object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FriendGroup'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    delete:
+      tags:
+      - friend
+      summary: Delete a group of friends
+      description: This can be done by the logged in user.
+      operationId: deleteGroup
+      requestBody:
+        description: Delete friendGroup object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FriendGroup'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    get:
+      tags:
+      - friend
+      summary: View a list of friend groups
+      description: This can be done by the logged in user.
+      operationId: viewGroup
+      requestBody:
+        description: View friendGroup object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FriendGroup'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+     
 components:
   schemas:
     Authentication:
@@ -461,7 +598,26 @@ components:
           type: string
         imageProfile:
           type: string
-          format: binary     
+          format: binary   
+    Friendship:
+      type: object
+      properties:
+        username:
+          type: string 
+    FriendList:
+      type: object
+      properties:
+        friendsNames:
+          type: string
+        numFriends:
+          type: integer
+    FriendGroup:
+      type: object
+      properties:
+        friendsNames:
+          type: string
+        groupName:
+          type: string
     ApiResponse:
       type: object
       properties:
