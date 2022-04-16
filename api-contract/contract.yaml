@@ -18,6 +18,8 @@ tags:
   description: Operations about posts
 - name: friend
   description: Operations about friendship
+- name: group
+  description: Operations about group of friends
 paths:
   /user:
     post:
@@ -389,25 +391,6 @@ paths:
         default:
           description: successful operation
           content: {}
-    get:
-      tags:
-      - friend
-      summary: View a list of friends
-      description: This can be done by the logged in user.
-      operationId: viewFriend
-      requestBody:
-        description: View friend object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FriendList'
-        required: true
-      security:
-        - bearer_auth: []
-      responses:
-        default:
-          description: successful operation
-          content: {}
     put:
       tags:
       - friend
@@ -427,19 +410,41 @@ paths:
         default:
           description: successful operation
           content: {}
-  /friend/group:
-    post:
+  /friend/all:
+    get:
       tags:
       - friend
+      summary: View a list of friends
+      description: This can be done by the logged in user.
+      operationId: viewFriend
+      requestBody:
+        description: View friend object
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+              $ref: '#/components/schemas/FriendList'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /group:
+    post:
+      tags:
+      - group
       summary: Create a group of friends
       description: This can be done by the logged in user.
       operationId: createGroup
       requestBody:
-        description: Create friendGroup object
+        description: Create group object
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FriendGroup'
+              $ref: '#/components/schemas/Group'
         required: true
       security:
         - bearer_auth: []
@@ -449,16 +454,16 @@ paths:
           content: {}
     delete:
       tags:
-      - friend
+      - group
       summary: Delete a group of friends
       description: This can be done by the logged in user.
       operationId: deleteGroup
       requestBody:
-        description: Delete friendGroup object
+        description: Delete group object
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FriendGroup'
+              $ref: '#/components/schemas/Group'
         required: true
       security:
         - bearer_auth: []
@@ -466,18 +471,21 @@ paths:
         default:
           description: successful operation
           content: {}
+  /group/all:
     get:
       tags:
-      - friend
+      - group
       summary: View a list of friend groups
       description: This can be done by the logged in user.
       operationId: viewGroup
       requestBody:
-        description: View friendGroup object
+        description: View group object
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FriendGroup'
+              type: array
+              items:
+              $ref: '#/components/schemas/GroupList'
         required: true
       security:
         - bearer_auth: []
@@ -605,19 +613,28 @@ components:
         username:
           type: string 
     FriendList:
-      type: object
+      type: array
       properties:
         friendsNames:
           type: string
         numFriends:
           type: integer
-    FriendGroup:
+    Group:
       type: object
       properties:
         friendsNames:
-          type: string
+          type: array
         groupName:
           type: string
+        numMembers:
+          type: integer
+    GroupList:
+      type: array
+      properties:
+        groupNames: 
+          type: string
+        numGroups:
+          type: integer
     ApiResponse:
       type: object
       properties:
