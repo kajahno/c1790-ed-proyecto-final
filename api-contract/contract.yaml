@@ -383,7 +383,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Friend'
+              $ref: '#/components/schemas/FriendDelete'
         required: true
       security:
         - bearer_auth: []
@@ -625,11 +625,24 @@ components:
           type: string
         imageProfile:
           type: string
-          format: binary   
+          format: binary
+        postID:
+          type: string   
     Friend:
       type: object
       properties:
         username:
+          type: string
+        friendID: 
+          type: string
+        since:
+          type: string
+    FriendDelete:
+      type: object
+      properties:
+        user:
+          type: string
+        friend:
           type: string
     Group:
       type: object
@@ -638,6 +651,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Friend'
+        groupID:
+          type: string
         name:
           type: string
         createdAt:
