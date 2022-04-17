@@ -62,11 +62,11 @@ class signup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        const { email,Birthday, password, confirmPassword, username} = this.state;
+        const { email,birthday, password, confirmPassword, username} = this.state;
 
         const newUserData = {
             email,
-            Birthday,
+            birthday,
             password,
             confirmPassword,
             username
@@ -89,7 +89,7 @@ class signup extends Component {
 
                 this.props.history.push("/");
 
-                // Clear state
+                // Clear state 
                 this.setState({
                     loading: false,
                     errors: {}
@@ -147,14 +147,14 @@ class signup extends Component {
                             fullWidth
                         />
                         <TextField
-                            id="Birthday"
-                            name="Birthday"
-                            type="Birthday"
+                            id="birthday"
+                            name="birthday"
+                            type="birthday"
                             label="Birthday"
-                            helperText={errors.Birthday}
-                            error={errors.Birthday ? true : false}
+                            helperText={errors.birthday}
+                            error={errors.birthday ? true : false}
                             className={classes.TextField}
-                            value={this.state.Birthday}
+                            value={this.state.birthday}
                             onChange={this.handleChange}
                             fullWidth
                         />
