@@ -459,11 +459,7 @@ y.command({
             demandOption: true,
             type: 'string'
         },
-        userID: {
-            describe: 'An user ID',
-            demandOption: true,
-            type: 'string'
-        },
+
        picture: {
            describe: 'A profile picture',
             demandOption: true,
@@ -484,11 +480,6 @@ y.command({
     builder: {
         username: {
             describe: 'Username',
-            demandOption: true,
-            type: 'string'
-        },
-        userID: {
-            describe: 'An user ID',
             demandOption: true,
             type: 'string'
         },
@@ -758,7 +749,7 @@ y.command({
     command: 'view-comment',
     describe: 'view a comment',
     builder: {
-        post: {
+        Comment: {
             describe: 'Post name',
             demandOption: true,
             type: 'string'
@@ -796,7 +787,7 @@ y.command({
     command: 'create-comment',
     describe: 'create a comment',
     builder: {
-        post: {
+        comment: {
             describe: 'Post name',
             demandOption: true,
             type: 'string'
