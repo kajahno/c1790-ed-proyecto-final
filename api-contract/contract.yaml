@@ -452,6 +452,25 @@ paths:
         default:
           description: successful operation
           content: {}
+    put:
+      tags:
+      - group
+      summary: Edit a group of friends
+      description: This can be done by the logged in user.
+      operationId: editGroup
+      requestBody:
+        description: Edit group object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
     delete:
       tags:
       - group
@@ -485,7 +504,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/GroupList'
+                $ref: '#/components/schemas/Group'
         required: true
       security:
         - bearer_auth: []
@@ -615,16 +634,15 @@ components:
     Group:
       type: object
       properties:
-        friendsNames:
+        friends:
           type: array
-        groupName:
+          items:
+            $ref: '#/components/schemas/Friend'
+        name:
           type: string
-        numMembers:
-          type: integer
-    GroupList:
-      type: object
-      properties:
-        groupNames: 
+        createdAt:
+          type: string
+        updatedAt:
           type: string
     ApiResponse:
       type: object
