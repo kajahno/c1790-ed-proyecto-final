@@ -501,16 +501,7 @@ y.command({
             demandOption: true,
             type: 'string'
         },
-        userID: {
-            describe: 'An user ID',
-            demandOption: true,
-            type: 'string'
-        },
-        email: {
-            describe: 'An user email',
-            demandOption: true,
-            type: 'string'
-        },
+
         newPassword: {
             describe: 'The new password of the account',
             demandOption: true,
@@ -572,16 +563,7 @@ y.command({
             demandOption: true,
             type: 'string'
         },
-        password: {
-            describe: 'password of the account',
-            demandOption: true,
-            type: 'string'
-        },
-        confirmPassword: {
-            describe: 'confirm the password',
-            demandOption: true,
-            type: 'string'
-        },
+ 
         username: {
             describe: 'and username',
             demandOption: true,
@@ -670,11 +652,6 @@ y.command({
             demandOption: true,
             type: 'bool'
         },
-        likes: {
-            describe: 'Ammount of likes',
-            demandOption: true,
-            type: 'int'
-        },
         tag: {
             describe: 'Tag',
             demandOption: true,
@@ -707,11 +684,7 @@ y.command({
             demandOption: true,
             type: 'bool'
         },
-        likes: {
-            describe: 'Ammount of likes',
-            demandOption: true,
-            type: 'int'
-        },
+
         tag: {
             describe: 'Tag',
             demandOption: true,
