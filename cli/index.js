@@ -104,11 +104,7 @@ const login = (args) => {
 }
 
 // implement user/logout
-const logOut= (args) => {
-
-    const {  } = args;
-
-    console.log(chalk.yellow.bold("Logging out..."));
+   {  console.log(chalk.yellow.bold("Logging out..."));
 
     axios
         .post("/user/logout")
@@ -122,8 +118,8 @@ const logOut= (args) => {
         .catch((error) => {
             console.log(chalk.red.bold(`Could not log out: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
         });
-}
 
+    }
 //* recover 
 const recover = (args) => {
 
@@ -165,7 +161,7 @@ const deleteuser = (args) => {
     console.log(chalk.yellow.bold("borrando..."));
 
     axios
-        .delete("/user/{username}", deleteUserData)
+        .delete('/user/${deleteUserData.username}')
         .then((res) => {
             console.log(res.data);
 
@@ -181,7 +177,7 @@ const deleteuser = (args) => {
 // ==> user progile <===
 
 //* getuser 
-const getuser = (args) => {
+const getUser = (args) => {
 
     console.log(chalk.yellow.bold("getting user..."));
 
@@ -242,7 +238,7 @@ const updateuser = (args) => {
         });
 }
 //get post command definition
-const getpost = (args) => {
+const getPost = (args) => {
 
     console.log(chalk.yellow.bold("getting post..."));
 
@@ -338,7 +334,7 @@ const deletePost = (args) => {
     console.log(chalk.yellow.bold("deleting..."));
 
     axios
-        .post("/posts", deleteCo)
+        .delete("/posts", deleteCo)
         .then((res) => {
             console.log(res.data);
 
@@ -455,7 +451,7 @@ y.command({
 // create guest account command
 y.scriptName("connectme")
 y.command({
-    command: 'guest',
+    command: 'guest-user',
     describe: 'Creates a guest account ',
     builder: {
         username: {
@@ -746,26 +742,6 @@ y.command({
     builder: {
         post: {
             describe: 'Post name',
-            demandOption: true,
-            type: 'string'
-        },
-        canLike: {
-            describe: 'Not possibility to like',
-            demandOption: true,
-            type: 'bool'
-        },
-       canUnlike: {
-           describe: 'Not possibility to unlike',
-            demandOption: true,
-            type: 'bool'
-        },
-        likes: {
-            describe: 'Ammount of likes',
-            demandOption: true,
-            type: 'int'
-        },
-        tag: {
-            describe: 'Tag',
             demandOption: true,
             type: 'string'
         },
