@@ -73,8 +73,7 @@ class login extends Component {
         // TODO: implement creating the user here using axios - Denny
 
         axios.post("/user",userData,{
-            username: "DennBryant",
-            password: "Ros@23",
+           
         })
             .then(function (response) {
                 console.log(response);
