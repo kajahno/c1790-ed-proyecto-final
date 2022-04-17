@@ -364,7 +364,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Friendship'
+              $ref: '#/components/schemas/Friend'
         required: true
       security:
         - bearer_auth: []
@@ -383,7 +383,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Friendship'
+              $ref: '#/components/schemas/Friend'
         required: true
       security:
         - bearer_auth: []
@@ -402,7 +402,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Friendship'
+              $ref: '#/components/schemas/Friend'
         required: true
       security:
         - bearer_auth: []
@@ -424,7 +424,7 @@ paths:
             schema:
               type: array
               items:
-              $ref: '#/components/schemas/FriendList'
+                $ref: '#/components/schemas/Friend'
         required: true
       security:
         - bearer_auth: []
@@ -485,7 +485,7 @@ paths:
             schema:
               type: array
               items:
-              $ref: '#/components/schemas/GroupList'
+                $ref: '#/components/schemas/GroupList'
         required: true
       security:
         - bearer_auth: []
@@ -607,18 +607,11 @@ components:
         imageProfile:
           type: string
           format: binary   
-    Friendship:
+    Friend:
       type: object
       properties:
         username:
-          type: string 
-    FriendList:
-      type: array
-      properties:
-        friendsNames:
           type: string
-        numFriends:
-          type: integer
     Group:
       type: object
       properties:
@@ -629,12 +622,10 @@ components:
         numMembers:
           type: integer
     GroupList:
-      type: array
+      type: object
       properties:
         groupNames: 
           type: string
-        numGroups:
-          type: integer
     ApiResponse:
       type: object
       properties:
