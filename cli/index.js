@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import boxen from 'boxen';
-import yargs from 'yargs';
+import yargs, { demandOption } from 'yargs';
 import axios from "axios";
 
 const greeting = chalk.white.bold("Welcome to ConnectMe CLI!");
@@ -51,12 +51,11 @@ const signUp = (args) => {
 }
 
 // *definition of create guest command
-const guest= (args) => {
+const guestSignUp= (args) => {
 
-    const { userId, picture, username } = args;
+    const { picture, username } = args;
 
     const guestuserdata= {
-        userId,
         picture,
         username,
     };
@@ -202,13 +201,12 @@ const getUser = (args) => {
 }
 
 //* updated user 
-const updateuser = (args) => {
+const updateUser = (args) => {
 
-    const { userId, password, confirmPassword, username, firstName, 
-    lastName, email, bio, website, location, picture } = args;
+    const { password, confirmPassword, username, firstName, 
+    lastName, email, bio, website, location, picture, birthday } = args;
 
     const updateUserData = {
-        userId,
         password,
         confirmPassword,
         username,
@@ -219,7 +217,7 @@ const updateuser = (args) => {
         website,
         location,
         picture,
-        Birthday
+        birthday
     };
 
     console.log(chalk.yellow.bold("updating..."));
@@ -242,10 +240,10 @@ const getPost = (args) => {
 
     console.log(chalk.yellow.bold("getting post..."));
 
-    const { post } = args;
+    const { postId } = args;
     
         const getPostData = {
-            post
+            postId
         };
 
     axios
@@ -292,10 +290,10 @@ const createPost = (args) => {
 //update post command definition
 const updatePost = (args) => {
 
-    const { post, canLike, canUnlike, likes, tag } = args;
+    const { postId, canLike, canUnlike, likes, tag } = args;
 
     const putPostData = {
-        post,
+        postId,
         canLike,
         canUnlike,
         likes,
@@ -321,20 +319,16 @@ const updatePost = (args) => {
 /*  Delete post    */
 const deletePost = (args) => {
 
-    const {  } = args;
+    const { postId } = args;
 
-    const deleteCo = {
-        post,
-        canLike,
-        canUnlike,
-        likes,
-        tag
+    const deletePostData = {
+        postId
     };
 
     console.log(chalk.yellow.bold("deleting..."));
 
     axios
-        .delete("/posts", deleteCo)
+        .delete("/posts", deletePostData)
         .then((res) => {
             console.log(res.data);
 
@@ -350,12 +344,16 @@ const deletePost = (args) => {
 /* View comments */
 const viewComment = (args) => {
 
-    const {  } = args;
+    const { postId } = args;
 
-    console.log(chalk.yellow.bold("View comment..."));
+    const viewCommentData = {
+        postId
+    };
+
+    console.log(chalk.yellow.bold("View commens..."));
 
     axios
-        .post("/posts/comments")
+        .post("/posts/comments", viewCommentData)
         .then((res) => {
             console.log(res.data);
 
@@ -370,12 +368,17 @@ const viewComment = (args) => {
 /*  Create comment    */
 const createComment = (args) => {
 
-    const {  } = args;
+    const { comment, postId } = args;
+
+    const createCommentData = {
+        postId,
+        comment
+    };
 
     console.log(chalk.yellow.bold("deleting..."));
 
     axios
-        .post("/posts/comments")
+        .post("/posts/comments", createCommentData)
         .then((res) => {
             console.log(res.data);
 
@@ -428,7 +431,7 @@ y.command({
 })
 
 // create login command
-y.scriptName("connectme")
+
 y.command({
     command: 'login',
     describe: 'login with an account',
@@ -450,7 +453,7 @@ y.command({
 })
 
 // create guest account command
-y.scriptName("connectme")
+
 y.command({
     command: 'guest-user',
     describe: 'Creates a guest account ',
@@ -463,18 +466,18 @@ y.command({
 
        picture: {
            describe: 'A profile picture',
-            demandOption: true,
+            demandOption: false,
             type: 'string'
         }
         // TODO: prompt to confirm the password
     },
     handler(argv) {
-        guest(argv)
+        guestSignUp(argv)
     }
 })
 
 // Logout user
-y.scriptName("connectme")
+
 y.command({
     command: 'logout',
     describe: 'Logout current account ',
@@ -492,7 +495,7 @@ y.command({
 })
 
 // recover the account
-y.scriptName("connectme")
+
 y.command({
     command: 'recover',
     describe: 'recover the current account ',
@@ -520,7 +523,7 @@ y.command({
 })
 
 // delete an account 
-y.scriptName("connectme")
+
 y.command({
     command: 'delete',
     describe: 'This can only be done by the logged in user',
@@ -537,7 +540,7 @@ y.command({
 })
 
 // get user by username
-y.scriptName("connectme")
+
 y.command({
     command: 'get-user',
     describe: 'get an user by username',
@@ -549,22 +552,16 @@ y.command({
         },
     },
     handler(argv) {
-        getuser(argv)
+        getUser(argv)
     }
 })
 
 // update account
-y.scriptName("connectme")
+
 y.command({
     command: 'update-user',
     describe: 'update & existen account',
     builder: {
-        userId: {
-            describe: 'and userID',
-            demandOption: true,
-            type: 'string'
-        },
- 
         username: {
             describe: 'and username',
             demandOption: true,
@@ -611,17 +608,17 @@ y.command({
         // TODO: prompt to confirm the password
     },
     handler(argv) {
-        updateuser(argv)
+        updateUser(argv)
     }
 })
 
 //get post command
-y.scriptName("connectme")
+
 y.command({
     command: 'get-post',
     describe: 'gets a post',
     builder: {
-        post: {
+        postid: {
             describe: 'Post to get',
             demandOption: true,
             type: 'string'
@@ -629,11 +626,11 @@ y.command({
         // TODO: prompt to confirm the password
     },
     handler(argv) {
-        getpost(argv)
+        getPost(argv)
     }
 })
-//Post command
-y.scriptName("connectme")
+// Create a post command
+
 y.command({
     command: 'post',
     describe: 'creates a post ',
@@ -665,13 +662,13 @@ y.command({
     }
 })
 //update post command
-y.scriptName("connectme")
+
 y.command({
     command: 'update-post',
     describe: 'updates a post',
     builder: {
-        post: {
-            describe: 'Post name',
+        postId: {
+            describe: 'Post ID',
             demandOption: true,
             type: 'string'
         },
@@ -700,12 +697,12 @@ y.command({
 })
 
 // Delete post
-y.scriptName("connectme")
+
 y.command({
     command: 'delete-post',
     describe: 'deletes a post',
     builder: {
-        post: {
+        postId: {
             describe: 'Post name',
             demandOption: true,
             type: 'string'
@@ -718,33 +715,13 @@ y.command({
 })
 
 // View comment
-y.scriptName("connectme")
+
 y.command({
     command: 'view-comment',
     describe: 'view a comment',
     builder: {
-        Comment: {
-            describe: 'Post name',
-            demandOption: true,
-            type: 'string'
-        },
-        canLike: {
-            describe: 'Possibility to like',
-            demandOption: true,
-            type: 'bool'
-        },
-       canUnlike: {
-           describe: 'Possibility to unlike',
-            demandOption: true,
-            type: 'bool'
-        },
-        likes: {
-            describe: 'Ammount of likes',
-            demandOption: true,
-            type: 'int'
-        },
-        tag: {
-            describe: 'Tag',
+        postid: {
+            describe: 'Post ID',
             demandOption: true,
             type: 'string'
         },
@@ -756,37 +733,21 @@ y.command({
 })
 
 // Create comment
-y.scriptName("connectme")
+
 y.command({
     command: 'create-comment',
     describe: 'create a comment',
     builder: {
         comment: {
-            describe: 'Post name',
+            describe: 'Comment to create',
             demandOption: true,
             type: 'string'
         },
-        canLike: {
-            describe: 'Possibility to like',
-            demandOption: true,
-            type: 'bool'
-        },
-       canUnlike: {
-           describe: 'Possibility to unlike',
-            demandOption: true,
-            type: 'bool'
-        },
-        likes: {
-            describe: 'Ammount of likes',
-            demandOption: true,
-            type: 'int'
-        },
-        tag: {
-            describe: 'Tag',
+        postid: {
+            describe: 'Post ID',
             demandOption: true,
             type: 'string'
-        },
-
+        }
     },
     handler(argv) {
         createComment(argv)
