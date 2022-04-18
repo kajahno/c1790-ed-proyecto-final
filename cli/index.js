@@ -476,6 +476,95 @@ const listoffriend = (args) => {
         });
 }
 
+//>> Operations about group friends <<
+
+// Create a group of friends
+const createGroup = (args) => {
+
+    const createGroupData = {
+      
+    };
+
+    console.log(chalk.yellow.bold("Creating group..."));
+
+    axios
+        .post("/group", createGroupData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            console.log(chalk.green.bold("the group was created successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not create a group -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+// Edit a group of friends
+const editGroup = (args) => {
+
+    const editGroupData = {
+      
+    };
+
+    console.log(chalk.yellow.bold("Editing group..."));
+
+    axios
+        .put("/group", editGroupData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            console.log(chalk.green.bold("the group was created successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not create a group -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+// Delete a group of friends
+const deleteGroup = (args) => {
+
+    const deleteGroupData = {
+      
+    };
+
+    console.log(chalk.yellow.bold("Deleting group..."));
+
+    axios
+        .delete("/group", deleteGroupData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            console.log(chalk.green.bold("the group was deleted successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not delete this group -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+// View a list of friends groups
+const listGroup = (args) => {
+
+    const listGroupData = {
+      
+    };
+
+    console.log(chalk.yellow.bold("Looking for the list of groups..."));
+
+    axios
+        .get("/group/all", listGroupData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            console.log(chalk.green.bold("The operation was successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not view the list of group -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
 
 // Back-end configuration
 // URLS:
@@ -929,6 +1018,160 @@ y.command({
     },
     handler(argv) {
         listoffriend(argv)
+    }
+})
+
+// Create a group of friends
+y.command({
+    command: 'create-group',
+    describe: 'create a group ',
+    builder: {
+        username: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+        },
+        friendId: {
+            describe: 'friendId',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        friend: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        groupId: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        name: {
+            describe: 'Name of the group',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        createdAt: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        updatedAt: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        }
+    },
+    handler(argv) {
+        createGroup(argv)
+    }
+})
+
+// Edit a group of friends
+y.command({
+    command: 'edit-group',
+    describe: 'edit a group ',
+    builder: {
+  
+        groupId: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        name: {
+            describe: 'Name of the group',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        createdAt: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        updatedAt: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        }
+    },
+    handler(argv) {
+        editGroup(argv)
+    }
+})
+
+// Delete a group of friends
+y.command({
+    command: 'delete-group',
+    describe: 'delete a group ',
+    builder: {
+        
+        groupId: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        name: {
+            describe: 'Name of the group',
+            demandOption: true,
+            type: 'string'
+            
+        }
+    },
+    handler(argv) {
+        deleteGroup(argv)
+    }
+})
+
+// View a list of friends group
+y.command({
+    command: 'view-groups',
+    describe: 'View a list of friends group',
+    builder: {
+        name: {
+            describe: 'Name of the group',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        username: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+        },
+  
+        friend: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        },
+        groupId: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        },
+
+        updatedAt: {
+            describe: 'string',
+            demandOption: true,
+            type: 'string'
+            
+        }
+    },
+    handler(argv) {
+        listGroup(argv)
     }
 })
 
