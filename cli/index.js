@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import boxen from 'boxen';
-import yargs, {  } from 'yargs';
+import yargs from 'yargs';
 import axios from "axios";
 
 const greeting = chalk.white.bold("Welcome to ConnectMe CLI!");
