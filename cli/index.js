@@ -24,14 +24,21 @@ const msgBox = boxen(greeting, boxenOptions);
 //*signup
 const signUp = (args) => {
 
-    const { email, password, username,Birthday } = args;
+    const { email, password, username, firstName, lastName,
+        website, location, picture, bio, birthday } = args;
 
     const newUserData = {
         email,
         password,
         confirmPassword: password,
         username,
-        Birthday,
+        firstName,
+        lastName,
+        bio,
+        website,
+        location,
+        picture,
+        birthday,
     };
 
     console.log(chalk.yellow.bold("Creating a new account..."));
@@ -122,12 +129,10 @@ const login = (args) => {
 //* recover 
 const recover = (args) => {
 
-    const { username, userId, email, newPassword, confirmPassword } = args;
+    const { username, newPassword, confirmPassword } = args;
 
     const recoverUserData = {
         username,
-        userId,
-        email,
         newPassword,
         confirmPassword,
     };
@@ -160,7 +165,7 @@ const deleteuser = (args) => {
     console.log(chalk.yellow.bold("borrando..."));
 
     axios
-        .delete('/user/${deleteUserData.username}')
+        .delete(`/user/${deleteUserData.username}`)
         .then((res) => {
             console.log(res.data);
 
@@ -187,7 +192,7 @@ const getUser = (args) => {
         };
 
     axios
-        .get("/user/{username}", getUserData)
+        .get(`/user/${username}`, getUserData)
         .then((res) => {
             console.log(res.data);
 
@@ -223,7 +228,7 @@ const updateUser = (args) => {
     console.log(chalk.yellow.bold("updating..."));
 
     axios
-        .put("/user/{username}", updateUserData)
+        .put(`/user/${username}`, updateUserData)
         .then((res) => {
             console.log(res.data);
 
@@ -290,10 +295,9 @@ const createPost = (args) => {
 //update post command definition
 const updatePost = (args) => {
 
-    const { postId, canLike, canUnlike, likes, tag } = args;
+    const { canLike, canUnlike, likes, tag } = args;
 
     const putPostData = {
-        postId,
         canLike,
         canUnlike,
         likes,
@@ -592,9 +596,46 @@ y.command({
             type: 'string'
         },
         password: {
-            describe: 'Password of the new account'
+            describe: 'Password of the new account',
+            demandOption: true,
+            type: 'string',
         },
-        Birthday:{
+        confirmPassword: {
+            describe: 'Confirm the password of the new account',
+            demandOption: true,
+            type: 'string',
+        },
+        firstName: {
+            describe: 'First name of the new account',
+            demandOption: true,
+            type: 'string',
+        },
+        lastName: {
+            describe: 'Last name of the new account',
+            demandOption: true,
+            type: 'string',
+        },
+        bio: {
+            describe: 'Biography of the new account',
+            demandOption: true,
+            type: 'string',
+        },
+        website: {
+            describe: 'Website of the new account',
+            demandOption: true,
+            type: 'string',
+        },
+        location: {
+            describe: 'Location of the new account',
+            demandOption: true,
+            type: 'string',
+        },
+        picture: {
+            describe: 'Picture of the new account',
+            demandOption: true,
+            type: 'string',
+        },
+        birthday:{
             describe: 'User birthday',
             type: 'string'
         }
