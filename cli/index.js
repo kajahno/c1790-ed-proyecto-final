@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import boxen from 'boxen';
-import yargs, { demandOption } from 'yargs';
+import yargs, {  } from 'yargs';
 import axios from "axios";
 
 const greeting = chalk.white.bold("Welcome to ConnectMe CLI!");
@@ -110,6 +110,7 @@ const login = (args) => {
 }
 
 // implement user/logout
+const logout = (args) => {
    {  console.log(chalk.yellow.bold("Logging out..."));
 
     axios
@@ -125,7 +126,7 @@ const login = (args) => {
             console.log(chalk.red.bold(`Could not log out: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
         });
 
-    }
+    }}
 //* recover 
 const recover = (args) => {
 
@@ -706,7 +707,7 @@ y.command({
         
     },
     handler(argv) {
-        logOut(argv)
+        logout(argv)
     }
 })
 
