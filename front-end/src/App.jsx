@@ -22,7 +22,7 @@ import login from "./pages/login";
 import signup from "./pages/signup";
 import React from "react";
 import home from "./pages/home";
-import username from "./pages/userprofile"
+import userprofile from "./pages/userprofile";
 const theme = createTheme({
   palette: {
     primary: {
