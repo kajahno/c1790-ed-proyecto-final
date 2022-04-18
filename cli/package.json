@@ -1,0 +1,21 @@
+{
+  "name": "connectme",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "CLI for the social network ConnectMe",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "connectme": "./index.js"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "boxen": "^6.2.1",
+    "chalk": "^5.0.1",
+    "yargs": "^17.4.0"
+  }
+}
