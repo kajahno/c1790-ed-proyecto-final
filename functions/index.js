@@ -13,6 +13,11 @@ app.use(cors());
 // Helper to load configurations
 const dotenv = require("dotenv");
 const { UserRecord } = require("firebase-admin/lib/auth/user-record");
+const { document, _documentWithOptions } = require("firebase-functions/v1/firestore");
+const { database } = require("firebase-admin");
+const { isUid } = require("firebase-admin/lib/utils/validator");
+const { identityOrigin } = require("firebase-tools/lib/api");
+const { getCommand } = require("firebase-tools");
 dotenv.config();
 
 const db = admin.firestore();
@@ -98,6 +103,65 @@ const signupUser = (req, res) => {
             res.status(500).json({ error: error.code });
         });
 };
+
+//Create guest account
+//funciona
+const guestAccount = (req, res) => {
+    const newGuest = {
+        userId: req.body.userId || "",
+        username: req.body.username ||"",
+        imageProfile: req.body.imageProfile ||"",
+        
+    };
+    if (newGuest.username == undefined) {
+        return res.status(400).json({ error: "Missing required parameter" });
+    }
+
+    db.doc(`/guest-users/${newGuest.username}`)
+        .create(newGuest)
+        .then((doc) => {
+            return res.status(201).json({ message: "Guest account created successfully" });
+        })
+        .catch((error) => {
+            res.status(500).json({ error: error.code });
+        });
+};
+
+
+
+//recover password
+// error 
+const recoverPassword = (req, res) => {
+    const recoveruser = {
+    username: req.body.username ||"",
+    email: req.body.email,
+    userId: req.body.userId ||"",
+    newPassword: req.body.newPassword ||"",
+    confirmPassword:req.body.confirmPassword ||"",
+    };
+    db.doc(`/users/${recoveruser.username}`)
+    .get()
+    .then((doc) => {
+        if (!doc.exists) {
+            throw {
+                code: "user/non-existent",
+                error: new Error(),
+            };
+        } else {
+          console.log('paso', recoveruser.email)
+           return firebase
+           .auth()
+           .sendPasswordResetEmail(recoveruser.email)
+        }
+    }) 
+    .then(() => {
+        return res.status(200).json({ message: "A password reset email has been sent to your email" });
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+};
+
 
 const loginUser = (req, res) => {
 
@@ -193,89 +257,93 @@ const deleteUser = (req, res) => {
 // // Start listing users from the beginning, 1000 at a time.
 // listAllUsers();
 
+
 //Update user profile
-
 const updateUser = (req, res) => {
-
-    const user = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        location: req.body.location,
-        bio: req.body.bio,
-        website: req.body.website,
-        imageProfile: req.body.imageProfile,
-    };
-
-    const authToken = req.headers.authorization;
-
-    if (!authToken) {
-        return res.status(401).json({ message: "not authenticated" });
-    }
-
-    console.log("User Profile to be updated", user.username);
-
-    const username = req.params.username;
-
-    // TODO: validate data. Return error when no valid, e.g. password is not the same as confirmPassword
-    db.doc(`/users/${username}`)
-        .get()
-        .then((doc) => {
-            if (!doc.exists) {
-                throw {
-                    code: "user/non-existent",
-                    error: new Error(),
-                };
-            } else {
-                const existingUser = doc.data();
-                // console.log("existingUser", existingUser);
-                // console.log("user", user);
-                const updatedUser = {
-                    firstName: user.firstName || existingUser.firstName,
-                    lastName: user.lastName || existingUser.lastName,
-                    location: user.location || existingUser.location,
-                    bio: user.bio || existingUser.bio,
-                    website: user.website || existingUser.website,
-                    imageProfile: user.imageProfile || existingUser.imageProfile,
-                };
-                // console.log("updatedUser", updatedUser);
-                return db.doc(`/users/${username}`).update(updatedUser);
-            }
-        })
-        .then(() => {
-            return res.status(200).json({ message: "user updated successfully" });
-        })
-        .catch((error) => {
-            console.error(error);
-            if (error.code === "user/non-existent") {
-                return res
-                    .status(400)
-                    .json({ username: "username doesn't exist in the system" });
-            }
-            res.status(500).json({ error: error.code });
-        });
+        const user = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            location: req.body.location,
+            bio: req.body.bio,
+            website: req.body.website,
+            imageProfile: req.body.imageProfile,
+        };
+    
+        const authToken = req.headers.authorization;
+    
+        if (!authToken) {
+            return res.status(401).json({ message: "not authenticated" });
+        }
+    
+        console.log("User Profile to be updated", user.username);
+    
+        const username = req.params.usernam;
+    
+        // TODO: validate data. Return error when no valid, e.g. password is not the same as confirmPassword
+        db.doc(`/users/${username}`)
+            .get()
+            .then((doc) => {
+                if (!doc.exists) {
+                    throw {
+                        code: "user/non-existent",
+                        error: new Error(),
+                    };
+                } else {
+                    const existingUser = doc.data();
+                    // console.log("existingUser", existingUser);
+                    // console.log("user", user);
+                    const updatedUser = {
+                        firstName: user.firstName || existingUser.firstName,
+                        lastName: user.lastName || existingUser.lastName,
+                        location: user.location || existingUser.location,
+                        bio: user.bio || existingUser.bio,
+                        website: user.website || existingUser.website,
+                        imageProfile: user.imageProfile || existingUser.imageProfile,
+                    };
+                    // console.log("updatedUser", updatedUser);
+                    return db.doc(`/users/${username}`).update(updatedUser);
+                }
+            })
+            .then(() => {
+                return res.status(200).json({ message: "user updated successfully" });
+            })
+            .catch((error) => {
+                console.error(error);
+                if (error.code === "user/non-existent") {
+                    return res
+                        .status(400)
+                        .json({ username: "username doesn't exist in the system" });
+                }
+                res.status(500).json({ error: error.code });
+            });
 };
 
+
+ 
+
 // User Post
-
+// funciona
 const newPost = (req, res) => {
-    const Post = {
-        username: req.user.username,
-        post: req.body.post,
-        tags: req.body.tags,
-        canLikes: req.body.canLikes,
-        canUnlike: req.body.canUnlike,
-
+    const Postuser = {
+        username: req.body.username ||"",
+        post: req.body.post ||"",
+        tag: req.body.tag ||"",
+        canLikes: req.body.canLikes ||"",
+        canUnlike: req.body.canUnlike ||"",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        title: req.body.title ||"",
+        
     };
-    if (Post.post == undefined) {
+
+    if (Postuser.post == undefined) {
         return res.status(400).json({ error: "Missing require parameter" });
     }
-
-    console.log("Starting Upload...", newUser.username);
-
-    db.collections("posts")
-        .add(Post)
-        .then((doc) => {
-            return res.status(201).json({ message: "Post created successfully" });
+    console.log("Starting Upload...", Postuser.username);
+    db.collection(`/posts/`)
+        .add(Postuser)
+        .then((isUid) => {
+            return res.status(201).json({message: "You can see your id in the section ['posts', 'your id']", isUid});
         })
         .catch((error) => {
             res.status(500).json({ error: error.code });
@@ -283,63 +351,46 @@ const newPost = (req, res) => {
 };
 
 // Update User Post
-
-const updatedPost = (req, res) => {
-    const post = {
-        post: req.body.post,
-        tags: req.body.tags,
-        postId: req.body.postId,
+// funciona
+const updatePost = (req, res) => {
+    const editpost = {
+        postId: req.params.postId,
+        post: req.body.post ||"",
+        tags: req.body.tags ||"",
+        title: req.body.title ||"",
+        updatedAt: new Date().toISOString(),
 
     };
-    if (post.post == undefined) {
+    const username = req.body.username;
+
+    if (editpost.post == undefined) {
         return res.status(400).json({ error: "Missing requirement" });
     }
 
-    console.log("Post edited", user.username);
-    db.doc(`/posts/${post.postId}`)
-        .get()
-        .then((Post) => {
-            if (!Post.exists) {
-                throw {
-                    code: "post/non-existent",
-                    error: new Error(),
-                };
-            } else {
-                const existingPost = doc.data();
-                const updatedPost = {
-                    post: post.post || existingPost.post,
-                    tags: post.tags || existingPost.tags,
-                };
-                return db.doc(`/posts/${post.postId}`).update(updatedPost);
-            }
-        })
-        .then(() => {
-            return res.satus(200).json({ message: "Post updated successfully" });
+    console.log("Post edited", username);
+    db.doc(`/posts/${editpost.postId}`)
+        .update(editpost)
+        .then((doc) => {
+            return res.status(200).json({ message: "Post updated successfully" });
         })
         .catch((error) => {
-            console.error(error);
-            if (error.code === "post/non-existent") {
-                return res
-                    .status(400)
-                    .json({ username: "Post doesn't exist in the system" });
-            }
             res.status(500).json({ error: error.code });
-        });
-
+            });
 };
 
 //Delete a Post
-
+//funciona
 const deletePost = (req, res) => {
     const delet = {
-        postId: req.body.postId,
-
+        postId: req.params.postId,
+        username: req.body.username,
+        title: req.body.title,
+        post: req.body.post ||"",
     };
-
-    db.doc(`/posts/${post.postId}`)
-        .delete()
-        .then(() => {
-            return res.satus(200).json({ message: "Post updated successfully" });
+    db.doc(`/posts/${delet.username}`)
+        .delete(delet)
+        .then((doc) => {
+            return res.status(200).json({ message: "Post updated successfully" });
         })
         .catch((error) => {
             console.error(error);
@@ -356,13 +407,12 @@ const createComment = (req, res) => {
         comment: req.body.comment,
 
     };
-    if (comment.comment === undefined) {
+    if (newComment.comment === undefined) {
         return res.status(400).json({ error: "Missing require parameter" });
     }
 
-    console.log("Starting Upload...", newUser.username);
-
-    db.collection("comments")
+    console.log("Starting Upload...", newComment.username);
+    db.doc("comments")
         .add(newComment)
         .then((doc) => {
             return res.status(201).json({ message: "Post created successfully" });
@@ -370,6 +420,7 @@ const createComment = (req, res) => {
         .catch((error) => {
             res.status(500).json({ error: error.code });
         });
+        console.log(req);
 };
 
 //Update a Comment 
@@ -439,15 +490,17 @@ const deleteComment = (req, res) => {
 
 // User routes
 app.post("/user", signupUser);
+app.post("/user/guest", guestAccount);
 app.post("/user/login", loginUser);
 app.post("/user/logout", logoutUser);
 app.delete("/user/:username", deleteUser);
 app.put("/user/:username", updateUser);
+app.put("/user/username", recoverPassword);
 // app.post("/user/{username}", listAllUsers);
-// app.post("/posts", newPost);
-// app.post("/posts}", updatedPost);
-// app.post("/posts}", deletePost);
-// app.post("/posts/{comments}", createComment);
+app.post("/post", newPost);
+app.put("/post", updatePost);
+app.delete("/post", deletePost);
+//app.post("/post/comment", createComment);
 // app.post("/posts/comments}", updatedComment);
 // app.post("/posts/comments}", deleteComment);
 
