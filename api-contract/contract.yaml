@@ -16,6 +16,10 @@ tags:
   description: Operations about user profile
 - name: post
   description: Operations about posts
+- name: friend
+  description: Operations about friendship
+- name: group
+  description: Operations about group of friends
 paths:
   /user:
     post:
@@ -348,7 +352,167 @@ paths:
         default:
           description: successful operation
           content: {}
-          
+  /friend:
+    post:
+      tags:
+      - friend
+      summary: Add a friend
+      description: This can be done by the logged in user.
+      operationId: addFriend
+      requestBody:
+        description: Add friend object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Friend'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    delete:
+      tags:
+      - friend
+      summary: Delete a friend
+      description: This can be done by the logged in user.
+      operationId: deleteFriend
+      requestBody:
+        description: Delete friend object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Friend'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    put:
+      tags:
+      - friend
+      summary: Block a friend
+      description: This can be done by the logged in user.
+      operationId: blockFriend
+      requestBody:
+        description: Block friend object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Friend'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /friend/all:
+    get:
+      tags:
+      - friend
+      summary: View a list of friends
+      description: This can be done by the logged in user.
+      operationId: viewFriend
+      requestBody:
+        description: View friend object
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Friend'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /group:
+    post:
+      tags:
+      - group
+      summary: Create a group of friends
+      description: This can be done by the logged in user.
+      operationId: createGroup
+      requestBody:
+        description: Create group object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    put:
+      tags:
+      - group
+      summary: Edit a group of friends
+      description: This can be done by the logged in user.
+      operationId: editGroup
+      requestBody:
+        description: Edit group object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    delete:
+      tags:
+      - group
+      summary: Delete a group of friends
+      description: This can be done by the logged in user.
+      operationId: deleteGroup
+      requestBody:
+        description: Delete group object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /group/all:
+    get:
+      tags:
+      - group
+      summary: View a list of friend groups
+      description: This can be done by the logged in user.
+      operationId: viewGroup
+      requestBody:
+        description: View group object
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Group'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+     
 components:
   schemas:
     Authentication:
@@ -461,7 +625,35 @@ components:
           type: string
         imageProfile:
           type: string
-          format: binary     
+          format: binary
+        postID:
+          type: string   
+    Friend:
+      type: object
+      properties:
+        username:
+          type: string
+        friendID: 
+          type: string
+        friend:
+          type: string
+        since:
+          type: string
+    Group:
+      type: object
+      properties:
+        friends:
+          type: array
+          items:
+            $ref: '#/components/schemas/Friend'
+        groupID:
+          type: string
+        name:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
     ApiResponse:
       type: object
       properties:
