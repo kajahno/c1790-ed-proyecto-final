@@ -259,19 +259,21 @@ paths:
         default:
           description: successful operation
           content: {}
+  /post/{postId}:
     delete:
       tags:
       - post
       summary: Delete post
       description: This can be done by the logged in user.
       operationId: deletePost
-      requestBody:
-        description: Delete post object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Post'
+      parameters:
+      - name: postId
+        in: path
+        description: |
+          The postId to be deleted
         required: true
+        schema:
+          type: string
       security:
         - bearer_auth: []
       responses:
@@ -285,15 +287,6 @@ paths:
       summary: View a list of posts
       description: This can be done by anyone.
       operationId: viewPostList
-      requestBody:
-        description: View post object
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Post'
-        required: true
       responses:
         default:
           description: successful operation
@@ -722,7 +715,7 @@ components:
           type: integer
         commentCount:
           type: integer
-        tag:
+        tags:
           type: string
         createdAt:
           type: string
