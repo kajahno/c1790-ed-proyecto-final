@@ -258,24 +258,23 @@ const updateUser = (req, res) => {
 // User Post
 
 const newPost = (req, res) => {
-    const Post = {
-        username: req.user.username,
-        post: req.body.post,
-        tags: req.body.tags,
-        canLikes: req.body.canLikes,
-        canUnlike: req.body.canUnlike,
-
+    const Postuser = {
+        username: req.body.username ||"",
+        post: req.body.post ||"",
+        tag: req.body.tag ||"",
+        canLikes: req.body.canLikes ||"",
+        canUnlike: req.body.canUnlike ||"",
     };
-    if (Post.post == undefined) {
+    if (Postuser.post == undefined) {
         return res.status(400).json({ error: "Missing require parameter" });
     }
+    console.log("Starting Upload...", Postuser.username);
 
-    console.log("Starting Upload...", newUser.username);
-
-    db.collections("posts")
-        .add(Post)
+    db.doc(`/posts/${Postuser.post}`)
+        .create(Postuser)
         .then((doc) => {
             return res.status(201).json({ message: "Post created successfully" });
+
         })
         .catch((error) => {
             res.status(500).json({ error: error.code });
@@ -285,61 +284,42 @@ const newPost = (req, res) => {
 // Update User Post
 
 const updatedPost = (req, res) => {
-    const post = {
-        post: req.body.post,
-        tags: req.body.tags,
-        postId: req.body.postId,
+    const editpost = {
+        post: req.body.post ||"",
+        tags: req.body.tags ||"",
+        title: req.body.title ||"",
 
     };
-    if (post.post == undefined) {
+    const username = req.body.username;
+    if (editpost.post == undefined) {
         return res.status(400).json({ error: "Missing requirement" });
     }
 
-    console.log("Post edited", user.username);
-    db.doc(`/posts/${post.postId}`)
-        .get()
-        .then((Post) => {
-            if (!Post.exists) {
-                throw {
-                    code: "post/non-existent",
-                    error: new Error(),
-                };
-            } else {
-                const existingPost = doc.data();
-                const updatedPost = {
-                    post: post.post || existingPost.post,
-                    tags: post.tags || existingPost.tags,
-                };
-                return db.doc(`/posts/${post.postId}`).update(updatedPost);
-            }
-        })
-        .then(() => {
-            return res.satus(200).json({ message: "Post updated successfully" });
+    console.log("Post edited", username);
+    
+    db.doc(`/posts/${editpost.post}`)
+        .update(editpost)
+        .then((doc) => {
+            return res.status(200).json({ message: "Post updated successfully" });
         })
         .catch((error) => {
-            console.error(error);
-            if (error.code === "post/non-existent") {
-                return res
-                    .status(400)
-                    .json({ username: "Post doesn't exist in the system" });
-            }
             res.status(500).json({ error: error.code });
-        });
-
+            });
 };
 
 //Delete a Post
 
 const deletePost = (req, res) => {
     const delet = {
-        postId: req.body.postId,
+        username: req.body.username,
+        title: req.body.title,
+        post: req.body.post ||"",
 
     };
-
-    db.doc(`/posts/${post.postId}`)
-        .delete()
-        .then(() => {
-            return res.satus(200).json({ message: "Post updated successfully" });
+    db.doc(`/posts/${delet.post}`)
+        .delete(delet)
+        .then((doc) => {
+            return res.status(200).json({ message: "Post updated successfully" });
         })
         .catch((error) => {
             console.error(error);
@@ -348,93 +328,77 @@ const deletePost = (req, res) => {
 
 }
 
-//Create a comment
+//New Comment
+//Sirve
 
-const createComment = (req, res) => {
-    const newComment = {
-        username: req.body.username,
-        comment: req.body.comment,
+const newComment = (req, res) => {
+    const Postcomment = {
+      username: req.body.username ||"",
+      post: req.body.post || "",
 
     };
-    if (comment.comment === undefined) {
-        return res.status(400).json({ error: "Missing require parameter" });
+    if (Postcomment.post == undefined) {
+      return res.status(400).json({ error: "Missing required parameter" });
     }
-
-    console.log("Starting Upload...", newUser.username);
-
-    db.collection("comments")
-        .add(newComment)
-        .then((doc) => {
-            return res.status(201).json({ message: "Post created successfully" });
-        })
-        .catch((error) => {
-            res.status(500).json({ error: error.code });
-        });
+    console.log("New Comment is being created...", Postcomment.username);
+  
+    db.collection(`/post/`)
+      .add(Postcomment)
+      .then((doc) => {
+        return res.status(201).json({ message: "Comment created successfully" });
+  
+    })
+      .catch ((error) => {
+        res.status(500).json({ error: error.code });
+      });
 };
-
-//Update a Comment 
+  
+//Update a Comment
+//No Sirve ReferenceError: username is not defined 
 
 const updatedComment = (req, res) => {
-    const comment = {
-        comment: req.body.comment,
-        commentId: req.body.commentId,
-
+    const editcomment = {
+        post: req.body.post || "",
+        username: req.body.username,
     };
-    if (comment.commentId == undefined) {
-        return res.status(400).json({ error: "Missing requirement" });
+
+    
+
+    if (editcomment.post == undefined) {
+      return res.status(400).json({ error: "Missing requirement" });
     }
 
-    console.log("Post edited", user.username);
-    db.doc(`/comments/${comment.commentId}`)
-        .get()
-        .then((comment) => {
-            if (!comment.exists) {
-                throw {
-                    code: "comment/non-existent",
-                    error: new Error(),
-                };
-            } else {
-                const existingComment = doc.data();
-                const updatedComment = {
-                    post: comment.post || existingComment.commentId,
-
-                };
-                return db.doc(`/posts/${comment.commentId}`).update(updatedComment);
-            }
-        })
-        .then(() => {
-            return res.satus(200).json({ message: "Comment updated successfully" });
+    console.log("Comment edited", username);
+  
+    db.doc(`/comment/${editcomment.post}`)
+        .update(editcomment)
+        .then((doc) => {
+             return res.status(200).json({ message: "Comment updated successfully" });
         })
         .catch((error) => {
-            console.error(error);
-            if (error.code === "comment/non-existent") {
-                return res
-                    .status(400)
-                    .json({ username: "Comment doesn't exist in the system" });
-            }
             res.status(500).json({ error: error.code });
-        });
-
+            });
 };
-
-//Delete a comment
-
+  
+//Delete a Comment
+//Sirve
+  
 const deleteComment = (req, res) => {
     const delet = {
-        commentId: req.body.postId,
-
+        username: req.body.username,
+        post: req.body.post || "",
+  
     };
-
-    db.doc(`/comment/${comment.commentId}`)
-        .delete()
-        .then(() => {
-            return res.satus(200).json({ message: "comment deleted successfully" });
-        })
+      db.doc(`/comment/${delet.post}`)
+        .delete(delet)
+        .then((doc) => {
+          return res.status(200).json({ message: "Comment deleted successfully" });
+    })
         .catch((error) => {
-            console.error(error);
-            res.status(500).json({ error: error.code });
+          console.error(error);
+          res.status(500).json({ error: error.code });
         });
-}
+};
 
 
 // User routes
@@ -443,13 +407,14 @@ app.post("/user/login", loginUser);
 app.post("/user/logout", logoutUser);
 app.delete("/user/:username", deleteUser);
 app.put("/user/:username", updateUser);
+//app.put("/user/recover", recoverPassword);
 // app.post("/user/{username}", listAllUsers);
-// app.post("/posts", newPost);
-// app.post("/posts}", updatedPost);
-// app.post("/posts}", deletePost);
-// app.post("/posts/{comments}", createComment);
-// app.post("/posts/comments}", updatedComment);
-// app.post("/posts/comments}", deleteComment);
+app.post("/post", newPost);
+app.put("/post", updatedPost);
+app.delete("/post", deletePost);
+app.post("/post/comment", newComment);
+app.put("/post/comment", updatedComment);
+app.delete("/post/comment", deleteComment);
 
 
 // Test so you know how to add other methods
