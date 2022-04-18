@@ -17,6 +17,7 @@ import Comments from '../components/layout/Homepage-systems/Comments';
 import App from './PostSystem';
 import PostSystem from './PostSystem';
 import login from './login';
+import userprofile from "./userprofile";
 
 //Andy's Work
 const styles = {
