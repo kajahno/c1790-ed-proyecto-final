@@ -396,25 +396,83 @@ const createComment = (args) => {
 /*  add friend  */
 const addafriend = (args) => {
 
-    const { username } = args;
+    const { username,userId } = args;
 
     const addfriendData = {
-        username
+        username,
+        userId
     };
 
-    console.log(chalk.yellow.bold("deleting..."));
+    console.log(chalk.yellow.bold("adding..."));
 
     axios
-        .post("/posts/comments", createCommentData)
+        .post("/friend", addfriendData)
         .then((res) => {
             console.log(res.data);
 
             const FBIdToken = `Bearer ${res.data.token}`;
             // TODO: create a file in the user's machine to store the auth token
-            console.log(chalk.green.bold("The comment was created successfully ✔️"));
+            console.log(chalk.green.bold("the friend was added successfully ✔️"));
         })
         .catch((error) => {
-            console.log(chalk.red.bold(`Could not create the comment -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+            console.log(chalk.red.bold(`Could add a friend -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+/*  delete friend  */
+const deleteafriend = (args) => {
+
+    console.log(chalk.yellow.bold("deleting..."));
+
+    axios
+        .delete("/friend", addfriendData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("the friend was delete successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could delete a friend -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+/*  block friend  */
+const blockeafriend = (args) => {
+
+    console.log(chalk.yellow.bold("blocking..."));
+
+    axios
+        .put("/friend", addfriendData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("the friend was blocked successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could block a friend -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+/*  friend list */
+const listoffriend = (args) => {
+
+    console.log(chalk.yellow.bold("charging..."));
+
+    axios
+        .get("/friend/all", addfriendData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("loading friends list ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could view friend list -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
         });
 }
 
@@ -779,6 +837,98 @@ y.command({
     },
     handler(argv) {
         createComment(argv)
+    }
+})
+
+// add a friend 
+y.command({
+    command: 'add-friend',
+    describe: 'add a friend ',
+    builder: {
+        username: {
+            describe: 'Username of the friend',
+            demandOption: true,
+            type: 'string'
+        },
+        userId: {
+            describe: 'UserId of the friend',
+            demandOption: true,
+            type: 'string'
+            
+        }
+        // TODO: prompt to confirm the password
+    },
+    handler(argv) {
+        addafriend(argv)
+    }
+})
+
+// delete a friend 
+y.command({
+    command: 'delete-friend',
+    describe: 'delete a friend ',
+    builder: {
+        username: {
+            describe: 'Username of the friend to delete',
+            demandOption: true,
+            type: 'string'
+        },
+        userId: {
+            describe: 'UserId of the friend to delete',
+            demandOption: true,
+            type: 'string'
+            
+        }
+        // TODO: prompt to confirm the password
+    },
+    handler(argv) {
+        deleteafriend(argv)
+    }
+})
+
+// block a friend 
+y.command({
+    command: 'block-friend',
+    describe: 'block a friend ',
+    builder: {
+        username: {
+            describe: 'Username of the friend to block',
+            demandOption: true,
+            type: 'string'
+        },
+        userId: {
+            describe: 'UserId of the friend to block',
+            demandOption: true,
+            type: 'string'
+            
+        }
+        // TODO: prompt to confirm the password
+    },
+    handler(argv) {
+        blockeafriend(argv)
+    }
+})
+
+// friend list 
+y.command({
+    command: 'all-friend',
+    describe: 'list of all your friends ',
+    builder: {
+        username: {
+            describe: 'Usernames of your friends',
+            demandOption: true,
+            type: 'array'
+        },
+        userId: {
+            describe: 'UserIds of your friends',
+            demandOption: true,
+            type: 'array'
+            
+        }
+        // TODO: prompt to confirm the password
+    },
+    handler(argv) {
+        listoffriend(argv)
     }
 })
 
