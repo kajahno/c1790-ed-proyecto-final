@@ -49,11 +49,16 @@ class signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            firstname:"",
+            lastname:"",
             email: "",
-            Birthday: "",
+            birthday: "",
+            location:"",
             password: "",
             confirmPassword: "",
             username: "",
+            bio:"",
+            website:"",
             errors: {},
             loading: false,
         };
@@ -268,7 +273,7 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth
                         />
-                        
+
                         {errors.general && (
                             <Typography
                                 variant="body2"
