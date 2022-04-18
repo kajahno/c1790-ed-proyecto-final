@@ -49,16 +49,16 @@ class signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstname:"",
-            lastname:"",
+            firstname: "",
+            lastname: "",
             email: "",
             birthday: "",
-            location:"",
+            location: "",
             password: "",
             confirmPassword: "",
             username: "",
-            bio:"",
-            website:"",
+            bio: "",
+            website: "",
             errors: {},
             loading: false,
         };
@@ -156,20 +156,18 @@ class signup extends Component {
                             onchange={this.handleChange}
                             fullWidth
                         />
-
                         <textField
                             id="lastname"
                             name="lastname"
                             type="lastname"
                             label="Lastname"
-                            helperText={errors.Lastname}
-                            error={errors.Lastname ? true : false}
+                            helperText={errors.lastname}
+                            error={errors.lastname ? true : false}
                             className={classes.textField}
-                            value={this.state.Lastname}
+                            value={this.state.lastname}
                             onchange={this.handleChange}
                             fullWidth
                         />
-
                         <textField
                             id="email"
                             name="email"
@@ -182,7 +180,6 @@ class signup extends Component {
                             onchange={this.handleChange}
                             fullWidth
                         />
-
                         <TextField
                             id="birthday"
                             name="birthday"
@@ -195,7 +192,6 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth
                         />
-
                         <textField
                             id="location"
                             name="location"
@@ -208,7 +204,6 @@ class signup extends Component {
                             onchange={this.handleChange}
                             fullWidth
                         />
-
                         <TextField
                             id="password"
                             name="password"
@@ -221,7 +216,6 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth
                         />
-
                         <TextField
                             id="confirmPassword"
                             name="confirmPassword"
@@ -234,7 +228,6 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth
                         />
-
                         <TextField
                             id="username"
                             name="username"
@@ -247,7 +240,6 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth
                         />
-
                         <TextField
                             id="bio"
                             name="bio"
@@ -260,7 +252,6 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth
                         />
-
                         <TextField
                             id="website"
                             name="website"
@@ -273,7 +264,6 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth
                         />
-
                         {errors.general && (
                             <Typography
                                 variant="body2"
