@@ -123,7 +123,7 @@ class Home extends React.Component {
                             <Button
                                 color="inherit"
                                 component={Link}
-                                to="/User profile"
+                                to="userprofile"
                             >
                              <h2> User profile </h2>
                             </Button>
