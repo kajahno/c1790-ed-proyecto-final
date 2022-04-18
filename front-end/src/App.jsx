@@ -21,6 +21,7 @@ import Navbar from "./components/layout/Navbar";
 import login from "./pages/login";
 import signup from "./pages/signup";
 import React from "react";
+import home from "./pages/home";
 
 const theme = createTheme({
   palette: {
@@ -87,13 +88,13 @@ class App extends React.Component {
           <Navbar authenticated={authenticated} />
           <div className="container">
             <Switch>
-              <Route exact path="/" />
+              <Route exact path="/" authenticated={authenticated} component={home}  />
               {!authenticated && <Route exact path="/login" component={login} />}
-              {!authenticated && <Route exact path="/signup" component={signup} />}
-              <Route
+              {!authenticated && <Route exact path="/signup" component={signup} />}              
+              {/* <Route
                 exact
                 path="/users/:username"
-              />
+              /> */}
             </Switch>
           </div>
         </Router>
