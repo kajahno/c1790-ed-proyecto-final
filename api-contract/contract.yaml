@@ -383,7 +383,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FriendDelete'
+              $ref: '#/components/schemas/Friend'
         required: true
       security:
         - bearer_auth: []
@@ -635,14 +635,9 @@ components:
           type: string
         friendID: 
           type: string
-        since:
-          type: string
-    FriendDelete:
-      type: object
-      properties:
-        user:
-          type: string
         friend:
+          type: string
+        since:
           type: string
     Group:
       type: object
