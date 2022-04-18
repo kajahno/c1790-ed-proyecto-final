@@ -72,8 +72,10 @@ class login extends Component {
         };
         // TODO: implement creating the user here using axios - Denny
 
-        axios.post("/user",userData,{
-           
+        axios.post("/user/login", userData, {
+            Username: this.state.username,
+            password: this.state.password
+
         })
             .then(function (response) {
                 console.log(response);
