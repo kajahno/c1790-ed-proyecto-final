@@ -391,6 +391,34 @@ const createComment = (args) => {
         });
 }
 
+//>> Operations about friendship <<
+
+/*  add friend  */
+const addafriend = (args) => {
+
+    const { username } = args;
+
+    const addfriendData = {
+        username
+    };
+
+    console.log(chalk.yellow.bold("deleting..."));
+
+    axios
+        .post("/posts/comments", createCommentData)
+        .then((res) => {
+            console.log(res.data);
+
+            const FBIdToken = `Bearer ${res.data.token}`;
+            // TODO: create a file in the user's machine to store the auth token
+            console.log(chalk.green.bold("The comment was created successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not create the comment -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+
 // Back-end configuration
 // URLS:
 // Production -> https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
