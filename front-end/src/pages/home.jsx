@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Button from '@mui/material/Button';
-import { Grid, Item, CircularProgress, Typography, formLabelClasses, Avatar, TextField } from '@mui/material';
+import { Grid, Item, CircularProgress, Typography, formLabelClasses, Avatar, TextField, Paper } from '@mui/material';
 import {
     withStyles,
 } from "@mui/styles";
@@ -9,12 +9,16 @@ import { ClassNames } from '@emotion/react';
 import AppIcon from "../logo.svg";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { typographyVariant } from '@mui/system';
-
-//Andy's Work
+import { Container } from '@mui/material';
 import { Post } from '../components/layout/Homepage-systems/Post';
 import CommentForm from '../components/layout/Homepage-systems/CommentForm';
+import Comment from '../components/layout/Homepage-systems/Comment';
+import Comments from '../components/layout/Homepage-systems/Comments';
+import App from './PostSystem';
+import PostSystem from './PostSystem';
+import login from './login';
 
-
+//Andy's Work
 const styles = {
     form: {
         textAlign: "center",
@@ -63,6 +67,10 @@ class Home extends React.Component {
     }
 
     render() {
+
+        <Container maxWidth="sm">
+
+        </Container>
         const {
             classes
         } = this.props;
@@ -74,19 +82,21 @@ class Home extends React.Component {
             })
         ) : <React.Fragment />;
 
+        <Container maxWidth="sm">
+            <PostSystem></PostSystem>
+        </Container>
+
         return <Grid container className={classes.form}>
-            <Grid item xs>
-                <form noValidate autoComplete="off">
-                <TextField 
-                Label="How are you feeling today?"
-                variant="outlined"
-                color="secondary"
-                fullWidth
+            <Grid
+  container
+  direction="row"
+  justifyContent="space-between"
+  alignItems="center"
+>
+            <Grid item sm >
 
+<PostSystem/>
 
-                />
-                </form>
-         
                 </Grid>
 
             <Grid item xs></Grid>
@@ -97,7 +107,6 @@ class Home extends React.Component {
                             >
                                 Login  /
                             </Button>
-                            <Grid item>
                             <Button
                                 color="inherit"
                                 component={Link}
@@ -105,11 +114,27 @@ class Home extends React.Component {
                             >
                               /  Signup
                             </Button>
+
+                            <Grid item xs >
+                            <Paper elevation={3}/>
+                            <Typography>
+                                <h2> /Username </h2>
+                            </Typography>
+                            <Button
+                                color="inherit"
+                                component={Link}
+                                to="/User profile"
+                            >
+                             <h2> User profile </h2>
+                            </Button>
+
+ 
                             </Grid>
 
 
 
     
+        </Grid>
         </Grid>
     }
 }

@@ -1,8 +1,8 @@
 
-import CommentForm from "./CommentForm.js";
+import CommentForm from "./CommentForm.jsx";
 
 const Comment = ({
-  Comment,
+  comment,
   replies,
   setActiveComment,
   activeComment,
