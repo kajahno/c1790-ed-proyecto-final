@@ -22,7 +22,7 @@ import login from "./pages/login";
 import signup from "./pages/signup";
 import React from "react";
 import home from "./pages/home";
-
+import username from "./pages/userprofile"
 const theme = createTheme({
   palette: {
     primary: {
@@ -90,7 +90,8 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" authenticated={authenticated} component={home}  />
               {!authenticated && <Route exact path="/login" component={login} />}
-              {!authenticated && <Route exact path="/signup" component={signup} />}              
+              {!authenticated && <Route exact path="/signup" component={signup} />}   
+              {!authenticated && <Route exact path="/userprofile" component={userprofile} />}           
               {/* <Route
                 exact
                 path="/users/:username"
