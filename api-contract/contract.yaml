@@ -550,7 +550,8 @@ paths:
           application/json:
             schema:
               type: array
-              $ref: '#/components/schemas/Admin'
+              items:
+                $ref: '#/components/schemas/Admin'
         required: true
       security:
         - bearer_auth: []
@@ -570,7 +571,8 @@ paths:
           application/json:
             schema:
               type: array
-              $ref: '#/components/schemas/Admin'
+              items:
+                $ref: '#/components/schemas/Admin'
         required: true
       security:
         - bearer_auth: []
@@ -590,7 +592,8 @@ paths:
           application/json:
             schema:
               type: array
-              $ref: '#/components/schemas/Admin'
+              items:
+                $ref: '#/components/schemas/Admin'
         required: true
       security:
         - bearer_auth: []
@@ -723,7 +726,7 @@ components:
           type: string
         friend:
           type: string
-        since:
+        createdAt:
           type: string
     Group:
       type: object
@@ -743,35 +746,25 @@ components:
     Notification:
       type: object
       properties:
-        liked:
-          type: string
-        reached100Likes:
-          type: string
-          items:
-            $ref: '#/components/schemas/Post'
-        reached25Friends:
-          type: string
-          items:
-            $ref: '#/components/schemas/UserProfile'
-        friendRequest:
-          type: string
-        requestAccepted:
-          type: string
-        commented:
-          type: string
         userId:
           type: string
-        notifId:
+        notificationId:
           type: string
         postID:
           type: string
+        commentId:
+          type: string
+        message:
+          type: string
+        read:
+          type: boolean
     Admin:
       type: object
       properties:
         user:
           type: string
           items:
-            $ref: '#/components/schemas/UserProfile'
+            $ref: '#/components/schemas/UserProfile'      
         post:
           type: array
           items:
