@@ -20,6 +20,11 @@ tags:
   description: Operations about friendship
 - name: group
   description: Operations about group of friends
+- name: notification
+  description: Operations about notifications
+- name: admin
+  description: Operations about admin
+
 paths:
   /user:
     post:
@@ -512,7 +517,88 @@ paths:
         default:
           description: successful operation
           content: {}
-     
+  /notification:
+    get:
+      tags:
+      - notification
+      summary: Get notified when there is an interaction with users
+      description: This can be done by the logged in user.
+      operationId: notif
+      requestBody:
+        description: View notification object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notification'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /admin:
+    get:
+      tags:
+      - admin
+      summary: Be able to see user stats, posts, friends and groups
+      description: This can be done by the administrator.
+      operationId: seeStats
+      requestBody:
+        description: View admin object
+        content:
+          application/json:
+            schema:
+              type: array
+              $ref: '#/components/schemas/Admin'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    put:
+      tags:
+      - admin
+      summary: Be able to edit a user stats, posts, friends and groups
+      description: This can be done by the administrator.
+      operationId: editStats
+      requestBody:
+        description: Edit admin object
+        content:
+          application/json:
+            schema:
+              type: array
+              $ref: '#/components/schemas/Admin'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+    delete:
+      tags:
+      - admin
+      summary: Be able to delete user stats, posts, friends and groups
+      description: This can be done by the administrator.
+      operationId: deleteStats
+      requestBody:
+        description: Delete admin object
+        content:
+          application/json:
+            schema:
+              type: array
+              $ref: '#/components/schemas/Admin'
+        required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+
 components:
   schemas:
     Authentication:
@@ -654,6 +740,50 @@ components:
           type: string
         updatedAt:
           type: string
+    Notification:
+      type: object
+      properties:
+        liked:
+          type: string
+        reached100Likes:
+          type: string
+          items:
+            $ref: '#/components/schemas/Post'
+        reached25Friends:
+          type: string
+          items:
+            $ref: '#/components/schemas/UserProfile'
+        friendRequest:
+          type: string
+        requestAccepted:
+          type: string
+        commented:
+          type: string
+        userId:
+          type: string
+        notifId:
+          type: string
+        postID:
+          type: string
+    Admin:
+      type: object
+      properties:
+        user:
+          type: string
+          items:
+            $ref: '#/components/schemas/UserProfile'
+        post:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+        group:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group' 
+        friend:
+          type: array
+          items:
+            $ref: '#/components/schemas/Friend'      
     ApiResponse:
       type: object
       properties:
