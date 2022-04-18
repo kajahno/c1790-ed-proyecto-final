@@ -44,7 +44,7 @@ const styles = {
         position: "absolute",
     },
 };
-     // I just add a Birthday TextField in sign up - Denny 
+     //  Denny 
 class signup extends Component {
     constructor(props) {
         super(props);
