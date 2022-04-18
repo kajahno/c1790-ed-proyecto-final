@@ -44,12 +44,13 @@ const styles = {
         position: "absolute",
     },
 };
-
+     // I just add a Birthday TextField in sign up - Denny 
 class signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: "",
+            Birthday:"",
             password: "",
             confirmPassword: "",
             username: "",
@@ -61,13 +62,15 @@ class signup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        const { email, password, confirmPassword, username } = this.state;
+        const { email,birthday, password, confirmPassword, username} = this.state;
 
         const newUserData = {
             email,
+            birthday,
             password,
             confirmPassword,
-            username,
+            username
+           
         };
 
 
@@ -86,7 +89,7 @@ class signup extends Component {
 
                 this.props.history.push("/");
 
-                // Clear state
+                // Clear state 
                 this.setState({
                     loading: false,
                     errors: {}
@@ -140,6 +143,18 @@ class signup extends Component {
                             error={errors.email ? true : false}
                             className={classes.textField}
                             value={this.state.email}
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
+                        <TextField
+                            id="birthday"
+                            name="birthday"
+                            type="birthday"
+                            label="Birthday"
+                            helperText={errors.birthday}
+                            error={errors.birthday ? true : false}
+                            className={classes.TextField}
+                            value={this.state.birthday}
                             onChange={this.handleChange}
                             fullWidth
                         />
