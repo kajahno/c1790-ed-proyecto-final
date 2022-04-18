@@ -627,7 +627,9 @@ components:
           type: string
           format: binary
         postID:
-          type: string   
+          type: string  
+        commentID:
+          type: string 
     Friend:
       type: object
       properties:

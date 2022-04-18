@@ -333,7 +333,7 @@ const deletePost = (req, res) => {
 
 const newComment = (req, res) => {
     const Postcomment = {
-      username: req.body.username ||"",
+      postId: req.body.username ||"",
       post: req.body.post || "",
 
     };
@@ -356,37 +356,36 @@ const newComment = (req, res) => {
 //Update a Comment
 //No Sirve ReferenceError: username is not defined 
 
-const updatedComment = (req, res) => {
-    const editcomment = {
-        post: req.body.post || "",
-        username: req.body.username,
-    };
+//const updatedComment = (req, res) => {
+ //  const editcomment = {
+ //       post: req.body.post ||"",
+ //       commentID: req.body.post,
+ //       
+ //   };
+//
+  // if (editcomment.post == undefined) {
+    // return res.status(400).json({ error: "Missing requirement" });
+    //}
 
-    
-
-    if (editcomment.post == undefined) {
-      return res.status(400).json({ error: "Missing requirement" });
-    }
-
-    console.log("Comment edited", username);
+   // console.log("Comment edited", username);
   
-    db.doc(`/comment/${editcomment.post}`)
-        .update(editcomment)
-        .then((doc) => {
-             return res.status(200).json({ message: "Comment updated successfully" });
-        })
-        .catch((error) => {
-            res.status(500).json({ error: error.code });
-            });
-};
+   // db.doc(`/comment/${editcomment.post}`)
+     //   .update(editcomment)
+       // .then((doc) => {
+         //   return res.status(200).json({ message: "Comment updated successfully" });
+       // })
+       // .catch((error) => {
+       //     res.status(500).json({ error: error.code });
+       //     });
+// };
   
 //Delete a Comment
 //Sirve
   
 const deleteComment = (req, res) => {
     const delet = {
-        username: req.body.username,
-        post: req.body.post || "",
+        post: req.body.post,
+        postID: req.params.post || "",
   
     };
       db.doc(`/comment/${delet.post}`)
@@ -401,6 +400,7 @@ const deleteComment = (req, res) => {
 };
 
 
+
 // User routes
 app.post("/user", signupUser);
 app.post("/user/login", loginUser);
@@ -408,7 +408,7 @@ app.post("/user/logout", logoutUser);
 app.delete("/user/:username", deleteUser);
 app.put("/user/:username", updateUser);
 //app.put("/user/recover", recoverPassword);
-// app.post("/user/{username}", listAllUsers);
+//app.post("/user/{username}", listAllUsers);
 app.post("/post", newPost);
 app.put("/post", updatedPost);
 app.delete("/post", deletePost);
