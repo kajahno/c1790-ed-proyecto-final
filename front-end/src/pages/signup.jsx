@@ -44,7 +44,8 @@ const styles = {
         position: "absolute",
     },
 };
-//  Denny 
+//Denny Bryant De La Rosa -10139393
+// Puse todos los parametros establecidos en contrato  y el apartado de image-profile estara en Userprofile 
 class signup extends Component {
     constructor(props) {
         super(props);
@@ -72,12 +73,12 @@ class signup extends Component {
         const newUserData = {
             firstname,
             lastname,
-            email,
-            birthday,
-            location,
+            email,  
+            username,
             password,
             confirmPassword,
-            username,
+            birthday,
+            location,
             bio,
             website
 
@@ -281,7 +282,7 @@ class signup extends Component {
                         >
                             {this.state.loading ? (
                                 <CircularProgress
-                                    size={40}
+                                    size={30}
                                     className={classes.progress}
                                 />
                             ) : (
