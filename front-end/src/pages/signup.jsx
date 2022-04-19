@@ -185,7 +185,7 @@ class signup extends Component {
                         <TextField
                             id="username"
                             name="username"
-                            typeof="username"
+                            typeof="text"
                             label="Username"
                             helperText={errors.username}
                             error={errors.username ? true : false}
