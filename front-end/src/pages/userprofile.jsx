@@ -1,6 +1,6 @@
 //Anthony's Work
 //El user profile solo funciona con el SignUp
-//Al dar SignUp, luego hay que dar un refresh a la pagina y aparecera loggeado
+//Al dar SignUp, luego hay que dar un refresh a la pagina y aparecera userProfile
 //Ojo en la base de datos no se esta guardando el firstname y el lastname pero si se ingresa el valor desde de la base de datos aparecera en user profile
 
 import React, { Component } from "react";
@@ -60,7 +60,7 @@ class userprofile extends Component {
                 lastSeen: "",
                 userId: "",
                 website: "",
-                location:"",
+                location: "",
             },
             loading: false
         };
@@ -132,8 +132,8 @@ class userprofile extends Component {
                                                 <th>lastseen: </th>
                                                 <td> {user.lastSeen}</td>
                                                 <center>
-                                                <th>Userid: </th>
-                                                <td> {user.userId}</td>
+                                                    <th>Userid: </th>
+                                                    <td> {user.userId}</td>
                                                 </center>
                                             </center>
                                         </center>

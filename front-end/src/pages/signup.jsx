@@ -97,6 +97,9 @@ class signup extends Component {
 
                 const FBIdToken = `Bearer ${res.data.token}`;
                 localStorage.setItem("FBIdToken", FBIdToken);
+
+                localStorage.setItem("username",username);
+                
                 axios.defaults.headers.common["Authorization"] = FBIdToken;
 
                 this.props.history.push("/");
