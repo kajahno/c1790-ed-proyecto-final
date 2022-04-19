@@ -44,15 +44,23 @@ const styles = {
         position: "absolute",
     },
 };
-
+// Denny Bryant De La Rosa Suarez-10139393
+// Puse todos los parametros del contrato y probe el sign up (esta funcionando ya que cree un usario llamado dennbryant12 que esta en la base de datos)
+// El parametro de picture se movio al userprofile ,le recuerdo que se lo comente en la clase de ayer y usted dijo que podia usarlo asi
 class signup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            firstname: "",
+            lastname: "",
             email: "",
+            birthday: "",
+            location: "",
             password: "",
             confirmPassword: "",
             username: "",
+            bio: "",
+            website: "",
             errors: {},
             loading: false,
         };
@@ -61,18 +69,25 @@ class signup extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        const { email, password, confirmPassword, username } = this.state;
+        const { firstname, lastname, bio, location, email, birthday, password, confirmPassword, username, website } = this.state;
 
         const newUserData = {
-            email,
+            firstname,
+            lastname,
+            email,  
+            username,
             password,
             confirmPassword,
-            username,
+            birthday,
+            location,
+            bio,
+            website
+
         };
 
 
         this.setState({
-           loading: true,
+            loading: true,
         });
 
         axios
@@ -86,11 +101,11 @@ class signup extends Component {
 
                 this.props.history.push("/");
 
-                // Clear state
+                // Clear state 
                 this.setState({
                     loading: false,
                     errors: {}
-                });                
+                });
             })
             .catch((error) => {
 
@@ -102,7 +117,7 @@ class signup extends Component {
                         ...this.state.errors,
                         general: error.message
                     }
-                 });
+                });
             });
     };
 
@@ -132,6 +147,30 @@ class signup extends Component {
                     </Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
+                            id="firstname"
+                            name="firstname"
+                            type="text"
+                            label="First name"
+                            helperText={errors.firstname}
+                            error={errors.firstname ? true : false}
+                            className={classes.textField}
+                            value={this.state.firstname}
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
+                        <TextField
+                            id="lastname"
+                            name="lastname"
+                            type="text"
+                            label="Last name"
+                            helperText={errors.lastname}
+                            error={errors.lastname ? true : false}
+                            className={classes.textField}
+                            value={this.state.lastname}
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
+                        <TextField
                             id="email"
                             name="email"
                             type="email"
@@ -140,6 +179,18 @@ class signup extends Component {
                             error={errors.email ? true : false}
                             className={classes.textField}
                             value={this.state.email}
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
+                        <TextField
+                            id="username"
+                            name="username"
+                            type="text"
+                            label="Username"
+                            helperText={errors.username}
+                            error={errors.username ? true : false}
+                            className={classes.textField}
+                            value={this.state.username}
                             onChange={this.handleChange}
                             fullWidth
                         />
@@ -168,14 +219,50 @@ class signup extends Component {
                             fullWidth
                         />
                         <TextField
-                            id="username"
-                            name="username"
+                            id="birthday"
+                            name="birthday"
                             type="text"
-                            label="Username"
-                            helperText={errors.username}
-                            error={errors.username ? true : false}
+                            label="Birthday"
+                            helperText={errors.birthday}
+                            error={errors.birthday ? true : false}
                             className={classes.textField}
-                            value={this.state.username}
+                            value={this.state.birthday}
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
+                        <TextField
+                            id="location"
+                            name="location"
+                            type="text"
+                            label="Location"
+                            helperText={errors.location}
+                            error={errors.location ? true : false}
+                            className={classes.textField}
+                            value={this.state.location}
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
+                        <TextField
+                            id="bio"
+                            name="bio"
+                            type="text"
+                            label="Bio"
+                            helperText={errors.bio}
+                            error={errors.bio ? true : false}
+                            className={classes.textField}
+                            value={this.state.bio}
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
+                        <TextField
+                            id="website"
+                            name="website"
+                            type="website"
+                            label="Website"
+                            helperText={errors.website}
+                            error={errors.website ? true : false}
+                            className={classes.textField}
+                            value={this.state.website}
                             onChange={this.handleChange}
                             fullWidth
                         />

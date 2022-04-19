@@ -1,4 +1,4 @@
-import "./App.css";
+import  "./App.css";
 
 import axios from "axios";
 import jwtDecode from "jwt-decode";
@@ -21,7 +21,8 @@ import Navbar from "./components/layout/Navbar";
 import login from "./pages/login";
 import signup from "./pages/signup";
 import React from "react";
-
+import home from "./pages/home";
+import userprofile from "./pages/userprofile";
 const theme = createTheme({
   palette: {
     primary: {
@@ -46,7 +47,7 @@ const theme = createTheme({
 // Production -> https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
 // Local development -> http://localhost:5001/c1790-ed-proyecto-final/europe-west2/api
 axios.defaults.baseURL =
-  "http://localhost:5001/c1790-ed-proyecto-final/europe-west2/api";
+  "https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api";
 
 
 class App extends React.Component {
@@ -87,13 +88,14 @@ class App extends React.Component {
           <Navbar authenticated={authenticated} />
           <div className="container">
             <Switch>
-              <Route exact path="/" />
+              <Route exact path="/" authenticated={authenticated} component={home}  />
               {!authenticated && <Route exact path="/login" component={login} />}
-              {!authenticated && <Route exact path="/signup" component={signup} />}
-              <Route
+              {!authenticated && <Route exact path="/signup" component={signup} />}   
+              {!authenticated && <Route exact path="/userprofile" component={userprofile} />}           
+              {/* <Route
                 exact
                 path="/users/:username"
-              />
+              /> */}
             </Switch>
           </div>
         </Router>
