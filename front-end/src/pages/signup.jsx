@@ -183,7 +183,7 @@ class signup extends Component {
                         <textField
                             id="email"
                             name="email"
-                            type="text"
+                            type="email"
                             label="email"
                             helperText={errors.email}
                             error={errors.email ? true : false}
@@ -281,7 +281,7 @@ class signup extends Component {
                         >
                             {this.state.loading ? (
                                 <CircularProgress
-                                    size={30}
+                                    size={40}
                                     className={classes.progress}
                                 />
                             ) : (
