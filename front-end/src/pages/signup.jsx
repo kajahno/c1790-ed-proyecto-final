@@ -144,93 +144,8 @@ class signup extends Component {
                         Signup
                     </Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
-                    <textField
-                            id="firstname"
-                            name="firstname"
-                            type="text"
-                            label="firstname"
-                            helperText={errors.firstname}
-                            error={errors.firstname ? true : false}
-                            className={classes.textField}
-                            value={this.state.firstname}
-                            onchange={this.handleChange}
-                            fullWidth
-                        />
-                        <textField
-                            id="lastname"
-                            name="lastname"
-                            type="text"
-                            label="Lastname"
-                            helperText={errors.lastname}
-                            error={errors.lastname ? true : false}
-                            className={classes.textField}
-                            value={this.state.lastname}
-                            onchange={this.handleChange}
-                            fullWidth
-                        />
-                        <TextField
-<<<<<<< Updated upstream
-                            id="username"
-                            name="username"
-                            type="text"
-                            label="Username"
-                            helperText={errors.username}
-                            error={errors.username ? true : false}
-                            className={classes.textField}
-                            value={this.state.username}
-                            onChange={this.handleChange}
-                            fullWidth
-                        />
-                        <textField
-=======
-                            id="firstname"
-                            name="firstname"
-                            type="firstname"
-                            label="Firstname"
-                            helperText={errors.firstname}
-                            error={errors.firstname ? true : false}
-                            className={classes.textField}
-                            value={this.state.firstname}
-                            onChange={this.handleChange}
-                            fullWidth
-                        />
-                        <TextField
->>>>>>> Stashed changes
-                            id="email"
-                            name="email"
-                            type="email"
-                            label="email"
-                            helperText={errors.email}
-                            error={errors.email ? true : false}
-                            className={classes.textField}
-                            value={this.state.email}
-                            onchange={this.handleChange}
-                            fullWidth
-                        />
-                        <TextField
-                            id="birthday"
-                            name="birthday"
-                            type="birthday"
-                            label="Birthday"
-                            helperText={errors.birthday}
-                            error={errors.birthday ? true : false}
-                            className={classes.TextField}
-                            value={this.state.birthday}
-                            onChange={this.handleChange}
-                            fullWidth
-                        />
-                        <textField
-                            id="location"
-                            name="location"
-                            type="text"
-                            label="Location"
-                            helperText={errors.location}
-                            error={errors.location ? true : false}
-                            className={classes.textField}
-                            value={this.state.location}
-                            onchange={this.handleChange}
-                            fullWidth
-                        />
+                        
+                          
                         <TextField
                             id="password"
                             name="password"
@@ -255,30 +170,7 @@ class signup extends Component {
                             onChange={this.handleChange}
                             fullWidth
                         />
-                        <TextField
-                            id="bio"
-                            name="bio"
-                            type="bio"
-                            label="Bio"
-                            helperText={errors.bio}
-                            error={errors.bio ? true : false}
-                            className={classes.textField}
-                            value={this.state.bio}
-                            onChange={this.handleChange}
-                            fullWidth
-                        />
-                        <TextField
-                            id="website"
-                            name="website"
-                            type="website"
-                            label="Website"
-                            helperText={errors.website}
-                            error={errors.website ? true : false}
-                            className={classes.textField}
-                            value={this.state.website}
-                            onChange={this.handleChange}
-                            fullWidth
-                        />
+                      
                         {errors.general && (
                             <Typography
                                 variant="body2"
