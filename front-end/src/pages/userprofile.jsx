@@ -1,7 +1,7 @@
 //Anthony's Work
 //El user profile solo funciona con el SignUp
 //Al dar SignUp, luego hay que dar un refresh a la pagina y aparecera loggeado
-
+//Ojo en la base de datos no se esta guardando el firstname y el lastname pero si se ingresa el valor desde de la base de datos aparecera en user profile
 
 import React, { Component } from "react";
 import { withStyles } from "@mui/styles";
