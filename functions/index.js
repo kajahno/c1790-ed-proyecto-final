@@ -32,6 +32,7 @@ app.delete("/post/:postId", deletePost);
 app.get("/post/all", getAllPosts);
 
 // Comments routes
+// app.get("/post/comment", viewComment);
 app.post("/post/comment", createComment);
 app.put("/post/comment", updatedComment);
 app.delete("/post/comment", deleteComment);

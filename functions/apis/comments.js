@@ -1,6 +1,7 @@
 
 const { db, firebase, config } = require("../utils/firebase");
 
+//Sirve, crea comentario en firestore
 
 const createComment = (req, res) => {
     const newComment = {

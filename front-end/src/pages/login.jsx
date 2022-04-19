@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AppIcon from "../logo.svg";
+import axios from "axios";
 
 import {
     Grid,
@@ -66,11 +67,42 @@ class login extends Component {
 
         const { email, password } = this.state;
 
-        const userData = {
+        const params = {
             email,
-            password,
+            password
         };
+
+        //Denny Bryant De la Rosa Suarez 10139393
         // TODO: implement creating the user here using axios
+
+        axios
+            .post("/user/login", null, { params })
+            .then((res) => {
+                console.log(res.data);
+
+                const FBIdToken = `Bearer ${res.data.token}`;
+                localStorage.setItem("FBIdToken", FBIdToken);
+                axios.defaults.headers.common["Authorization"] = FBIdToken;
+                this.props.history.push("/");
+
+                // Clear state 
+                this.setState({
+                    loading: false,
+                    errors: {}
+                });
+            })
+            .catch((error) => {
+
+                console.log("there were errors: ", error);
+
+                this.setState({
+                    loading: false,
+                    errors: {
+                        ...this.state.errors,
+                        general: error.message
+                    }
+                });
+            });
     };
 
     handleChange = (event) => {

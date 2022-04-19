@@ -259,7 +259,6 @@ paths:
         default:
           description: successful operation
           content: {}
-  /post/{postId}:
     delete:
       tags:
       - post
@@ -287,6 +286,15 @@ paths:
       summary: View a list of posts
       description: This can be done by anyone.
       operationId: viewPostList
+      requestBody:
+        description: View post object
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Post'
+        required: true
       responses:
         default:
           description: successful operation
@@ -303,7 +311,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Post'
+              $ref: '#/components/schemas/Comment'
         required: true
       responses:
         default:
@@ -320,7 +328,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Post'
+              $ref: '#/components/schemas/Comment'
         required: true
       security:
         - bearer_auth: []
@@ -339,7 +347,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Post'
+              $ref: '#/components/schemas/Comment'
         required: true
       security:
         - bearer_auth: []
@@ -347,19 +355,21 @@ paths:
         default:
           description: successful operation
           content: {}
+  /post/comment/{commentId}:
     delete:
       tags:
       - post
       summary: Delete comment
       description: This can be done by the logged in user.
       operationId: deleteComment
-      requestBody:
-        description: Delete post object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Post'
+      parameters:
+      - name: commentId
+        in: path
+        description: |
+          The commentId to be deleted
         required: true
+        schema:
+          type: string
       security:
         - bearer_auth: []
       responses:
@@ -386,25 +396,6 @@ paths:
         default:
           description: successful operation
           content: {}
-    delete:
-      tags:
-      - friend
-      summary: Delete a friend
-      description: This can be done by the logged in user.
-      operationId: deleteFriend
-      requestBody:
-        description: Delete friend object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Friend'
-        required: true
-      security:
-        - bearer_auth: []
-      responses:
-        default:
-          description: successful operation
-          content: {}
     put:
       tags:
       - friend
@@ -418,6 +409,27 @@ paths:
             schema:
               $ref: '#/components/schemas/Friend'
         required: true
+      security:
+        - bearer_auth: []
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /friend/{friendId}:
+    delete:
+      tags:
+      - friend
+      summary: Delete a friend
+      description: This can be done by the logged in user.
+      operationId: deleteFriend
+      parameters:
+      - name: friendId
+        in: path
+        description: |
+          The friendId to be deleted
+        required: true
+        schema:
+          type: string
       security:
         - bearer_auth: []
       responses:
@@ -485,19 +497,21 @@ paths:
         default:
           description: successful operation
           content: {}
+  /group/{groupId}:
     delete:
       tags:
       - group
       summary: Delete a group of friends
       description: This can be done by the logged in user.
       operationId: deleteGroup
-      requestBody:
-        description: Delete group object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Group'
+      parameters:
+      - name: groupId
+        in: path
+        description: |
+          The groupId to be deleted
         required: true
+        schema:
+          type: string
       security:
         - bearer_auth: []
       responses:
@@ -721,11 +735,31 @@ components:
           type: string
         updatedAt:
           type: string
-        imageProfile:
-          type: string
-          format: binary
         postId:
-          type: string   
+          type: string
+    Comment:
+      type: object
+      properties:
+        username:
+          type: string
+        comment:
+          type: string
+        canLike:
+          type: boolean
+        canUnlike: 
+          type: boolean
+        likeCount:
+          type: integer
+        tags: 
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+        commentId:
+          type: string
+        postId:
+          type: string
     Friend:
       type: object
       properties:
@@ -773,7 +807,7 @@ components:
         user:
           type: string
           items:
-            $ref: '#/components/schemas/UserProfile'      
+          $ref: '#/components/schemas/UserProfile'      
         post:
           type: array
           items:
