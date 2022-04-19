@@ -52,7 +52,7 @@ class login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            Username: "",
+            username: "",
             password: "",
             loading: false,
             errors: {},
@@ -65,27 +65,29 @@ class login extends Component {
             loading: true,
         });
 
-        const { Username, password } = this.state;
+        const { email, password } = this.state;
 
         const userData = {
-            Username,
+            username,
             password,
         };
         // TODO: implement creating the user here using axios
 
-        axios.post("/user",userData, {
-            Username: "DennBryant",
-            password: "Rosa1234",
-          
+        axios.post("user/login", userData, {
+            username: this.state.username,
+            password: this.state.password
+
         })
             .then(function (response) {
                 console.log(response);
+
             })
             .catch(function (error) {
                 console.log(error);
-            });
+            })
 
     };
+
 
     handleChange = (event) => {
         this.setState({
@@ -115,14 +117,14 @@ class login extends Component {
                     </Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
-                            id="Username"
-                            name="Username"
-                            type="Username"
+                            id="username"
+                            name="username"
+                            type="username"
                             label="Username"
-                            helperText={errors.Username}
-                            error={errors.Username ? true : false}
+                            helperText={errors.username}
+                            error={errors.username ? true : false}
                             className={classes.textField}
-                            value={this.state.Username}
+                            value={this.state.username}
                             onChange={this.handleChange}
                             fullWidth
                         />
@@ -184,5 +186,3 @@ class login extends Component {
 }
 
 export default withStyles(styles)(login);
-
-
