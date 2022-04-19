@@ -47,7 +47,7 @@ const styles = {
 
 //Denny Bryant De la Rosa Suarez -10139393
 // Puse todos los parametros del contrato y probe el sign up (esta funcionando ya que cree un usario llamado dennbryant12 que esta en la base de datos)
-// El parametro de picture se movio al userprofile ,le recuerdo que se lo comente en la clase de ayer y useted dijo que podia usarlo asi
+// El parametro de picture se movio al userprofile ,le recuerdo que se lo comente en la clase de ayer y usted dijo que podia usarlo asi
 class signup extends Component {
     constructor(props) {
         super(props);
