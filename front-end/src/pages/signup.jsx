@@ -185,7 +185,7 @@ class signup extends Component {
                         <TextField
                             id="username"
                             name="username"
-                            type="username"
+                            typeof="username"
                             label="Username"
                             helperText={errors.username}
                             error={errors.username ? true : false}
@@ -198,7 +198,7 @@ class signup extends Component {
                         <TextField
                             id="password"
                             name="password"
-                            type="password"
+                            typeof="password"
                             label="Password"
                             helperText={errors.password}
                             error={errors.password ? true : false}
@@ -210,7 +210,7 @@ class signup extends Component {
                         <TextField
                             id="confirmPassword"
                             name="confirmPassword"
-                            type="password"
+                            typeof="password"
                             label="Confirm Password"
                             helperText={errors.confirmPassword}
                             error={errors.confirmPassword ? true : false}
@@ -222,7 +222,7 @@ class signup extends Component {
                         <TextField
                             id="birthday"
                             name="birthday"
-                            type="text"
+                            typeof="text"
                             label="Birthday"
                             helperText={errors.birthday}
                             error={errors.birthday ? true : false}
