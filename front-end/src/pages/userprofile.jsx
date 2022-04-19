@@ -60,7 +60,7 @@ class userprofile extends Component {
                 lastSeen: "",
                 userId: "",
                 website: "",
-                location:"",
+                location: "",
             },
             loading: false
         };
@@ -132,8 +132,8 @@ class userprofile extends Component {
                                                 <th>lastseen: </th>
                                                 <td> {user.lastSeen}</td>
                                                 <center>
-                                                <th>Userid: </th>
-                                                <td> {user.userId}</td>
+                                                    <th>Userid: </th>
+                                                    <td> {user.userId}</td>
                                                 </center>
                                             </center>
                                         </center>
