@@ -1,8 +1,8 @@
 
 
 import { useState, useEffect } from "react";
-import CommentForm from "./CommentForm";
-import Comment from "./Comment.jsx";
+import PostForm from "./PostForm";
+import Post from "./Post.jsx";
 import {
   getComments as getCommentsApi,
   createComment as createCommentApi,
@@ -10,12 +10,17 @@ import {
   deleteComment as deleteCommentApi,
 } from "./Api";
 
-const Comments = ({ commentsUrl, currentUserId }) => {
+import axios from 'axios';
+
+const Posts = ({ commentsUrl, currentUserId }) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parentId === null
   );
+
+  console.log("rootComments", rootComments);
+
   const getReplies = (commentId) =>
     backendComments
       .filter((backendComment) => backendComment.parentId === commentId)
@@ -29,8 +34,8 @@ const Comments = ({ commentsUrl, currentUserId }) => {
       setActiveComment(null);
     });
   };
-// todo, implement png/jpg system. Use external library
-//Potentially use avatar state
+  // todo, implement png/jpg system. Use external library
+  //Potentially use avatar state
   const updateComment = (text, commentId) => {
     updateCommentApi(text).then(() => {
       const updatedBackendComments = backendComments.map((backendComment) => {
@@ -54,20 +59,35 @@ const Comments = ({ commentsUrl, currentUserId }) => {
     }
   };
 
-  useEffect(() => {
-    getCommentsApi().then((data) => {
-      setBackendComments(data);
+  useEffect( async () => {
+
+    await axios
+    .get('/post/all')
+    .then((res) => {
+      console.log("backendComments", res.data);
+      setBackendComments(res.data);
+    })
+    .catch((error) => {
+      console.log("there wer eerrors");
     });
+
+    // getCommentsApi().then((data) => {
+
+    //   console.log("backendComments", data);
+
+    //   setBackendComments(data);
+
+    // });
   }, []);
 
   return (
     <div className="comments">
       <h3 className="comments-title">Post board</h3>
       <div className="comment-form-title">How are you feeling?</div>
-      <CommentForm submitLabel="Write" handleSubmit={addComment} />
+      <PostForm submitLabel="Write" handleSubmit={addComment} />
       <div className="comments-container">
         {rootComments.map((rootComment) => (
-          <Comment
+          <Post
             key={rootComment.id}
             comment={rootComment}
             replies={getReplies(rootComment.id)}
@@ -84,4 +104,4 @@ const Comments = ({ commentsUrl, currentUserId }) => {
   );
 };
 
-export default Comments;
+export default Posts;
