@@ -48,7 +48,6 @@ const styles = {
     },
 };
 
-// Denny Bryant De La Rosa Suarez -10139393
 class login extends Component {
     constructor(props) {
         super(props);
@@ -73,19 +72,21 @@ class login extends Component {
             password,
         };
         
-        // TODO: implement creating the user here using axios 
+        //Denny Bryant De la Rosa Suarez 10139393
+        // TODO: implement creating the user here using axios
 
-        axios.post("/user/login", userData, {
-            Username: this.state.username,
+        axios.post("user/login", userData, {
+            username: this.state.username,
             password: this.state.password
 
         })
             .then(function (response) {
                 console.log(response);
+
             })
             .catch(function (error) {
                 console.log(error);
-            });
+            })
 
     };
 
@@ -119,7 +120,7 @@ class login extends Component {
                         <TextField
                             id="username"
                             name="username"
-                            type="username"
+                            typeof="text"
                             label="Username"
                             helperText={errors.username}
                             error={errors.username ? true : false}
@@ -131,7 +132,7 @@ class login extends Component {
                         <TextField
                             id="password"
                             name="password"
-                            type="password"
+                            typeof="password"
                             label="Password"
                             helperText={errors.password}
                             error={errors.password ? true : false}
@@ -186,5 +187,3 @@ class login extends Component {
 }
 
 export default withStyles(styles)(login);
-
-
