@@ -52,7 +52,7 @@ class login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
+            email: "",
             password: "",
             loading: false,
             errors: {},
@@ -65,10 +65,10 @@ class login extends Component {
             loading: true,
         });
 
-        const { username, password } = this.state;
+        const { email, password } = this.state;
 
         const userData = {
-            username,
+            email,
             password
         };
         
@@ -136,14 +136,14 @@ class login extends Component {
                     </Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
-                            id="username"
-                            name="username"
-                            type="text"
-                            label="Username"
-                            helperText={errors.username}
-                            error={errors.username ? true : false}
+                            id="email"
+                            name="email"
+                            type="email"
+                            label="email"
+                            helperText={errors.email}
+                            error={errors.email ? true : false}
                             className={classes.textField}
-                            value={this.state.username}
+                            value={this.state.email}
                             onChange={this.handleChange}
                             fullWidth
                         />
