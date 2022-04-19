@@ -10,12 +10,17 @@ import {
   deleteComment as deleteCommentApi,
 } from "./Api";
 
+import axios from 'axios';
+
 const Posts = ({ commentsUrl, currentUserId }) => {
   const [backendComments, setBackendComments] = useState([]);
   const [activeComment, setActiveComment] = useState(null);
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parentId === null
   );
+
+  console.log("rootComments", rootComments);
+
   const getReplies = (commentId) =>
     backendComments
       .filter((backendComment) => backendComment.parentId === commentId)
@@ -29,8 +34,8 @@ const Posts = ({ commentsUrl, currentUserId }) => {
       setActiveComment(null);
     });
   };
-// todo, implement png/jpg system. Use external library
-//Potentially use avatar state
+  // todo, implement png/jpg system. Use external library
+  //Potentially use avatar state
   const updateComment = (text, commentId) => {
     updateCommentApi(text).then(() => {
       const updatedBackendComments = backendComments.map((backendComment) => {
@@ -54,10 +59,25 @@ const Posts = ({ commentsUrl, currentUserId }) => {
     }
   };
 
-  useEffect(() => {
-    getCommentsApi().then((data) => {
-      setBackendComments(data);
+  useEffect( async () => {
+
+    await axios
+    .get('/post/all')
+    .then((res) => {
+      console.log("backendComments", res.data);
+      setBackendComments(res.data);
+    })
+    .catch((error) => {
+      console.log("there wer eerrors");
     });
+
+    // getCommentsApi().then((data) => {
+
+    //   console.log("backendComments", data);
+
+    //   setBackendComments(data);
+
+    // });
   }, []);
 
   return (
