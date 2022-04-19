@@ -736,20 +736,31 @@ components:
           type: string
         updatedAt:
           type: string
-        imageProfile:
-          type: string
-          format: binary
         postId:
           type: string
     Comment:
       type: object
       properties:
+        username:
+          type: string
         comment:
           type: string
-          items:
-            $ref: '#/components/schemas/Post'
+        canLike:
+          type: boolean
+        canUnlike: 
+          type: boolean
+        likeCount:
+          type: integer
+        tags: 
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
         commentId:
-          type: string   
+          type: string
+        postId:
+          type: string
     Friend:
       type: object
       properties:
@@ -797,7 +808,7 @@ components:
         user:
           type: string
           items:
-            $ref: '#/components/schemas/UserProfile'      
+          $ref: '#/components/schemas/UserProfile'      
         post:
           type: array
           items:
