@@ -144,11 +144,47 @@ class signup extends Component {
                         Signup
                     </Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
+                    <textField
+                            id="firstname"
+                            name="firstname"
+                            type="text"
+                            label="firstname"
+                            helperText={errors.firstname}
+                            error={errors.firstname ? true : false}
+                            className={classes.textField}
+                            value={this.state.firstname}
+                            onchange={this.handleChange}
+                            fullWidth
+                        />
+                        <textField
+                            id="lastname"
+                            name="lastname"
+                            type="text"
+                            label="Lastname"
+                            helperText={errors.lastname}
+                            error={errors.lastname ? true : false}
+                            className={classes.textField}
+                            value={this.state.lastname}
+                            onchange={this.handleChange}
+                            fullWidth
+                        />
+                        <TextField
+                            id="username"
+                            name="username"
+                            type="text"
+                            label="Username"
+                            helperText={errors.username}
+                            error={errors.username ? true : false}
+                            className={classes.textField}
+                            value={this.state.username}
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
                         <textField
                             id="email"
                             name="email"
-                            type="email"
-                            label="Email"
+                            type="text"
+                            label="email"
                             helperText={errors.email}
                             error={errors.email ? true : false}
                             className={classes.textField}
@@ -171,7 +207,7 @@ class signup extends Component {
                         <textField
                             id="location"
                             name="location"
-                            type="location"
+                            type="text"
                             label="Location"
                             helperText={errors.location}
                             error={errors.location ? true : false}
@@ -205,24 +241,12 @@ class signup extends Component {
                             fullWidth
                         />
                         <TextField
-                            id="username"
-                            name="username"
-                            type="text"
-                            label="Username"
-                            helperText={errors.username}
-                            error={errors.username ? true : false}
-                            className={classes.textField}
-                            value={this.state.username}
-                            onChange={this.handleChange}
-                            fullWidth
-                        />
-                        <TextField
                             id="bio"
                             name="bio"
                             type="bio"
                             label="Bio"
                             helperText={errors.bio}
-                            error={errors.email ? true : false}
+                            error={errors.bio ? true : false}
                             className={classes.textField}
                             value={this.state.bio}
                             onChange={this.handleChange}
