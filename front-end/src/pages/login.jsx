@@ -120,7 +120,7 @@ class login extends Component {
                         <TextField
                             id="username"
                             name="username"
-                            typeof="text"
+                            type="text"
                             label="Username"
                             helperText={errors.username}
                             error={errors.username ? true : false}
@@ -132,7 +132,7 @@ class login extends Component {
                         <TextField
                             id="password"
                             name="password"
-                            typeof="password"
+                            type="password"
                             label="Password"
                             helperText={errors.password}
                             error={errors.password ? true : false}
