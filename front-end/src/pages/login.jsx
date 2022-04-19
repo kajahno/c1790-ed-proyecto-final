@@ -69,13 +69,13 @@ class login extends Component {
 
         const userData = {
             username,
-            password,
+            password
         };
         
         //Denny Bryant De la Rosa Suarez 10139393
         // TODO: implement creating the user here using axios
 
-        axios.post("user/login", userData, {
+        axios.post("user/", userData, {
             username: this.state.username,
             password: this.state.password
 
@@ -89,7 +89,6 @@ class login extends Component {
             })
 
     };
-
 
     handleChange = (event) => {
         this.setState({
