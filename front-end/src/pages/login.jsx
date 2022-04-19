@@ -67,7 +67,7 @@ class login extends Component {
 
         const { email, password } = this.state;
 
-        const userData = {
+        const params = {
             email,
             password
         };
@@ -77,7 +77,7 @@ class login extends Component {
 
       
         axios
-            .post("/user", userData)
+            .post("/user/login",null,{params})
             .then((res) => {
                 console.log(res.data);
 
