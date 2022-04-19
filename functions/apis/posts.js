@@ -37,14 +37,15 @@ const newPost = (req, res) => {
 
 const getPost = (req, res) => {
 
-    const username = req.body.username;
+    const postId = req.body.postId;
+    if (postId == undefined) {
+        return res.status(400).json({ error: "Missing required parameter" });
+    }
 
-
-    db.doc(`/posts/${username}`)
+    db.doc(`/posts/${postId}`)
         .get()
         .then((doc) => {
             if (doc.exists) {
-                console.log("all good until here");
                 const data = doc.data();
                 res.status(200).json(data);
             } else {
@@ -56,10 +57,10 @@ const getPost = (req, res) => {
         })
         .catch((error) => {
             console.error(error);
-            if (error.code === "auth/user-doesnt-exist") {
+            if (error.code === "auth/post-doesnt-exist") {
                 return res
                     .status(400)
-                    .json({ user: "username doesnt exist" });
+                    .json({ user: "post doesnt exist" });
             }
             res.status(500).json({ error: error.code });
         });

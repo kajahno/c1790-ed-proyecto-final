@@ -259,7 +259,6 @@ paths:
         default:
           description: successful operation
           content: {}
-  /post/{postId}:
     delete:
       tags:
       - post
@@ -287,6 +286,15 @@ paths:
       summary: View a list of posts
       description: This can be done by anyone.
       operationId: viewPostList
+      requestBody:
+        description: View post object
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Post'
+        required: true
       responses:
         default:
           description: successful operation
