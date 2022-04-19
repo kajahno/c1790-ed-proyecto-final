@@ -65,7 +65,7 @@ class login extends Component {
             loading: true,
         });
 
-        const { email, password } = this.state;
+        const { username, password } = this.state;
 
         const userData = {
             username,
