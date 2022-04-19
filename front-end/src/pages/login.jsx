@@ -75,19 +75,37 @@ class login extends Component {
         //Denny Bryant De la Rosa Suarez 10139393
         // TODO: implement creating the user here using axios
 
-        axios.post("user/", userData, {
-            username: this.state.username,
-            password: this.state.password
+      
+        axios
+            .post("/user", userData)
+            .then((res) => {
+                console.log(res.data);
 
-        })
-            .then(function (response) {
-                console.log(response);
+                const FBIdToken = `Bearer ${res.data.token}`;
+                localStorage.setItem("FBIdToken", FBIdToken);
+        
+                axios.defaults.headers.common["Authorization"] = FBIdToken;
 
+                this.props.history.push("/");
+
+                // Clear state 
+                this.setState({
+                    loading: false,
+                    errors: {}
+                });
             })
-            .catch(function (error) {
-                console.log(error);
-            })
+            .catch((error) => {
 
+                console.log("there were errors: ", error);
+
+                this.setState({
+                    loading: false,
+                    errors: {
+                        ...this.state.errors,
+                        general: error.message
+                    }
+                });
+            });
     };
 
     handleChange = (event) => {
