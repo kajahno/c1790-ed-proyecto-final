@@ -47,7 +47,7 @@ const theme = createTheme({
 // Production -> https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
 // Local development -> http://localhost:5001/c1790-ed-proyecto-final/europe-west2/api
 axios.defaults.baseURL =
-  "http://localhost:5001/c1790-ed-proyecto-final/europe-west2/api";
+  "https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api";
 
 
 class App extends React.Component {

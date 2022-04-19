@@ -48,12 +48,11 @@ const styles = {
     },
 };
 
-// Denny Bryant De La Rosa Suarez -10139393
 class login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
+            email: "",
             password: "",
             loading: false,
             errors: {},
@@ -66,27 +65,44 @@ class login extends Component {
             loading: true,
         });
 
-        const { username, password } = this.state;
+        const { email, password } = this.state;
 
-        const userData = {
-            username,
-            password,
+        const params = {
+            email,
+            password
         };
-        
-        // TODO: implement creating the user here using axios 
 
-        axios.post("/user/login", userData, {
-            Username: this.state.username,
-            password: this.state.password
+        //Denny Bryant De la Rosa Suarez 10139393
+        // TODO: implement creating the user here using axios
 
-        })
-            .then(function (response) {
-                console.log(response);
+        axios
+            .post("/user/login", null, { params })
+            .then((res) => {
+                console.log(res.data);
+
+                const FBIdToken = `Bearer ${res.data.token}`;
+                localStorage.setItem("FBIdToken", FBIdToken);
+                axios.defaults.headers.common["Authorization"] = FBIdToken;
+                this.props.history.push("/");
+
+                // Clear state 
+                this.setState({
+                    loading: false,
+                    errors: {}
+                });
             })
-            .catch(function (error) {
-                console.log(error);
-            });
+            .catch((error) => {
 
+                console.log("there were errors: ", error);
+
+                this.setState({
+                    loading: false,
+                    errors: {
+                        ...this.state.errors,
+                        general: error.message
+                    }
+                });
+            });
     };
 
     handleChange = (event) => {
@@ -117,14 +133,14 @@ class login extends Component {
                     </Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
-                            id="username"
-                            name="username"
-                            type="username"
-                            label="Username"
-                            helperText={errors.username}
-                            error={errors.username ? true : false}
+                            id="email"
+                            name="email"
+                            type="email"
+                            label="Email"
+                            helperText={errors.email}
+                            error={errors.email ? true : false}
                             className={classes.textField}
-                            value={this.state.username}
+                            value={this.state.email}
                             onChange={this.handleChange}
                             fullWidth
                         />
@@ -186,5 +202,3 @@ class login extends Component {
 }
 
 export default withStyles(styles)(login);
-
-

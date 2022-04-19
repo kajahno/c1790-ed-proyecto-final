@@ -44,8 +44,9 @@ const styles = {
         position: "absolute",
     },
 };
-//Denny Bryant De La Rosa -10139393
-// Puse todos los parametros establecidos en contrato  y el apartado de image-profile estara en Userprofile 
+// Denny Bryant De La Rosa Suarez-10139393
+// Puse todos los parametros del contrato y probe el sign up (esta funcionando ya que cree un usario llamado dennbryant12 que esta en la base de datos)
+// El parametro de picture se movio al userprofile ,le recuerdo que se lo comente en la clase de ayer y usted dijo que podia usarlo asi
 class signup extends Component {
     constructor(props) {
         super(props);
@@ -148,7 +149,7 @@ class signup extends Component {
                         <TextField
                             id="firstname"
                             name="firstname"
-                            typeof="firstname"
+                            type="text"
                             label="First name"
                             helperText={errors.firstname}
                             error={errors.firstname ? true : false}
@@ -160,7 +161,7 @@ class signup extends Component {
                         <TextField
                             id="lastname"
                             name="lastname"
-                            typeof="lastname"
+                            type="text"
                             label="Last name"
                             helperText={errors.lastname}
                             error={errors.lastname ? true : false}
@@ -172,7 +173,7 @@ class signup extends Component {
                         <TextField
                             id="email"
                             name="email"
-                            typeof="email"
+                            type="email"
                             label="Email"
                             helperText={errors.email}
                             error={errors.email ? true : false}
@@ -184,7 +185,7 @@ class signup extends Component {
                         <TextField
                             id="username"
                             name="username"
-                            typeof="username"
+                            type="text"
                             label="Username"
                             helperText={errors.username}
                             error={errors.username ? true : false}
@@ -220,7 +221,7 @@ class signup extends Component {
                         <TextField
                             id="birthday"
                             name="birthday"
-                            typeof="birthday"
+                            type="text"
                             label="Birthday"
                             helperText={errors.birthday}
                             error={errors.birthday ? true : false}
@@ -232,7 +233,7 @@ class signup extends Component {
                         <TextField
                             id="location"
                             name="location"
-                            typeof="location"
+                            type="text"
                             label="Location"
                             helperText={errors.location}
                             error={errors.location ? true : false}
@@ -244,7 +245,7 @@ class signup extends Component {
                         <TextField
                             id="bio"
                             name="bio"
-                            typeof="bio"
+                            type="text"
                             label="Bio"
                             helperText={errors.bio}
                             error={errors.bio ? true : false}
@@ -256,7 +257,7 @@ class signup extends Component {
                         <TextField
                             id="website"
                             name="website"
-                            typeof="website"
+                            type="website"
                             label="Website"
                             helperText={errors.website}
                             error={errors.website ? true : false}
