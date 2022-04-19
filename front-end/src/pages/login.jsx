@@ -71,12 +71,12 @@ class login extends Component {
             email,
             password
         };
-        
+
         //Denny Bryant De la Rosa Suarez 10139393
         // TODO: implement creating the user here using axios
 
         axios
-            .post("/user/login",null,{params})
+            .post("/user/login", null, { params })
             .then((res) => {
                 console.log(res.data);
 
