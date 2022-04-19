@@ -75,7 +75,6 @@ class login extends Component {
         //Denny Bryant De la Rosa Suarez 10139393
         // TODO: implement creating the user here using axios
 
-      
         axios
             .post("/user/login",null,{params})
             .then((res) => {
@@ -83,9 +82,7 @@ class login extends Component {
 
                 const FBIdToken = `Bearer ${res.data.token}`;
                 localStorage.setItem("FBIdToken", FBIdToken);
-        
                 axios.defaults.headers.common["Authorization"] = FBIdToken;
-
                 this.props.history.push("/");
 
                 // Clear state 
@@ -139,7 +136,7 @@ class login extends Component {
                             id="email"
                             name="email"
                             type="email"
-                            label="email"
+                            label="Email"
                             helperText={errors.email}
                             error={errors.email ? true : false}
                             className={classes.textField}
