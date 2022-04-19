@@ -169,6 +169,7 @@ class signup extends Component {
                             fullWidth
                         />
                         <TextField
+<<<<<<< Updated upstream
                             id="username"
                             name="username"
                             type="text"
@@ -181,6 +182,20 @@ class signup extends Component {
                             fullWidth
                         />
                         <textField
+=======
+                            id="firstname"
+                            name="firstname"
+                            type="firstname"
+                            label="Firstname"
+                            helperText={errors.firstname}
+                            error={errors.firstname ? true : false}
+                            className={classes.textField}
+                            value={this.state.firstname}
+                            onChange={this.handleChange}
+                            fullWidth
+                        />
+                        <TextField
+>>>>>>> Stashed changes
                             id="email"
                             name="email"
                             type="email"
