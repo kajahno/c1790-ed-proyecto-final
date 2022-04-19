@@ -58,11 +58,11 @@ const signUp = (args) => {
 }
 
 // *definition of create guest command
-const guestSignUp= (args) => {
+const guestSignUp = (args) => {
 
     const { picture, username } = args;
 
-    const guestuserdata= {
+    const guestuserdata = {
         picture,
         username,
     };
@@ -86,22 +86,25 @@ const guestSignUp= (args) => {
 //* Login 
 const login = (args) => {
 
-    const { password, username } = args;
+    const { password, email } = args;
 
-    const useUserData = {
+    const params = {
         password,
-        username,
+        email,
     };
 
     console.log(chalk.yellow.bold("login..."));
 
     axios
-        .post("/user/login", useUserData)
+        .post("/user/login", null, { params })
         .then((res) => {
             console.log(res.data);
 
             const FBIdToken = `Bearer ${res.data.token}`;
             // TODO: create a file in the user's machine to store the auth token
+
+                
+
             console.log(chalk.green.bold("login successfully ✔️"));
         })
         .catch((error) => {
@@ -111,22 +114,24 @@ const login = (args) => {
 
 // implement user/logout
 const logout = (args) => {
-   {  console.log(chalk.yellow.bold("Logging out..."));
+    {
+        console.log(chalk.yellow.bold("Logging out..."));
 
-    axios
-        .post("/user/logout")
-        .then((res) => {
-            console.log(res.data);
+        axios
+            .post("/user/logout")
+            .then((res) => {
+                console.log(res.data);
 
-            const FBIdToken = `Bearer ${res.data.token}`;
-            
-            console.log(chalk.green.bold(" successfully operation ✔️"));
-        })
-        .catch((error) => {
-            console.log(chalk.red.bold(`Could not log out: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
-        });
+                const FBIdToken = `Bearer ${res.data.token}`;
 
-    }}
+                console.log(chalk.green.bold(" successfully operation ✔️"));
+            })
+            .catch((error) => {
+                console.log(chalk.red.bold(`Could not log out: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+            });
+
+    }
+}
 //* recover 
 const recover = (args) => {
 
@@ -185,20 +190,11 @@ const deleteuser = (args) => {
 const getUser = (args) => {
 
     console.log(chalk.yellow.bold("getting user..."));
-
     const { username } = args;
-    
-        const getUserData = {
-            username
-        };
-
     axios
-        .get(`/user/${username}`, getUserData)
+        .get(`/user/${username}`)
         .then((res) => {
             console.log(res.data);
-
-            const FBIdToken = `Bearer ${res.data.token}`;
-            // TODO: create a file in the user's machine to store the auth token
             console.log(chalk.green.bold("you got the user successfully ✔️"));
         })
         .catch((error) => {
@@ -209,16 +205,13 @@ const getUser = (args) => {
 //* updated user 
 const updateUser = (args) => {
 
-    const { password, confirmPassword, username, firstName, 
-    lastName, email, bio, website, location, picture, birthday } = args;
+    const { username, firstName,
+        lastName, bio, website, location, picture, birthday } = args;
 
     const updateUserData = {
-        password,
-        confirmPassword,
         username,
         firstName,
         lastName,
-        email,
         bio,
         website,
         location,
@@ -232,28 +225,26 @@ const updateUser = (args) => {
         .put(`/user/${username}`, updateUserData)
         .then((res) => {
             console.log(res.data);
-
-            const FBIdToken = `Bearer ${res.data.token}`;
-            // TODO: create a file in the user's machine to store the auth token
             console.log(chalk.green.bold(" update successfully ✔️"));
         })
         .catch((error) => {
             console.log(chalk.red.bold(`Could not update this account -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
         });
 }
+
 //get post command definition
 const getPost = (args) => {
 
     console.log(chalk.yellow.bold("getting post..."));
 
     const { postId } = args;
-    
-        const getPostData = {
-            postId
-        };
+
+    const data = {
+        postId
+    };
 
     axios
-        .get("/posts", getPostData)
+        .get("/posts", data)
         .then((res) => {
             console.log(res.data);
 
@@ -268,9 +259,11 @@ const getPost = (args) => {
 //create post command definition
 const createPost = (args) => {
 
-    const { post, canLike, canUnlike, likes, tag } = args;
+    const { username, title, post, canLike, canUnlike, likes, tag } = args;
 
     const postData = {
+        username,
+        title,
         post,
         canLike,
         canUnlike,
@@ -281,12 +274,9 @@ const createPost = (args) => {
     console.log(chalk.yellow.bold("posting..."));
 
     axios
-        .post("/posts", postData)
+        .post("/post", postData)
         .then((res) => {
             console.log(res.data);
-
-            const FBIdToken = `Bearer ${res.data.token}`;
-            // TODO: create a file in the user's machine to store the auth token
             console.log(chalk.green.bold("post created successfully ✔️"));
         })
         .catch((error) => {
@@ -296,9 +286,13 @@ const createPost = (args) => {
 //update post command definition
 const updatePost = (args) => {
 
-    const { canLike, canUnlike, likes, tag } = args;
+    const { postId, username, title, post, canLike, canUnlike, likes, tag } = args;
 
     const putPostData = {
+        postId,
+        username,
+        title,
+        post,
         canLike,
         canUnlike,
         likes,
@@ -308,16 +302,34 @@ const updatePost = (args) => {
     console.log(chalk.yellow.bold("editing the post..."));
 
     axios
-        .put("/posts", putPostData)
+        .put("/post", putPostData)
+        .then((res) => {
+            console.log(res.data);
+            console.log(chalk.green.bold("post updated successfully ✔️"));
+        })
+        .catch((error) => {
+            console.log(chalk.red.bold(`Could not update this post -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+        });
+}
+
+/*  list of post    */
+const allPost = (args) => {
+
+    const { postId } = args;
+
+    console.log(chalk.yellow.bold("getting..."));
+
+    axios
+        .get('/post/all')
         .then((res) => {
             console.log(res.data);
 
             const FBIdToken = `Bearer ${res.data.token}`;
             // TODO: create a file in the user's machine to store the auth token
-            console.log(chalk.green.bold("post updated successfully ✔️"));
+            console.log(chalk.green.bold("post deleted successfully ✔️"));
         })
         .catch((error) => {
-            console.log(chalk.red.bold(`Could not update this post -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
+            console.log(chalk.red.bold(`Could not delete the post -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
         });
 }
 
@@ -326,14 +338,10 @@ const deletePost = (args) => {
 
     const { postId } = args;
 
-    const deletePostData = {
-        postId
-    };
-
     console.log(chalk.yellow.bold("deleting..."));
 
     axios
-        .delete("/posts", deletePostData)
+        .delete(`/post/${postId}`)
         .then((res) => {
             console.log(res.data);
 
@@ -363,7 +371,7 @@ const viewComment = (args) => {
             console.log(res.data);
 
             const FBIdToken = `Bearer ${res.data.token}`;
-    
+
         })
         .catch((error) => {
             console.log(chalk.red.bold(`Could not view this comment -> code: ${error.response.statusText}, message: ${JSON.stringify(error.response.data)}`));
@@ -401,7 +409,7 @@ const createComment = (args) => {
 /*  add friend  */
 const addafriend = (args) => {
 
-    const { username,userId } = args;
+    const { username, userId } = args;
 
     const addfriendData = {
         username,
@@ -487,7 +495,7 @@ const listoffriend = (args) => {
 const createGroup = (args) => {
 
     const createGroupData = {
-      
+
     };
 
     console.log(chalk.yellow.bold("Creating group..."));
@@ -509,7 +517,7 @@ const createGroup = (args) => {
 const editGroup = (args) => {
 
     const editGroupData = {
-      
+
     };
 
     console.log(chalk.yellow.bold("Editing group..."));
@@ -531,7 +539,7 @@ const editGroup = (args) => {
 const deleteGroup = (args) => {
 
     const deleteGroupData = {
-      
+
     };
 
     console.log(chalk.yellow.bold("Deleting group..."));
@@ -553,7 +561,7 @@ const deleteGroup = (args) => {
 const listGroup = (args) => {
 
     const listGroupData = {
-      
+
     };
 
     console.log(chalk.yellow.bold("Looking for the list of groups..."));
@@ -572,11 +580,15 @@ const listGroup = (args) => {
 }
 
 // Back-end configuration
-// URLS:
-// Production -> https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api
-// Local development -> http://localhost:5001/c1790-ed-proyecto-final/europe-west2/api
-axios.defaults.baseURL =
-    "http://localhost:5001/c1790-ed-proyecto-final/europe-west2/api";
+const bearerToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFhZmE4MTJiMTY5NzkxODBmYzc4MjA5ZWE3Y2NhYjkxZTY4NDM2NTkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vYzE3OTAtZWQtcHJveWVjdG8tZmluYWwiLCJhdWQiOiJjMTc5MC1lZC1wcm95ZWN0by1maW5hbCIsImF1dGhfdGltZSI6MTY1MDMxMTU4MywidXNlcl9pZCI6ImIwaDZBZTFkVVVTZlhqanR6eTA4ajdEbzR3VjIiLCJzdWIiOiJiMGg2QWUxZFVVU2ZYamp0enkwOGo3RG80d1YyIiwiaWF0IjoxNjUwMzExNTgzLCJleHAiOjE2NTAzMTUxODMsImVtYWlsIjoidGVzdDExQG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbInRlc3QxMUBtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.GhuFWAyHinW1w1LinYA6sYBMwclQAjyhYb6iESFW93dTbsCOx6rBZ6iiTq2YuiR9bt8bqopKwNQuJmA7vtfGzQchE52uy4gpHs3U8gd5miKE8SmnsTqhrhdq1PBWcHyfekdmNboWN-pAsWSJ7VA_rZbJ_MDt6A-IFC_P5sjeDU6FSKZghNgGSwjdyBVw8hJ_U-37JqL3jI6RUxWRIOg8QcqesiO-9LRE5O4uIxpjHXnB11QiEd7micyzYZXG16IN35Jad1mqt8otlFQquqTMqLRQGrA2xjco45E9pB7u8frir0Sbc50mP__NXrIDXxm6imHEOfyWyNeLtbKTSLvNhA";
+axios.defaults.headers.common = {
+    "Authorization": `Bearer ${bearerToken}`,
+};
+const appUrls = {
+    dev: "http://localhost:5001/c1790-ed-proyecto-final/europe-west2/api",
+    prod: "https://europe-west2-c1790-ed-proyecto-final.cloudfunctions.net/api"
+};
+axios.defaults.baseURL = appUrls.prod;
 
 // CLI interface definition
 const y = yargs();
@@ -601,42 +613,31 @@ y.command({
             demandOption: true,
             type: 'string',
         },
-        confirmPassword: {
-            describe: 'Confirm the password of the new account',
-            demandOption: true,
-            type: 'string',
-        },
         firstName: {
             describe: 'First name of the new account',
-            demandOption: true,
             type: 'string',
         },
         lastName: {
             describe: 'Last name of the new account',
-            demandOption: true,
             type: 'string',
         },
         bio: {
-            describe: 'Biography of the new account',
-            demandOption: true,
+            describe: 'Description of the new account',
             type: 'string',
         },
         website: {
             describe: 'Website of the new account',
-            demandOption: true,
             type: 'string',
         },
         location: {
             describe: 'Location of the new account',
-            demandOption: true,
             type: 'string',
         },
         picture: {
             describe: 'Picture of the new account',
-            demandOption: true,
             type: 'string',
         },
-        birthday:{
+        birthday: {
             describe: 'User birthday',
             type: 'string'
         }
@@ -653,14 +654,13 @@ y.command({
     command: 'login',
     describe: 'login with an account',
     builder: {
-        username: {
-            describe: 'Username',
+        email: {
+            describe: 'Email',
             demandOption: true,
             type: 'string'
         },
         password: {
             describe: 'Password of the account',
-            
         }
         // TODO: prompt to confirm the password
     },
@@ -681,8 +681,8 @@ y.command({
             type: 'string'
         },
 
-       picture: {
-           describe: 'A profile picture',
+        picture: {
+            describe: 'A profile picture',
             demandOption: false,
             type: 'string'
         }
@@ -704,7 +704,7 @@ y.command({
             demandOption: true,
             type: 'string'
         },
-        
+
     },
     handler(argv) {
         logout(argv)
@@ -732,7 +732,7 @@ y.command({
             describe: 'confirm the current password',
             demandOption: true,
             type: 'string'
-        },  
+        },
     },
     handler(argv) {
         recover(argv)
@@ -781,44 +781,32 @@ y.command({
     builder: {
         username: {
             describe: 'and username',
-            demandOption: true,
             type: 'string'
         },
         firstName: {
             describe: 'your frist name',
-            demandOption: true,
             type: 'string'
         },
         lastName: {
             describe: 'your lastname',
-            demandOption: true,
-            type: 'string'
-        },
-        email: {
-            describe: 'your email',
-            demandOption: true,
             type: 'string'
         },
         bio: {
             describe: 'your biogaphy',
-            demandOption: true,
             type: 'string'
         },
         website: {
             describe: '...',
-            demandOption: true,
             type: 'string'
         },
         location: {
             describe: 'your actual location',
-            demandOption: true,
             type: 'string'
         },
         picture: {
-            describe: '...',
-            demandOption: true,
+            describe: 'User profile picture',
             type: 'string'
-        },Birthday:{
+        }, birthday: {
             describe: 'User birthday',
             type: 'string'
         }
@@ -835,7 +823,7 @@ y.command({
     command: 'get-post',
     describe: 'gets a post',
     builder: {
-        postid: {
+        postId: {
             describe: 'Post to get',
             demandOption: true,
             type: 'string'
@@ -853,23 +841,27 @@ y.command({
     describe: 'creates a post ',
     builder: {
         post: {
-            describe: 'Post name',
+            describe: 'Post description',
             demandOption: true,
             type: 'string'
         },
+        title: {
+            describe: 'Pos title',
+            demandOption: true,
+            type: 'string'
+        },        
         canLike: {
             describe: 'Possibility to like',
-            demandOption: true,
-            type: 'bool'
+            type: 'bool',
+            default: false
         },
-       canUnlike: {
-           describe: 'Possibility to unlike',
-            demandOption: true,
-            type: 'bool'
+        canUnlike: {
+            describe: 'Possibility to unlike',
+            type: 'bool',
+            default: false
         },
         tag: {
             describe: 'Tag',
-            demandOption: true,
             type: 'string'
         },
         // TODO: prompt to confirm the password
@@ -886,23 +878,26 @@ y.command({
     builder: {
         postId: {
             describe: 'Post ID',
-            demandOption: true,
             type: 'string'
         },
+        post: {
+            describe: 'Post body',
+            type: 'string'
+        },
+        title: {
+            describe: 'Post title',
+            type: 'string'
+        },        
         canLike: {
             describe: 'Possibility to like',
-            demandOption: true,
             type: 'bool'
         },
-       canUnlike: {
-           describe: 'Possibility to unlike',
-            demandOption: true,
+        canUnlike: {
+            describe: 'Possibility to unlike',
             type: 'bool'
         },
-
         tag: {
             describe: 'Tag',
-            demandOption: true,
             type: 'string'
         },
 
@@ -985,7 +980,7 @@ y.command({
             describe: 'UserId of the friend',
             demandOption: true,
             type: 'string'
-            
+
         }
         // TODO: prompt to confirm the password
     },
@@ -1008,7 +1003,7 @@ y.command({
             describe: 'UserId of the friend to delete',
             demandOption: true,
             type: 'string'
-            
+
         }
         // TODO: prompt to confirm the password
     },
@@ -1031,7 +1026,7 @@ y.command({
             describe: 'UserId of the friend to block',
             demandOption: true,
             type: 'string'
-            
+
         }
         // TODO: prompt to confirm the password
     },
@@ -1054,7 +1049,7 @@ y.command({
             describe: 'UserIds of your friends',
             demandOption: true,
             type: 'array'
-            
+
         }
         // TODO: prompt to confirm the password
     },
@@ -1077,37 +1072,37 @@ y.command({
             describe: 'friendId',
             demandOption: true,
             type: 'string'
-            
+
         },
         friend: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         },
         groupId: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         },
         name: {
             describe: 'Name of the group',
             demandOption: true,
             type: 'string'
-            
+
         },
         createdAt: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         },
         updatedAt: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         }
     },
     handler(argv) {
@@ -1120,30 +1115,30 @@ y.command({
     command: 'edit-group',
     describe: 'edit a group ',
     builder: {
-  
+
         groupId: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         },
         name: {
             describe: 'Name of the group',
             demandOption: true,
             type: 'string'
-            
+
         },
         createdAt: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         },
         updatedAt: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         }
     },
     handler(argv) {
@@ -1156,18 +1151,18 @@ y.command({
     command: 'delete-group',
     describe: 'delete a group ',
     builder: {
-        
+
         groupId: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         },
         name: {
             describe: 'Name of the group',
             demandOption: true,
             type: 'string'
-            
+
         }
     },
     handler(argv) {
@@ -1184,32 +1179,32 @@ y.command({
             describe: 'Name of the group',
             demandOption: true,
             type: 'string'
-            
+
         },
         username: {
             describe: 'string',
             demandOption: true,
             type: 'string'
         },
-  
+
         friend: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         },
         groupId: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         },
 
         updatedAt: {
             describe: 'string',
             demandOption: true,
             type: 'string'
-            
+
         }
     },
     handler(argv) {
