@@ -149,7 +149,7 @@ class signup extends Component {
                         <TextField
                             id="firstname"
                             name="firstname"
-                            type="text"
+                            type="firstname"
                             label="First name"
                             helperText={errors.firstname}
                             error={errors.firstname ? true : false}
@@ -161,7 +161,7 @@ class signup extends Component {
                         <TextField
                             id="lastname"
                             name="lastname"
-                            type="text"
+                            type="lastname"
                             label="Last name"
                             helperText={errors.lastname}
                             error={errors.lastname ? true : false}
@@ -185,7 +185,7 @@ class signup extends Component {
                         <TextField
                             id="username"
                             name="username"
-                            type="text"
+                            type="username"
                             label="Username"
                             helperText={errors.username}
                             error={errors.username ? true : false}
@@ -221,7 +221,7 @@ class signup extends Component {
                         <TextField
                             id="birthday"
                             name="birthday"
-                            type="text"
+                            type="birthday"
                             label="Birthday"
                             helperText={errors.birthday}
                             error={errors.birthday ? true : false}
@@ -233,7 +233,7 @@ class signup extends Component {
                         <TextField
                             id="location"
                             name="location"
-                            type="text"
+                            type="location"
                             label="Location"
                             helperText={errors.location}
                             error={errors.location ? true : false}
@@ -245,7 +245,7 @@ class signup extends Component {
                         <TextField
                             id="bio"
                             name="bio"
-                            type="text"
+                            type="bio"
                             label="Bio"
                             helperText={errors.bio}
                             error={errors.bio ? true : false}

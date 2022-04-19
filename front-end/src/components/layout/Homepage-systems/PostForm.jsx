@@ -2,13 +2,16 @@
 
 import { useState } from "react";
 
-const CommentForm = ({
+const PostForm = ({
+  intialTital ="",
   handleSubmit,
   submitLabel,
   hasCancelButton = false,
   handleCancel,
   initialText = "",
-}) => {
+}) =>
+
+{
   const [text, setText] = useState(initialText);
   const isTextareaDisabled = text.length === 0;
   const onSubmit = (event) => {
@@ -16,6 +19,7 @@ const CommentForm = ({
     handleSubmit(text);
     setText("");
   };
+  
   return (
     <form onSubmit={onSubmit}>
       <textarea
@@ -39,4 +43,4 @@ const CommentForm = ({
   );
 };
 
-export default CommentForm;
+export default PostForm;

@@ -91,7 +91,7 @@ class App extends React.Component {
               <Route exact path="/" authenticated={authenticated} component={home}  />
               {!authenticated && <Route exact path="/login" component={login} />}
               {!authenticated && <Route exact path="/signup" component={signup} />}   
-              {!authenticated && <Route exact path="/userprofile" component={userprofile} />}           
+              {authenticated && <Route exact path="/userprofile" component={userprofile} />}           
               {/* <Route
                 exact
                 path="/users/:username"
