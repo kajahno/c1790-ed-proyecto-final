@@ -1,11 +1,11 @@
 
-import Comments from "../components/layout/Homepage-systems/Comments"
+import Posts from "../components/layout/Homepage-systems/Posts"
 
 const PostSystem = () => {
   return (
     <div>
     
-      <Comments
+      <Posts 
         commentsUrl="http://localhost:5001/c1790-ed-proyecto-final/europe-west2/api"
         currentUserId="1"
       />

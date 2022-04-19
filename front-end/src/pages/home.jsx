@@ -10,10 +10,9 @@ import AppIcon from "../logo.svg";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { typographyVariant } from '@mui/system';
 import { Container } from '@mui/material';
-import { Post } from '../components/layout/Homepage-systems/Post';
-import CommentForm from '../components/layout/Homepage-systems/CommentForm';
-import Comment from '../components/layout/Homepage-systems/Comment';
-import Comments from '../components/layout/Homepage-systems/Comments';
+import PostForm from '../components/layout/Homepage-systems/PostForm';
+import Post from '../components/layout/Homepage-systems/Post';
+import Posts from '../components/layout/Homepage-systems/Posts';
 import App from './PostSystem';
 import PostSystem from './PostSystem';
 import login from './login';
@@ -124,10 +123,19 @@ class Home extends React.Component {
                             <Button
                                 color="inherit"
                                 component={Link}
-                                to="userprofile"
+                                to="/userprofile"
                             >
                              <h2> User profile </h2>
                             </Button>
+                            <Button
+
+                            color="inherit"
+                            component={Link}
+                            to= "<Logout> </Logout>"
+>
+                            <h3>Logout </h3>
+                            </Button>
+
 
  
                             </Grid>
