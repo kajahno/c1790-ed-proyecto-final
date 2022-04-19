@@ -1,4 +1,7 @@
 //Anthony's Work
+//El user profile solo funciona con el SignUp
+//Al dar SignUp, luego hay que dar un refresh a la pagina y aparecera loggeado
+
 
 import React, { Component } from "react";
 import { withStyles } from "@mui/styles";
