@@ -19,6 +19,7 @@ import login from './login';
 import userprofile from "./userprofile";
 
 //Andy's Work
+//Una forma de hacer logout es cambiando de navegador o abrir un navegador en incognito
 const styles = {
     form: {
         textAlign: "center",
